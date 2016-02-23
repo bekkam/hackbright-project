@@ -42,13 +42,13 @@ def get_addresses():
                             end_long=end_long)
 
 
-@app.route('/new-route', methods=['POST'])
+@app.route('/new-route')
 def add_route():
     """Add a running route to the database"""
 
-    start = request.form.get("start")
-    end = request.form.get("end")
-    route = request.form.get("route-name")
+    # start = request.form.get("start")
+    # end = request.form.get("end")
+    route = request.args.get("route")
 
     # write to db
     # new_route = Route(start=start, end=end, route_name=route)
@@ -56,8 +56,11 @@ def add_route():
     # db.session.commit()
 
 
-    print "start is %s, end is %s, name is %s" % (start, end, route)
-    return "The start of your route was %s" % start
+
+    # print "start is %s, end is %s, name is %s" % (start, end, route)
+    # return "The name of your route was %s" % route
+    return render_template('confirmation.html', route=route)
+
 
 
 if __name__ == "__main__":

@@ -56,11 +56,11 @@
 
 <!-- Button to save route -->
 <!-- TODO: Hide lat long inputs -->
-  <form id="save-form" method="post" action="/new-route">
+  <form action="/new-route" method="get" >
     <span>Name this route:</span>
       <input type="text" name="route" id="route-name">
-      <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
-      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
+<!--       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
+      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}"> -->
       <input type="submit" id="save-route-button" value="Save Route">
   </form> 
 
@@ -110,14 +110,14 @@ function showRouteResults(result){
 function saveRoute(evt){
   evt.preventDefault();
   var formInputs = {
-    "route-name": $("#route").val(),
-    "start": $("#start-field").val(),
-    "end": $("#end-field").val()
+    "route": $("#route-name").val()
+    // "start": $("#start-field").val(),
+    // "end": $("#end-field").val()
   }; 
-  $.post("/new-route", formInputs, showRouteResults)
+  $.get("/new-route", formInputs, showRouteResults)
 }
 
-$("#save-form").on("submit", saveRoute);
+$("#save-route-button").on("submit", saveRoute);
 
 </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=updateMap"
