@@ -54,6 +54,17 @@
       <p>Total Distance: <span id="total"></span></p>
     </div>
 
+<!-- Button to save route -->
+<!-- TODO: Hide lat long inputs -->
+  <form id="save-form" method="post" action="/new-route">
+    <span>Name this route:</span>
+      <input type="text" name="route" id="route-name">
+      <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
+      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
+      <input type="submit" id="save-route-button" value="Save Route">
+  </form> 
+
+
     <script src="http://code.jquery.com/jquery.js"></script>
 
     <script>
@@ -89,23 +100,29 @@ function initMap() {
       }
     });
 }
+
+
+function showRouteResults(result){
+  alert(result);
+}
+
+
+function saveRoute(evt){
+  evt.preventDefault();
+  var formInputs = {
+    "route-name": $("#route").val(),
+    "start": $("#start-field").val(),
+    "end": $("#end-field").val()
+  }; 
+  $.post("/new-route", formInputs, showRouteResults)
+}
+
+$("#save-form").on("submit", saveRoute);
+
 </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
         async defer></script>
 
-<!-- Button to save route -->
-  <form id="save-form" method="get" action="/save-route">
-    <span>Name this route:</span>
-      <input type="text" name="route" id="route-name">
-      <input type="submit" id="save-route-button" value="Save Route">
-  </form> 
 
   </body>
 </html>
-<!-- NOTES FOR REFACTORING:
--Add distance calculation (in miles), which disappears after updating right-panel
--Change JS to Jquery
--getAddressInfo likely unnecessary
--Remove debug alerts
--Migrate JS to separate files
- -->

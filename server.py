@@ -42,6 +42,18 @@ def get_addresses():
                             end_long=end_long)
 
 
+@app.route('/new-route', methods=['POST'])
+def add_route():
+    """Add a running route to the database"""
+
+    start = request.form.get("start")
+    # end = request.form.get("end")
+    route = request.form.get("route-name")
+
+    # print "start is %s, end is %s, name is %s" % (start, end, route)
+    return "The start of your route was %s" % start
+
+
 
 if __name__ == "__main__":
     app.debug = True
