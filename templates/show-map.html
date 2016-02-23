@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Static Directions</title>
+    <!-- Specify sizes in style, so that CSS works in both quirks and standard mode -->
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 100%;
+        float: left;
+        width: 63%;
+        height: 55%;
+      }
+      #right-panel {
+        float: right;
+        width: 34%;
+        height: 100%;
+      }
+      #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #right-panel select, #right-panel input {
+        font-size: 15px;
+      }
+
+      #right-panel select {
+        width: 100%;
+      }
+
+      #right-panel i {
+        font-size: 12px;
+      }
+      .panel {
+        height: 100%;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+
+
+<!-- Create a div element named 'map' to hold Map -->
+    <div id="map"></div>
+    <div id="right-panel">
+      <p>Total Distance: <span id="total"></span></p>
+    </div>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+
+    <script>
+    "use strict";
+  var directionsDisplay;
+  var directionsService;
+  var map;
+
+function initMap() {
+   alert("called initMap");
+   directionsDisplay = new google.maps.DirectionsRenderer();
+   directionsService = new google.maps.DirectionsService();
+
+   map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 14,
+    center: {lat: {{ start_lat }}, lng: {{start_long}} }
+  });
+
+
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById("right-panel"));
+
+    directionsService.route({
+      origin: {lat: {{ start_lat }}, lng: {{start_long}} },
+      destination: {lat: {{ end_lat }}, lng: {{end_long}} },
+      travelMode: google.maps.TravelMode.WALKING,
+      avoidTolls: true
+    }, function(response, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);  
+      } else {
+        alert('Could not display directions due to: ' + status);
+      }
+    });
+}
+</script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
+        async defer></script>
+
+  </body>
+</html>
+<!-- NOTES FOR REFACTORING:
+-Add distance calculation (in miles), which disappears after updating right-panel
+-Change JS to Jquery
+-getAddressInfo likely unnecessary
+-Remove debug alerts
+-Migrate JS to separate files
+ -->

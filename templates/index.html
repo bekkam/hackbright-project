@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map {
+        height: 60%;
+      }
+    </style>
+  </head>
+  <body>
+
+
+<!-- form for start and end addresses -->
+  <form id="address-form" method="get" action="/get-route">
+    <span>Start:</span>
+      <input type="text" name="start" id="pointOne">
+     <span>End:</span>
+      <input type="text" name="end" id="pointTwo">
+      <input type="submit" id="submit-button" value="Map my run!">
+  </form>
+
+<!-- Button to save route -->
+ <!--  <form id="save-form" method="get" action="/save-route">
+    <span>Name this route:</span>
+      <input type="text" name="route" id="route-name">
+      <input type="submit" id="save-route-button" value="Save Route">
+  </form>  -->
+
+  </body>
+</html>
