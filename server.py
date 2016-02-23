@@ -46,8 +46,8 @@ def get_addresses():
 def add_route():
     """Add a running route to the database"""
 
-    # start = request.form.get("start")
-    # end = request.form.get("end")
+    start = request.args.get("start")
+    end = request.args.get("end")
     route = request.args.get("route")
 
     # write to db
@@ -57,9 +57,9 @@ def add_route():
 
 
 
-    # print "start is %s, end is %s, name is %s" % (start, end, route)
+    return "start is %s, end is %s, name is %s" % (start, end, route)
     # return "The name of your route was %s" % route
-    return render_template('confirmation.html', route=route)
+    # return render_template('confirmation.html', route=route)
 
 
 

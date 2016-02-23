@@ -3,7 +3,7 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Static Directions</title>
+    <title>Basic Directions</title>
     <!-- Specify sizes in style, so that CSS works in both quirks and standard mode -->
     <style>
       html, body {
@@ -56,11 +56,11 @@
 
 <!-- Button to save route -->
 <!-- TODO: Hide lat long inputs -->
-  <form action="/new-route" method="get" >
+  <form action="/new-route" name="save-route-form" method="get" >
     <span>Name this route:</span>
       <input type="text" name="route" id="route-name">
-<!--       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
-      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}"> -->
+      <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
+      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
       <input type="submit" id="save-route-button" value="Save Route">
   </form> 
 
@@ -108,16 +108,18 @@ function showRouteResults(result){
 
 
 function saveRoute(evt){
+  alert("saveRoute called");
   evt.preventDefault();
+
   var formInputs = {
-    "route": $("#route-name").val()
-    // "start": $("#start-field").val(),
-    // "end": $("#end-field").val()
+    "route": $("#route-name").val(),
+    "start": $("#start-field").val(),
+    "end": $("#end-field").val()
   }; 
-  $.get("/new-route", formInputs, showRouteResults)
+  $.get("/new-route", formInputs, showRouteResults);
 }
 
-$("#save-route-button").on("submit", saveRoute);
+$("#save-route-form").on("submit", saveRoute);
 
 </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=updateMap"
