@@ -47,12 +47,17 @@ def add_route():
     """Add a running route to the database"""
 
     start = request.form.get("start")
-    # end = request.form.get("end")
+    end = request.form.get("end")
     route = request.form.get("route-name")
 
-    # print "start is %s, end is %s, name is %s" % (start, end, route)
-    return "The start of your route was %s" % start
+    # write to db
+    # new_route = Route(start=start, end=end, route_name=route)
+    # db.session.add(new_route)
+    # db.session.commit()
 
+
+    print "start is %s, end is %s, name is %s" % (start, end, route)
+    return "The start of your route was %s" % start
 
 
 if __name__ == "__main__":
