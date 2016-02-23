@@ -16,14 +16,14 @@ app.jinja_env.undefined = StrictUndefined
 
 @app.route('/', methods=['GET'])
 def index():
-    """Show form for creating route"""
+    """Show blank map and form for addresses"""
 
     return render_template("index.html")
 
 
-@app.route('/get-route')
+@app.route('/draw-route')
 def get_addresses():
-    """Create map with route & based on user entered start and end address text"""
+    """Draw route on map based on user entered text for start and end address"""
 
     # get user entered start addresses, and convert it to latlng
     start = request.args.get("start")

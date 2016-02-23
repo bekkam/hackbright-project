@@ -16,9 +16,8 @@
   </head>
   <body>
 
-
-<!-- form for start and end addresses -->
-  <form id="address-form" method="get" action="/get-route">
+  <!-- form for start and end addresses -->
+  <form id="address-form" method="get" action="/draw-route">
     <span>Start:</span>
       <input type="text" name="start" id="pointOne">
      <span>End:</span>
@@ -26,23 +25,25 @@
       <input type="submit" id="submit-button" value="Map my run!">
   </form>
 
-    <div id="map"></div>
+  <div id="map"></div>
 
-    <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="http://code.jquery.com/jquery.js"></script>
 
-    <script>
-    "use strict";
-    var map;
+  <script>
+  "use strict";
+  var map;
 
-    function initMap() {
-       alert("called initMap");
+  function initMap() {
+     alert("called initMap");
 
-       map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 14,
-        center: {lat: 37.7833, lng: -122.4167 }
-      });
-    }
-   </script>
+     map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 14,
+      center: {lat: 37.7833, lng: -122.4167 }
+    });
+  }
+
+
+ </script>
 
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
     async defer></script>

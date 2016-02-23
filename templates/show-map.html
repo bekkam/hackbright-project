@@ -73,8 +73,8 @@
   var directionsService;
   var map;
 
-function initMap() {
-   alert("called initMap");
+function updateMap() {
+   alert("called updateMap");
    directionsDisplay = new google.maps.DirectionsRenderer();
    directionsService = new google.maps.DirectionsService();
 
@@ -120,7 +120,7 @@ function saveRoute(evt){
 $("#save-form").on("submit", saveRoute);
 
 </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=updateMap"
         async defer></script>
 
 
