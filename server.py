@@ -5,6 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, jsonify
 from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
+from model import connect_to_db, db, Route
 
 app = Flask(__name__)
 
@@ -51,9 +52,9 @@ def add_route():
     route = request.args.get("route")
 
     # write to db
-    # new_route = Route(start=start, end=end, route_name=route)
-    # db.session.add(new_route)
-    # db.session.commit()
+    new_route = Route(route_name=route)
+    db.session.add(new_route)
+    db.session.commit()
 
 
 
@@ -65,6 +66,7 @@ def add_route():
 
 if __name__ == "__main__":
     app.debug = True
-    # connect_to_db(app)
+
+    connect_to_db(app)
     DebugToolbarExtension(app)
     app.run()
