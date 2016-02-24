@@ -52,7 +52,7 @@ def add_route():
     route = request.args.get("route")
 
     # write to db
-    new_route = Route(route_name=route)
+    new_route = Route(route_name=route, start_lat_long=start)
     db.session.add(new_route)
     db.session.commit()
 
