@@ -2,7 +2,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
 from model import connect_to_db, db, Route
@@ -56,8 +56,6 @@ def add_route():
     db.session.add(new_route)
     db.session.commit()
 
-
-
     return "start is %s, end is %s, name is %s" % (start, end, route)
     # return "The name of your route was %s" % route
     # return render_template('confirmation.html', route=route)
@@ -79,7 +77,6 @@ def route_detail(route_id):
     return render_template("route.html", route=route)
 
 
-# @app.route("/")
 
 
 if __name__ == "__main__":
