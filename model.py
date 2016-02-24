@@ -49,7 +49,7 @@ class Route(db.Model):
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Route route_id=%s route_name=%s>" % (self.route_id, self.route_name)
+        return "<Route route_id=%s, route_name=%s, route_start_lat_long=%s>" % (self.route_id, self.route_name, self.start_lat_long)
 
 
 class Run(db.Model):

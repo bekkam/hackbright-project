@@ -27,6 +27,14 @@
 
   <div id="map"></div>
 
+  <!-- form to search for a route -->
+  <form id="get-route-form" method="get" action="/get-saved-route">
+    <span>Enter name of route:</span>
+      <input type="text" name="search" id="search-term">
+      <input type="submit" id="submit-button" value="Get saved route">
+  </form>
+
+
   <script src="http://code.jquery.com/jquery.js"></script>
 
   <script>

@@ -63,6 +63,14 @@ def add_route():
     # return render_template('confirmation.html', route=route)
 
 
+@app.route("/routes")
+def user_list():
+    """Show list of routes."""
+
+    routes = Route.query.all()
+    return render_template("route_list.html", routes=routes)
+
+
 
 if __name__ == "__main__":
     app.debug = True
