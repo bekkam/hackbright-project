@@ -36,11 +36,11 @@ class Route(db.Model):
     route_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     # user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     route_name = db.Column(db.String(100))
-    # add_date = db.Column(db.DateTime)
+    add_date = db.Column(db.DateTime)
     start_lat_long = db.Column(db.String(80))
     end_lat_long = db.Column(db.String(80))
-    # route_distance = db.Column(db.Float)
-    # favorite = db.Column(db.Boolean)
+    route_distance = db.Column(db.Float)
+    favorite = db.Column(db.Boolean)
 
     # Define relationship to user: a user has many routes
     # user = db.relationship("User",
