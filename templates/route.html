@@ -70,7 +70,7 @@ function showSavedMap() {
 
    map2 = new google.maps.Map(document.getElementById('map2'), {
     zoom: 14,
-    center: {lat: 37.7833, lng: -122.4167 }
+    center: { {{ route.start_lat_long }} }
   });
 
 
@@ -97,30 +97,3 @@ function showSavedMap() {
 
 </body>
 </html>
-
-<!-- {% extends 'base.html' %} -->
-<!-- {% block content %}
-
-  <h1>{{ route.route_name }} ({{ route.route_id }})</h1>
-
-  <p>Start Latlng: {{ route.start_lat_long }}</p>
-  <p>End Latlng: {{ route.end_lat_long }}</p>
-  <p>yo yo</p> -->
-
-  <!-- {% endblock %} -->
-
-  <!-- <p>Zipcode: {{ user.zipcode }}</p> -->
-
-<!--   {% if route.runs %}
-
-    <h2>Runs</h2>
-    <ul>
-    {% for run in runs.routes %}
-      <li>
-        <a href="/movies/{{ rating.movie_id }}">{{ rating.movie.title }}</a>
-        was rated {{ rating.score }}
-      </li>
-    {% endfor %}
-    </ul>
-  {% endif %} -->
-
