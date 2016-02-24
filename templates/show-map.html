@@ -85,7 +85,6 @@ function updateMap() {
     center: {lat: {{ start_lat }}, lng: {{start_long}} }
   });
 
-
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById("right-panel"));
 
@@ -97,6 +96,7 @@ function updateMap() {
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);  
+        calculateTotalDistanceInKilometers(response);  
       } else {
         alert('Could not display directions due to: ' + status);
       }
@@ -122,6 +122,25 @@ function saveRoute(evt){
 }
 
 $("#save-route-form").on("submit", saveRoute);
+
+
+function calculateTotalDistanceInKilometers(response) {
+  alert("calculateTotalDistanceInKilometers function called");
+  // get route data needed for db: total distance:
+  var totalDistance = 0;
+  var currentRoute = response.routes[0];
+  // for every leg of route, get the leg's distance, and add it to totalDistance
+  for (var i = 0; i < currentRoute.legs.length; i++) {
+    totalDistance += currentRoute.legs[i].distance.value;
+  }
+  //because distance.value contains value expressed in meters, convert meters to kilometers
+  totalDistance = totalDistance/1000;
+  alert("total km is " + totalDistance);
+}
+
+
+
+
 
 </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=updateMap"
