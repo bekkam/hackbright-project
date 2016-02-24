@@ -64,7 +64,7 @@ def add_route():
 
 
 @app.route("/routes")
-def user_list():
+def route_list():
     """Show list of routes."""
 
     routes = Route.query.all()
@@ -72,11 +72,14 @@ def user_list():
 
 
 @app.route("/routes/<int:route_id>")
-def user_detail(route_id):
+def route_detail(route_id):
     """Show info about route."""
 
     route = Route.query.get(route_id)
     return render_template("route.html", route=route)
+
+
+# @app.route("/")
 
 
 if __name__ == "__main__":
