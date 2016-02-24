@@ -71,6 +71,13 @@ def user_list():
     return render_template("route_list.html", routes=routes)
 
 
+@app.route("/routes/<int:route_id>")
+def user_detail(route_id):
+    """Show info about route."""
+
+    route = Route.query.get(route_id)
+    return render_template("route.html", route=route)
+
 
 if __name__ == "__main__":
     app.debug = True
