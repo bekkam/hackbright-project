@@ -6,7 +6,7 @@
       {% for route in routes %}
           <li>
               <a href="/routes/{{ route.route_id }}">
-                {{ route.route_name }} ({{ route.route_id  }}) ({{route.start_lat_long}}) ({{ route.end_lat_long }})
+                {{ route.route_name }} ({{ route.route_id  }}) ({{route.start_lat_long}}) ({{ route.end_lat_long }}) ({{ route.route_distance }})
               </a>
           </li>
       {% endfor %}

@@ -50,15 +50,14 @@ def add_route():
     start = request.args.get("start")
     end = request.args.get("end")
     route = request.args.get("route")
+    distance = request.args.get("distance")
 
     # write to db
-    new_route = Route(route_name=route, start_lat_long=start, end_lat_long=end)
+    new_route = Route(route_name=route, start_lat_long=start, end_lat_long=end, route_distance=distance)
     db.session.add(new_route)
     db.session.commit()
 
-    return "start is %s, end is %s, name is %s" % (start, end, route)
-    # return "The name of your route was %s" % route
-    # return render_template('confirmation.html', route=route)
+    return "start is %s, end is %s, name is %s, distance is %s" % (start, end, route, distance)
 
 
 @app.route("/routes")
