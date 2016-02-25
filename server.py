@@ -77,12 +77,22 @@ def route_detail(route_id):
 
 
 @app.route("/runs")
-def movie_list():
+def run_list():
     """Show list of runs."""
 
     runs = Run.query.order_by('run_date').all()
     return render_template("run_list.html", runs=runs)
 
+
+@app.route("/get-saved-route")
+def route_detail_by_name():
+    """Show info about route."""
+
+    search = request.args.get("search")
+    return search
+    route = Route.query.filter_by(route_name=route_name).first()
+    return "route is %s" % (route)
+    # return redirect("routes/%s" % route.route_id)
 
 if __name__ == "__main__":
     app.debug = True
