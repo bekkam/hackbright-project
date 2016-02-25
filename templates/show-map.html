@@ -70,10 +70,9 @@
   <br><button type="button" id="add-run-form-button">I've run this route</button>
   <div id="add-run"> 
   <form action="/new-run" name="add-run-form" method="get" >
-    <span>Date of run:</span>
-      <input type="text" name="date" id="run-date">
+      <input type="text" name="date" id="run-date" placeholder="Date of run">
       <!-- data from route -->
-      <input type="text" name="route" id="route-name">
+      <input type="text" name="route" id="route-name" placeholder="Name of run">
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
       <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
       <input type="text" name="distance" id="total-distance-field" value="">
@@ -167,6 +166,8 @@ function showForm(evt) {
     $("#add-run").show();
 }
   $("#add-run-form-button").on("click", showForm);
+
+
 
 
 </script>
