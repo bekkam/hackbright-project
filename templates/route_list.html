@@ -2,6 +2,7 @@
 {% block content %}
 
     <h2>Routes</h2>
+    <p>Debugging</p>
     <ul>
       {% for route in routes %}
           <li>
@@ -12,4 +13,29 @@
       {% endfor %}
     </ul>
 
+    <p>Table of all routes</p>
+
+    <table border="1" style="width:60%">
+        <tr>
+        <th>Name</th>
+        <th>Distance</th>
+        <th>Favorite</th>
+        </tr>
+        {% for route in routes %}
+          <tr>
+              <td> <a href="/routes/{{ route.route_id }}">{{ route.route_name }}</td>
+              <td> {{ route.route_distance }}
+          </tr>
+        {% endfor %}
+    </table>
+
+
+
+
+
 {% endblock %}
+
+
+    </ul>
+
+          <!--           {{ route.route_name }} ({{ route.route_id  }}) ({{route.start_lat_long}}) ({{ route.end_lat_long }}) ({{ route.route_distance }}) -->
