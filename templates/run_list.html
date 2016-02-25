@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>Runs</h2>
+    <ul>
+      {% for run in runs %}
+          <li>
+              <a href="/runs/{{ run.run_id }}">
+                {{ run.run_date }}
+              </a>
+          </li>
+      {% endfor %}
+    </ul>
+
+{% endblock %}

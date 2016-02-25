@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, jsonify, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
-from model import connect_to_db, db, Route
+from model import connect_to_db, db, Route, Run
 
 app = Flask(__name__)
 
@@ -76,6 +76,12 @@ def route_detail(route_id):
     return render_template("route.html", route=route)
 
 
+@app.route("/runs")
+def movie_list():
+    """Show list of runs."""
+
+    runs = Run.query.order_by('run_date').all()
+    return render_template("run_list.html", runs=runs)
 
 
 if __name__ == "__main__":
