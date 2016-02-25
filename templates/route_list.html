@@ -7,7 +7,7 @@
       {% for route in routes %}
           <li>
               <a href="/routes/{{ route.route_id }}">
-                {{ route.route_name }} ({{ route.route_id  }}) ({{route.start_lat_long}}) ({{ route.end_lat_long }}) ({{ route.route_distance }})
+                ({{ route.route_id }}) ({{ route.route_name }}) ({{ route.add_date }}) ({{route.start_lat_long}}) ({{ route.end_lat_long }}) ({{ route.route_distance }}) ({{ route.favorite}})
               </a>
           </li>
       {% endfor %}
@@ -17,25 +17,21 @@
 
     <table border="1" style="width:60%">
         <tr>
-        <th>Name</th>
-        <th>Distance</th>
+        <th>ID</th>
+        <th>Route Name</th>
+        <th>Add Date</th>      
+        <th>Distance (km)</th>
         <th>Favorite</th>
         </tr>
         {% for route in routes %}
           <tr>
+              <td> ({{ route.route_id }})            
               <td> <a href="/routes/{{ route.route_id }}">{{ route.route_name }}</td>
+              <td> ({{ route.add_date }})            
               <td> {{ route.route_distance }}
+              <td> {{ route.favorite }}
           </tr>
         {% endfor %}
     </table>
 
-
-
-
-
 {% endblock %}
-
-
-    </ul>
-
-          <!--           {{ route.route_name }} ({{ route.route_id  }}) ({{route.start_lat_long}}) ({{ route.end_lat_long }}) ({{ route.route_distance }}) -->

@@ -50,35 +50,34 @@
 
 <!-- Create a div element named 'map' to hold Map -->
     <div id="map"></div>
-    <div id="right-panel">
-      <!-- <p>Total Distance: <span id="total"></span></p> -->
-    </div>
+    <div id="right-panel"></div>
+    
 
-<!-- Button to save route -->
+<!-- "Save this Route" displays a form if user clicks it -->
 <!-- TODO: Hide lat long inputs & distance-->
-  <form action="/new-route" name="save-route-form" method="get" >
-    <span>Name this route:</span>
-      <input type="text" name="route" id="route-name">
+  <div id="add-route"> 
+  <form action="/new-route" name="save-route-form" method="get">
+    Complete the following form if you have never run this route:<br>
+      <input type="text" name="route" id="route-name" placeholder="Route Name"><br>
+      <input type="text" name="date" id="date-field"><br>     
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
       <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
-      <input type="text" name="distance" id="total-distance-field" value="">
+      <input type="text" name="distance" id="total-distance-field" value=""><br>
+      <input type="checkbox" name="favorite" value="true"> Favorite?<br>
       <input type="submit" id="save-route-button" value="Save Route">
   </form> 
+  </div>
 
-<!-- Form to save a run -->
 
-  <br><button type="button" id="add-run-form-button">I've run this route</button>
+  <!-- <br><button type="button" id="add-run-form-button">I've run this route</button> -->
   <div id="add-run"> 
-  <form action="/new-run" name="add-run-form" method="get" >
-      <input type="text" name="date" id="run-date" placeholder="Date of run">
-      <!-- data from route -->
-      <input type="text" name="route" id="route-name" placeholder="Name of run">
-      <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
-      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
-      <input type="text" name="distance" id="total-distance-field" value="">
-      <input type="submit" id="add-run-form-submit" value="Save this run">
+  <form action="/new-run" name="add-run-form" method="get">
+    <br>If you've run this route, complete the following additional information as well:<br>
+      <input type="text" name="date" id="run-date" placeholder="Date of run"><br>
+      <input type="text" name="duration" id="run-duration" placeholder="Duration in minutes"><br>
+      <input type="submit" id="add-run-form-submit" value="Save route and run">
   </form> 
-</div>
+  </div>
 
     <script src="http://code.jquery.com/jquery.js"></script>
 
@@ -89,10 +88,6 @@
   var directionsService;
   var map;
   var totalDistance;
-
-
-    // hide the form to add a run, until user clicks to add run
-    $("#add-run").hide();
 
 
 function updateMap() {
@@ -124,14 +119,15 @@ function updateMap() {
 }
 
 
+// SAVE A ROUTE
 function showRouteResults(result){
   alert(result);
 }
 
-
 function saveRoute(evt){
   alert("saveRoute called");
   evt.preventDefault();
+
 
   var formInputs = {
     "route": $("#route-name").val(),
@@ -141,10 +137,10 @@ function saveRoute(evt){
   }; 
   $.get("/new-route", formInputs, showRouteResults);
 }
-
 $("#save-route-form").on("submit", saveRoute);
 
 
+//UTILITY METHOD TO CALC ROUTE DISTANCE IN KM
 function calculateTotalDistanceInKilometers(response) {
   alert("calculateTotalDistanceInKilometers function called");
   // get route data needed for db: total distance:
@@ -161,11 +157,49 @@ function calculateTotalDistanceInKilometers(response) {
   $("#total-distance-field").val(totalDistance);
 }
 
-  //when user clicks to add a run, show the form
-function showForm(evt) {
-    $("#add-run").show();
-}
-  $("#add-run-form-button").on("click", showForm);
+// //SAVE A RUN
+//   //when user clicks to add a run, show the form
+// function showForm(evt) {
+//     $("#add-run").show();
+// }
+//   $("#add-run-form-button").on("click", showForm);
+
+
+// //TODO: STOPPED HERE - UNFINISHED
+// //When user clicks to save a run
+// function showRunResults(result){
+//   alert(result);
+// }
+// function saveRun(evt) {
+//     alert("saveRun called");
+//     evt.preventDefault();
+
+//     var formInputs = {
+//       "route": $("#route-name").val(),
+//       "start": $("#start-field").val(),
+//       "end": $("#end-field").val(),
+//       "distance":$("#total-distance-field").val()
+//     }; 
+
+//     $.get("/new-run", formInputs, showRunResults);
+//   }
+
+
+// $("#add-run-form-submit").on("submit", saveRun); 
+
+
+
+
+// When user clicks "Save this Route" button, show form to process a new route.  
+// If user indicates they have run the route, show second form, to process a new run 
+//(in addition to the new route)
+
+  //when user clicks "Save this Route", show the form to process a new route:
+// function showRouteForm(evt) {
+//     $("#add-route").show();
+// }
+//   $("#show-route-form-btn").on("click", showRouteForm);
+
 
 
 

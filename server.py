@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, jsonify, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
 from model import connect_to_db, db, Route, Run
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -49,15 +50,17 @@ def add_route():
 
     start = request.args.get("start")
     end = request.args.get("end")
+    date = datetime.now()
     route = request.args.get("route")
     distance = request.args.get("distance")
+    favorite = request.args.get("favorite")
 
     # write to db
-    new_route = Route(route_name=route, start_lat_long=start, end_lat_long=end, route_distance=distance)
+    new_route = Route(route_name=route, add_date=date, start_lat_long=start, end_lat_long=end, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
 
-    return "start is %s, end is %s, name is %s, distance is %s" % (start, end, route, distance)
+    return "start is %s, end is %s, name is %s, distance is %s, favorite is %s" % (start, end, route, distance, favorite)
 
 
 @app.route("/routes")
@@ -76,6 +79,15 @@ def route_detail(route_id):
     return render_template("route.html", route=route)
 
 
+@app.route("/get-saved-route")
+def search_route_detail_by_name():
+    """Show info about route."""
+
+    search = request.args.get("search")
+    route = Route.query.filter_by(route_name=search).first()
+    return redirect("routes/%s" % route.route_id)
+
+
 @app.route("/runs")
 def run_list():
     """Show list of runs."""
@@ -84,13 +96,21 @@ def run_list():
     return render_template("run_list.html", runs=runs)
 
 
-@app.route("/get-saved-route")
-def search_route_detail_by_name():
-    """Show info about route."""
+# @app.route('/new-run')
+# def add_run():
+#     """Add a run to the database"""
 
-    search = request.args.get("search")
-    route = Route.query.filter_by(route_name=search).first()
-    return redirect("routes/%s" % route.route_id)
+#     # TO DO: Add code to add run to db
+#     date = request.args.get("date")
+#     duration = request.args.get("duration")
+
+#     # write to db
+#     new_run = Run(run_date=date, run_duration=duration)
+#     db.session.add(new_run)
+#     db.session.commit()
+
+#     return "date is %s, duration is %s" % (date, duration)
+
 
 if __name__ == "__main__":
     app.debug = True

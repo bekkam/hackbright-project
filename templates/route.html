@@ -47,14 +47,18 @@
     </style>
   </head>
   <body>
-
-  <p>Route Name: {{ route.route_name }}</p>
-  <p>Total Distance (km): {{ route.route_distance }}</p>
+   <p>Current Route</p>
+   <table border="1" style="width:60%">
+      <tr>
+          <td> ID: {{ route.route_id }}            
+          <td> Route Name: {{ route.route_name }}
+          <td> Add Date: {{ route.add_date }}            
+          <td> Distance (km): {{ route.route_distance }}
+          <td> Favorite: {{ route.favorite }}
+      </tr>
+    </table>
   <div id="map2"></div>
-   <div id="right-panel">
-      <!-- <p>Total Distance: <span id="total"></span></p> -->
-  </div>
-  <!-- <p>Start: {{ route.start_lat_long }}</p> -->
+  <div id="right-panel"></div>
 
     <script src="http://code.jquery.com/jquery.js"></script>
 
@@ -92,13 +96,11 @@ function showSavedMap() {
     });
 }
 
-
-
 </script>
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
     async defer></script>
 
-<p>Placeholder for table of user's runs for this route</p>
+<div>RunHistory for {{ route.route_name }}:</div>
 <table border="1" style="width:60%">
     <tr>
     <th>Date</th>
