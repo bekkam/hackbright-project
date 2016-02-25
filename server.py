@@ -89,10 +89,8 @@ def search_route_detail_by_name():
     """Show info about route."""
 
     search = request.args.get("search")
-    # return search
     route = Route.query.filter_by(route_name=search).first()
-    return "route id is %s" % (route.route_id)
-    # return redirect("routes/%s" % route.route_id)
+    return redirect("routes/%s" % route.route_id)
 
 if __name__ == "__main__":
     app.debug = True
