@@ -55,8 +55,7 @@
     </div>
 
 <!-- Button to save route -->
-
-<!-- TODO: Hide lat long inputs -->
+<!-- TODO: Hide lat long inputs & distance-->
   <form action="/new-route" name="save-route-form" method="get" >
     <span>Name this route:</span>
       <input type="text" name="route" id="route-name">
@@ -66,8 +65,24 @@
       <input type="submit" id="save-route-button" value="Save Route">
   </form> 
 
+<!-- Form to save a run -->
+
+  <br><button type="button" id="add-run-form-button">I've run this route</button>
+  <div id="add-run"> 
+  <form action="/new-run" name="add-run-form" method="get" >
+    <span>Date of run:</span>
+      <input type="text" name="date" id="run-date">
+      <!-- data from route -->
+      <input type="text" name="route" id="route-name">
+      <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
+      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
+      <input type="text" name="distance" id="total-distance-field" value="">
+      <input type="submit" id="add-run-form-submit" value="Save this run">
+  </form> 
+</div>
 
     <script src="http://code.jquery.com/jquery.js"></script>
+
 
     <script>
     "use strict";
@@ -75,6 +90,11 @@
   var directionsService;
   var map;
   var totalDistance;
+
+
+    // hide the form to add a run, until user clicks to add run
+    $("#add-run").hide();
+
 
 function updateMap() {
    alert("called updateMap");
@@ -143,7 +163,11 @@ function calculateTotalDistanceInKilometers(response) {
 }
 
 
-
+function showForm(evt) {
+    $("#add-run").show();
+}
+  //when user clicks to add a run, show the form
+  $("#add-run-form-button").on("click", showForm);
 
 
 </script>
