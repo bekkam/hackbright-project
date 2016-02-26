@@ -115,6 +115,18 @@ def add_run():
     return "d is %s, duration is %s" % (d, duration)
 
 
+# USER PROFILE
+@app.route("/profile")
+def show_profile():
+    """Show the current user's profile page."""
+
+    # TODO: Add user, routes and runs, and pass to template
+    # runs = Run.query.order_by('run_date').all()
+    return render_template("profile.html")
+
+
+
+
 if __name__ == "__main__":
     app.debug = True
 
