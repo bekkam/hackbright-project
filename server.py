@@ -102,7 +102,7 @@ def add_run():
 
     # TO DO: Add code to add run to db
     date = request.args.get("date")
-    d = datetime.strptime(date, "%d-%b-%Y")
+    d = datetime.strptime(date, "%m/%d/%Y")
 
     duration = request.args.get("duration")
     duration = int(duration)

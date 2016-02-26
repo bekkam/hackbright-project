@@ -73,6 +73,7 @@
   <form action="/new-run" name="save-run-form" method="get">
     <br>If you've run this route, complete the following additional information as well:<br>
       <input type="text" name="date" id="run-date-field" placeholder="Date of run: MM/DD/YYYY"><br>
+
       <input type="text" name="duration" id="run-duration-field" placeholder="Duration in minutes"><br>
       <input type="submit" id="add-run-form-submit" value="Save route and run">
   </form> 
@@ -156,24 +157,21 @@ function calculateTotalDistanceInKilometers(response) {
   $("#total-distance-field").val(totalDistance);
 }
 
-// UTILITY METHOD TO PROVIDE DATE FUNCTIONALITY
-
-
 // //SAVE A RUN
-function showRunResults(result){
-  alert(result);
-}
+// function showRunResults(result){
+//   alert(result);
+// }
 
-function saveRun(evt){
-  alert("saveRun called");
-  evt.preventDefault();
+// function saveRun(evt){
+//   alert("saveRun called");
+//   evt.preventDefault();
 
-  // var formInputs = {
-  //   "date": $("#run-date-field").val(),
-  //   "duration": $("#run-duration-field").val()
-  // }; 
-  // $.get("/new-run", formInputs, showRunResults);
-}
+//   // var formInputs = {
+//   //   "date": $("#run-date-field").val(),
+//   //   "duration": $("#run-duration-field").val()
+//   // }; 
+//   // $.get("/new-run", formInputs, showRunResults);
+// }
 $("#save-run-form").on("submit", saveRun);
 
 
