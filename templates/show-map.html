@@ -158,6 +158,20 @@ function calculateTotalDistanceInKilometers(response) {
 }
 
 // //SAVE A RUN
+function showRunResults(result){
+  alert(result);
+}
+
+function saveRun(evt){
+  alert("saveRun called");
+  evt.preventDefault();
+
+  var formInputs = {
+    "date": $("#run-date-field").val(),
+    "duration": $("#run-duration-field").val()
+  }; 
+  $.get("/new-run", formInputs, showRunResults);
+}
 $("#save-run-form").on("submit", saveRun);
 
 
@@ -168,6 +182,10 @@ $("#save-run-form").on("submit", saveRun);
 //     $("#add-run").show();
 // }
 //   $("#add-run-form-button").on("click", showForm);
+
+
+
+
 
 
 // When user clicks "Save this Route" button, show form to process a new route.  
