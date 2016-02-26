@@ -59,8 +59,8 @@ class Run(db.Model):
 
     run_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     # route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
-    run_date = db.Column(db.DateTime)
-    # duration = db.Column(db.DateTime)
+    run_date = db.Column(db.Date)
+    duration = db.Column(db.Integer)
 
     # Define relationship to route: a route has many runs
     # route = db.relationship("Route",

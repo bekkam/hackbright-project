@@ -59,7 +59,6 @@
   <form action="/new-route" name="save-route-form" method="get">
     Complete the following form if you have never run this route:<br>
       <input type="text" name="route" id="route-name" placeholder="Route Name"><br>
-      <input type="text" name="date" id="date-field"><br>     
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
       <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
       <input type="text" name="distance" id="total-distance-field" value=""><br>
@@ -71,10 +70,10 @@
 
   <!-- <br><button type="button" id="add-run-form-button">I've run this route</button> -->
   <div id="add-run"> 
-  <form action="/new-run" name="add-run-form" method="get">
+  <form action="/new-run" name="save-run-form" method="get">
     <br>If you've run this route, complete the following additional information as well:<br>
-      <input type="text" name="date" id="run-date" placeholder="Date of run"><br>
-      <input type="text" name="duration" id="run-duration" placeholder="Duration in minutes"><br>
+      <input type="text" name="date" id="run-date-field" placeholder="Date of run: MM/DD/YYYY"><br>
+      <input type="text" name="duration" id="run-duration-field" placeholder="Duration in minutes"><br>
       <input type="submit" id="add-run-form-submit" value="Save route and run">
   </form> 
   </div>
@@ -157,7 +156,29 @@ function calculateTotalDistanceInKilometers(response) {
   $("#total-distance-field").val(totalDistance);
 }
 
+// UTILITY METHOD TO PROVIDE DATE FUNCTIONALITY
+
+
 // //SAVE A RUN
+function showRunResults(result){
+  alert(result);
+}
+
+function saveRun(evt){
+  alert("saveRun called");
+  evt.preventDefault();
+
+  // var formInputs = {
+  //   "date": $("#run-date-field").val(),
+  //   "duration": $("#run-duration-field").val()
+  // }; 
+  // $.get("/new-run", formInputs, showRunResults);
+}
+$("#save-run-form").on("submit", saveRun);
+
+
+
+
 //   //when user clicks to add a run, show the form
 // function showForm(evt) {
 //     $("#add-run").show();

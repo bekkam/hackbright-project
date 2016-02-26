@@ -96,20 +96,23 @@ def run_list():
     return render_template("run_list.html", runs=runs)
 
 
-# @app.route('/new-run')
-# def add_run():
-#     """Add a run to the database"""
+@app.route('/new-run')
+def add_run():
+    """Add a run to the database"""
 
-#     # TO DO: Add code to add run to db
-#     date = request.args.get("date")
-#     duration = request.args.get("duration")
+    # TO DO: Add code to add run to db
+    date = request.args.get("date")
+    d = datetime.strptime(date, "%d-%b-%Y")
 
-#     # write to db
-#     new_run = Run(run_date=date, run_duration=duration)
-#     db.session.add(new_run)
-#     db.session.commit()
+    duration = request.args.get("duration")
+    duration = int(duration)
 
-#     return "date is %s, duration is %s" % (date, duration)
+    # write to db
+    new_run = Run(run_date=date, duration=duration)
+    db.session.add(new_run)
+    db.session.commit()
+
+    return "d is %s, duration is %s" % (d, duration)
 
 
 if __name__ == "__main__":
