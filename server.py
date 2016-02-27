@@ -30,6 +30,7 @@ def get_addresses():
     # get user entered start addresses, and convert it to latlng
     start = request.args.get("start")
     end = request.args.get("end")
+    print "start is ", start
 
     start_lat = geocoder.google(start).latlng[0]
     start_long = geocoder.google(start).latlng[1]
@@ -37,13 +38,14 @@ def get_addresses():
     end_lat = geocoder.google(end).latlng[0]
     end_long = geocoder.google(end).latlng[1]
 
+    print "start_lat is ", start_lat
     return render_template("show-map.html",
-                            start_lat=start_lat,
-                            start_long=start_long,
-                            end_lat=end_lat,
-                            end_long=end_long)
+                           start_lat=start_lat,
+                           start_long=start_long,
+                           end_lat=end_lat,
+                           end_long=end_long)
 
-
+# ROUTES
 @app.route('/new-route')
 def add_route():
     """Add a running route to the database"""
@@ -88,6 +90,7 @@ def search_route_detail_by_name():
     return redirect("routes/%s" % route.route_id)
 
 
+#  RUNS
 @app.route("/runs")
 def run_list():
     """Show list of runs."""
@@ -100,14 +103,12 @@ def run_list():
 def add_run():
     """Add a run to the database"""
 
-    # TO DO: Add code to add run to db
     date = request.args.get("date")
     d = datetime.strptime(date, "%m/%d/%Y")
 
     duration = request.args.get("duration")
     duration = int(duration)
 
-    # write to db
     new_run = Run(run_date=date, duration=duration)
     db.session.add(new_run)
     db.session.commit()

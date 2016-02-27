@@ -118,28 +118,6 @@ function updateMap() {
     });
 }
 
-
-// SAVE A ROUTE
-function showRouteResults(result){
-  alert(result);
-}
-
-function saveRoute(evt){
-  alert("saveRoute called");
-  evt.preventDefault();
-
-
-  var formInputs = {
-    "route": $("#route-name").val(),
-    "start": $("#start-field").val(),
-    "end": $("#end-field").val(),
-    "distance":$("#total-distance-field").val()
-  }; 
-  $.get("/new-route", formInputs, showRouteResults);
-}
-$("#save-route-form").on("submit", saveRoute);
-
-
 //UTILITY METHOD TO CALC ROUTE DISTANCE IN KM
 function calculateTotalDistanceInKilometers(response) {
   alert("calculateTotalDistanceInKilometers function called");
@@ -156,6 +134,28 @@ function calculateTotalDistanceInKilometers(response) {
   //set the value of the total-distance field in the save-route form
   $("#total-distance-field").val(totalDistance);
 }
+
+// SAVE A ROUTE
+function showRouteResults(result){
+  alert(result);
+}
+
+function saveRoute(evt){
+  console.log("saveRoute called");
+  evt.preventDefault();
+
+  var formInputs = {
+    "route": $("#route-name").val(),
+    "start": $("#start-field").val(),
+    "end": $("#end-field").val(),
+    "distance":$("#total-distance-field").val()
+  }; 
+  $.get("/new-route", formInputs, showRouteResults);
+}
+$("#save-route-form").on("submit", saveRoute);
+
+
+
 
 // //SAVE A RUN
 function showRunResults(result){
