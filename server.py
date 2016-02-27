@@ -105,17 +105,17 @@ def run_list():
 def add_run():
     """Add a run to the database"""
 
-    # date = request.form.get("date")
-    # d = datetime.strptime(date, "%m/%d/%Y")
+    date = request.form.get("date")
+    d = datetime.strptime(date, "%m/%d/%Y")
 
-    # duration = request.form.get("duration")
-    # duration = int(duration)
+    duration = request.form.get("duration")
+    duration = int(duration)
 
-    # new_run = Run(run_date=date, duration=duration)
-    # db.session.add(new_run)
-    # db.session.commit()
+    new_run = Run(run_date=date, duration=duration)
+    db.session.add(new_run)
+    db.session.commit()
 
-    # return "d is %s, duration is %s" % (d, duration)
+    print "d is %s, duration is %s" % (d, duration)
     return "your run was saved"
 
 
