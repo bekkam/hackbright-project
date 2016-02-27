@@ -4,6 +4,8 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Basic Directions</title>
+    <script src="http://code.jquery.com/jquery.js"></script>
+
     <!-- Specify sizes in style, so that CSS works in both quirks and standard mode -->
     <style>
       html, body {
@@ -56,7 +58,7 @@
 <!-- "Save this Route" displays a form if user clicks it -->
 <!-- TODO: Hide lat long inputs & distance-->
   <div id="add-route"> 
-  <form action="/new-route" name="save-route-form" method="get">
+  <form  id="save-route-form" method="post" action="/new-route">
     Complete the following form if you have never run this route:<br>
       <input type="text" name="route" id="route-name" placeholder="Route Name"><br>
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
@@ -79,7 +81,6 @@
   </form> 
   </div>
 
-    <script src="http://code.jquery.com/jquery.js"></script>
 
 
     <script>
@@ -141,7 +142,7 @@ function showRouteResults(result){
 }
 
 function saveRoute(evt){
-  console.log("saveRoute called");
+  // console.log("saveRoute called");
   evt.preventDefault();
 
   var formInputs = {
@@ -150,7 +151,7 @@ function saveRoute(evt){
     "end": $("#end-field").val(),
     "distance":$("#total-distance-field").val()
   }; 
-  $.get("/new-route", formInputs, showRouteResults);
+  $.post("/new-route", formInputs, showRouteResults);
 }
 $("#save-route-form").on("submit", saveRoute);
 
