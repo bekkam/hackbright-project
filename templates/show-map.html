@@ -58,7 +58,7 @@
 <!-- "Save this Route" displays a form if user clicks it -->
 <!-- TODO: Hide lat long inputs & distance-->
   <div id="add-route"> 
-  <form  id="save-route-form" method="post" action="/new-route">
+  <form id="save-route-form" method="post" action="/new-route">
     Complete the following form if you have never run this route:<br>
       <input type="text" name="route" id="route-name" placeholder="Route Name"><br>
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
@@ -72,10 +72,9 @@
 
   <!-- <br><button type="button" id="add-run-form-button">I've run this route</button> -->
   <div id="add-run"> 
-  <form action="/new-run" name="save-run-form" method="get">
+  <form id="save-run-form" method="post" action="/new-run"  >
     <br>If you've run this route, complete the following additional information as well:<br>
       <input type="text" name="date" id="run-date-field" placeholder="Date of run: MM/DD/YYYY"><br>
-
       <input type="text" name="duration" id="run-duration-field" placeholder="Duration in minutes"><br>
       <input type="submit" id="add-run-form-submit" value="Save route and run">
   </form> 
@@ -142,7 +141,6 @@ function showRouteResults(result){
 }
 
 function saveRoute(evt){
-  // console.log("saveRoute called");
   evt.preventDefault();
 
   var formInputs = {
@@ -171,7 +169,7 @@ function saveRun(evt){
     "date": $("#run-date-field").val(),
     "duration": $("#run-duration-field").val()
   }; 
-  $.get("/new-run", formInputs, showRunResults);
+  $.post("/new-run", formInputs, showRunResults);
 }
 $("#save-run-form").on("submit", saveRun);
 

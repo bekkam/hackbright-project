@@ -64,7 +64,7 @@ def add_route():
     db.session.commit()
 
     # print "start is %s, end is %s, name is %s, distance is %s, favorite is %s" % (start, end, route, distance, favorite)
-    return "Roue %s has been saved to your routes" % route
+    return "Route %s has been saved to your routes" % route
 
 
 @app.route("/routes")
@@ -101,21 +101,22 @@ def run_list():
     return render_template("run_list.html", runs=runs)
 
 
-@app.route('/new-run')
+@app.route('/new-run', methods=['POST'])
 def add_run():
     """Add a run to the database"""
 
-    date = request.args.get("date")
-    d = datetime.strptime(date, "%m/%d/%Y")
+    # date = request.form.get("date")
+    # d = datetime.strptime(date, "%m/%d/%Y")
 
-    duration = request.args.get("duration")
-    duration = int(duration)
+    # duration = request.form.get("duration")
+    # duration = int(duration)
 
-    new_run = Run(run_date=date, duration=duration)
-    db.session.add(new_run)
-    db.session.commit()
+    # new_run = Run(run_date=date, duration=duration)
+    # db.session.add(new_run)
+    # db.session.commit()
 
-    return "d is %s, duration is %s" % (d, duration)
+    # return "d is %s, duration is %s" % (d, duration)
+    return "your run was saved"
 
 
 # USER PROFILE
