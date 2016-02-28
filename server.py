@@ -44,6 +44,8 @@ def get_addresses():
                            start_long=start_long,
                            end_lat=end_lat,
                            end_long=end_long)
+    # return jsonify({"start_latitude": start_lat, "start_longitude": start_long,
+    #             "end_latitude": end_lat, "end_longitude": end_long})
 
 
 # ROUTES
@@ -102,20 +104,32 @@ def run_list():
 
 
 @app.route('/new-run', methods=['POST'])
-def add_run():
+def add_route_and_run():
     """Add a run to the database"""
 
-    date = request.form.get("date")
-    d = datetime.strptime(date, "%m/%d/%Y")
+    start = request.form.get("start")
+    end = request.form.get("end")
+    date = datetime.now()
+    route = request.form.get("route")
+    distance = request.form.get("distance")
+    favorite = request.form.get("favorite")
+
+    print "route name is %s" % route
+    new_route = Route(route_name=route, add_date=date, start_lat_long=start, end_lat_long=end, route_distance=distance, favorite=favorite)
+    db.session.add(new_route)
+    db.session.commit()
+
+    run_date = request.form.get("date")
+    d = datetime.strptime(run_date, "%m/%d/%Y")
 
     duration = request.form.get("duration")
     duration = int(duration)
 
-    new_run = Run(run_date=date, duration=duration)
+    new_run = Run(run_date=d, route_id=new_route.route_id, duration=duration)
     db.session.add(new_run)
     db.session.commit()
 
-    print "d is %s, duration is %s" % (d, duration)
+    # print "d is %s, duration is %s" % (d, duration)
     return "your run was saved"
 
 
@@ -127,8 +141,6 @@ def show_profile():
     # TODO: Add user, routes and runs, and pass to template
     # runs = Run.query.order_by('run_date').all()
     return render_template("profile.html")
-
-
 
 
 if __name__ == "__main__":

@@ -4,7 +4,6 @@
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>Basic Directions</title>
-    <script src="http://code.jquery.com/jquery.js"></script>
 
     <!-- Specify sizes in style, so that CSS works in both quirks and standard mode -->
     <style>
@@ -58,31 +57,39 @@
 <!-- "Save this Route" displays a form if user clicks it -->
 <!-- TODO: Hide lat long inputs & distance-->
   <div id="add-route"> 
+  <button type="button">Save this Route</button>
+  <span>Form fields that will become visible if user saves the route: </span>
   <form id="save-route-form" method="post" action="/new-route">
-    Complete the following form if you have never run this route:<br>
       <input type="text" name="route" id="route-name" placeholder="Route Name"><br>
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
       <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
-      <input type="text" name="distance" id="total-distance-field" value=""><br>
+      <input type="text" name="distance" id="total-distance-field1" value=""><br>
       <input type="checkbox" name="favorite" value="true"> Favorite?<br>
-      <input type="submit" id="save-route-button" value="Save Route">
+      <input type="submit" id="save-route-button" value="Submit Route">
   </form> 
   </div>
+  <br>
+  <br>
+  <br>
 
-
-  <!-- <br><button type="button" id="add-run-form-button">I've run this route</button> -->
-  <div id="add-run"> 
+  <div id="add-run">
+  <button type="button">I've Run this Route</button>
+  <span>Form fields that will become visible if user ran the route: </span>
   <form id="save-run-form" method="post" action="/new-run"  >
-    <br>If you've run this route, complete the following additional information as well:<br>
+      <input type="text" name="route" id="route-name2" placeholder="Route Name"><br>
+      <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
+      <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
+      <input type="text" name="distance" id="total-distance-field2" value=""><br>
+      <input type="checkbox" name="favorite" value="true"> Favorite?<br>
       <input type="text" name="date" id="run-date-field" placeholder="Date of run: MM/DD/YYYY"><br>
       <input type="text" name="duration" id="run-duration-field" placeholder="Duration in minutes"><br>
-      <input type="submit" id="add-run-form-submit" value="Save route and run">
+      <input type="submit" id="add-run-form-submit" value="Submit Route and Run">
   </form> 
   </div>
+  
+  <script src="http://code.jquery.com/jquery.js"></script>
 
-
-
-    <script>
+<script>
     "use strict";
   var directionsDisplay;
   var directionsService;
@@ -131,8 +138,12 @@ function calculateTotalDistanceInKilometers(response) {
   //because distance.value contains value expressed in meters, convert meters to kilometers
   totalDistance = totalDistance/1000;
   alert("total km is " + totalDistance);
-  //set the value of the total-distance field in the save-route form
-  $("#total-distance-field").val(totalDistance);
+  //set the value of the total-distance field in the form
+
+  // Hacking for now; can css later
+  $("#total-distance-field1").val(totalDistance);
+  $("#total-distance-field2").val(totalDistance);
+
 }
 
 // SAVE A ROUTE
@@ -147,7 +158,7 @@ function saveRoute(evt){
     "route": $("#route-name").val(),
     "start": $("#start-field").val(),
     "end": $("#end-field").val(),
-    "distance":$("#total-distance-field").val()
+    "distance":$("#total-distance-field1").val()
   }; 
   $.post("/new-route", formInputs, showRouteResults);
 }
@@ -165,45 +176,24 @@ function saveRun(evt){
   evt.preventDefault();
 
   var formInputs = {
+    "route": $("#route-name2").val(),
+    "start": $("#start-field").val(),
+    "end": $("#end-field").val(),
+    "distance":$("#total-distance-field2").val(),
     "date": $("#run-date-field").val(),
     "duration": $("#run-duration-field").val()
   }; 
   $.post("/new-run", formInputs, showRunResults);
-
 }
+
 $("#save-run-form").on("submit", saveRun);
 
 
 
-//   //when user clicks to add a run, show the form
-// function showForm(evt) {
-//     $("#add-run").show();
-// }
-//   $("#add-run-form-button").on("click", showForm);
 
-
-
-
-
-
-// When user clicks "Save this Route" button, show form to process a new route.  
-// If user indicates they have run the route, show second form, to process a new run 
-//(in addition to the new route)
-
-  //when user clicks "Save this Route", show the form to process a new route:
-// function showRouteForm(evt) {
-//     $("#add-route").show();
-// }
-//   $("#show-route-form-btn").on("click", showRouteForm);
-
-
-
-
-
+ 
 </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=updateMap"
-        async defer></script>
-
-
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=updateMap"
+    async defer></script>
   </body>
 </html>

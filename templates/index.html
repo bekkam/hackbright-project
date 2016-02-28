@@ -10,15 +10,44 @@
         padding: 0;
       }
       #map {
-        height: 60%;
+        height: 100%;
+        float: left;
+        width: 63%;
+        height: 55%;
+      }
+      #right-panel {
+        float: right;
+        width: 34%;
+        height: 100%;
+      }
+      #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #right-panel select, #right-panel input {
+        font-size: 15px;
+      }
+
+      #right-panel select {
+        width: 100%;
+      }
+
+      #right-panel i {
+        font-size: 12px;
+      }
+      .panel {
+        height: 100%;
+        overflow: auto;
       }
     </style>
-          <script src="http://code.jquery.com/jquery.js"></script>
-
+   <script src="http://code.jquery.com/jquery.js"></script>
+  <script src="static/js/map.js"></script>
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
     async defer></script>
 
-  <script src="static/js/map.js"></script>
+
 
   </head>
   <body>
@@ -44,14 +73,18 @@
   </form>
 
   <div id="map"></div>
+  <div id="right-panel"></div>
 
   <!-- form to search for a route -->
+  <div id="search-route-form-div">
   <form id="get-route-form" method="get" action="/get-saved-route">
-    <br>Get a saved route<br>
+    <span>Get a saved route</span>
+    <br>
     <span>Enter name of route:</span>
       <input type="text" name="search" id="search-term">
       <input type="submit" id="submit-button" value="Get saved route">
   </form>
+  </div>
 
   </body>
 </html>
