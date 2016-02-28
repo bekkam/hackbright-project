@@ -64,12 +64,12 @@ class Run(db.Model):
 
     # Define relationship to route: a route has many runs
     route = db.relationship("Route",
-                            backref=db.backref("runs", order_by=run_date))
+                            backref=db.backref("runs", order_by=run_id))
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Run_id=%s run_date=%s>" % (self.run_id, self.run_date)
+        return "<Run_id=%s Route_id=%s run_date=%s>" % (self.run_id, self.route_id, self.run_date)
 
 
 ##############################################################################
