@@ -106,22 +106,25 @@ function showSavedMap() {
 
 
 
-  {% if route.runs %}
+{% if route.runs %}
 
 <div>RunHistory for {{ route.route_name }}:</div>
-<ul>
-  {% for run in route.runs %}
-      <li>Distance: {{ route.route_distance }}</li>
-      <li>Run Date: {{ run.run_date }}</li>
-      <li>Run Duration: {{ run.duration }}</li>
-  {% endfor %}
-</ul>
+
 <table border="1" style="width:60%">
     <tr>
-    <th>Date</th>
-    <th>Distance</th>
-    <th>Time</th>
+        <th>Run Date</th>
+        <th>Distance (km)</th>
+        <th>Run Duration</th>
     </tr>
+
+  {% for run in route.runs %}
+    <tr>
+      <td>Run Date: {{ run.run_date }}</td>
+      <td>Distance: {{ route.route_distance }}</td>
+      <td>Run Duration: {{ run.duration }}</td>
+    </tr>
+  {% endfor %}
+
 </table>
  {% endif %}
 </body>
