@@ -2,17 +2,6 @@
 {% block content %}
 
     <h2>Routes</h2>
-    <p>Debugging</p>
-    <ul>
-      {% for route in routes %}
-          <li>
-              <a href="/routes/{{ route.route_id }}">
-                ({{ route.route_id }}) ({{ route.route_name }}) ({{ route.add_date }}) ({{route.start_lat_long}}) ({{ route.end_lat_long }}) ({{ route.route_distance }}) ({{ route.favorite}})
-              </a>
-          </li>
-      {% endfor %}
-    </ul>
-
     <p>Table of all routes</p>
 
     <table border="1" style="width:60%">
