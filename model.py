@@ -63,8 +63,8 @@ class Run(db.Model):
     duration = db.Column(db.Integer)
 
     # Define relationship to route: a route has many runs
-    # route = db.relationship("Route",
-    #                         backref=db.backref("runs"))
+    route = db.relationship("Route",
+                            backref=db.backref("runs", order_by=run_date))
 
     def __repr__(self):
         """Provide helpful representation when printed."""

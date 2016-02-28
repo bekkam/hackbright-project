@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Basic Directions</title>
+    <!-- Specify sizes in style, so that CSS works in both quirks and standard mode -->
+    <style>
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #map2 {
+        height: 100%;
+        float: left;
+        width: 63%;
+        height: 55%;
+      }
+      #right-panel {
+        float: right;
+        width: 34%;
+        height: 100%;
+      }
+      #right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #right-panel select, #right-panel input {
+        font-size: 15px;
+      }
+
+      #right-panel select {
+        width: 100%;
+      }
+
+      #right-panel i {
+        font-size: 12px;
+      }
+      .panel {
+        height: 100%;
+        overflow: auto;
+      }
+    </style>
+  </head>
+  <body>
+
+<div>Current run: {{ run.run_id }}</div>
+<table border="1" style="width:60%">
+    <tr>
+    <td>Date of Run:</td>
+    <th>Distance</th>
+    <th>Duration</th>
+    </tr>
+    <tr>
+    <td>{{ run.run_date }}</td>
+    <td>Distance</td>
+    <td>{{ run.duration }}</td>
+    </tr>
+</table>
+</body>
+</html>

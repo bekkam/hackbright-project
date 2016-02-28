@@ -6,10 +6,25 @@
       {% for run in runs %}
           <li>
               <a href="/runs/{{ run.run_id }}">
-                {{ run.run_date }}
-              </a>
+                ({{ run.run_id }}) ({{ run.run_date }}) ({{ run.duration }})              </a>
           </li>
       {% endfor %}
     </ul>
 
+   <p>Table of all runs</p>
+
+    <table border="1" style="width:60%">
+        <tr>
+        <th>ID</th>
+        <th>Run Date</th>      
+        <th>Duration (km)</th>
+        </tr>
+        {% for run in runs %}
+          <tr>
+              <td> <a href="/runs/{{ run.run_id }}">({{ run.run_id }}) </td>
+              <td> ({{ run.run_date }})            
+              <td> {{ run.duration }}
+          </tr>
+        {% endfor %}
+    </table>
 {% endblock %}

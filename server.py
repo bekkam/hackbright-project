@@ -103,6 +103,15 @@ def run_list():
     return render_template("run_list.html", runs=runs)
 
 
+@app.route("/runs/<int:run_id>")
+def run_detail(run_id):
+    """Show info about route."""
+
+    run = Run.query.get(run_id)
+
+    return render_template("run.html", run=run)
+
+
 @app.route('/new-run', methods=['POST'])
 def add_route_and_run():
     """Add a run to the database"""
