@@ -100,7 +100,22 @@ function showSavedMap() {
    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
     async defer></script>
 
+
+<!-- ####################################### -->
+
+
+
+
+  {% if route.runs %}
+
 <div>RunHistory for {{ route.route_name }}:</div>
+<ul>
+  {% for run in route.runs %}
+      <li>Distance: {{ route.route_distance }}</li>
+      <li>Run Date: {{ run.run_date }}</li>
+      <li>Run Duration: {{ run.duration }}</li>
+  {% endfor %}
+</ul>
 <table border="1" style="width:60%">
     <tr>
     <th>Date</th>
@@ -108,5 +123,6 @@ function showSavedMap() {
     <th>Time</th>
     </tr>
 </table>
+ {% endif %}
 </body>
 </html>
