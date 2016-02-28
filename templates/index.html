@@ -13,6 +13,12 @@
         height: 60%;
       }
     </style>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
+    async defer></script>
+      <script src="http://code.jquery.com/jquery.js"></script>
+
+  <script src="static/js/map.js"></script>
+
   </head>
   <body>
 
@@ -45,29 +51,6 @@
       <input type="text" name="search" id="search-term">
       <input type="submit" id="submit-button" value="Get saved route">
   </form>
-
-
-
-  <script src="http://code.jquery.com/jquery.js"></script>
-
-  <script>
-  "use strict";
-  var map;
-
-  function initMap() {
-     alert("called initMap");
-
-     map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 14,
-      center: {lat: 37.7833, lng: -122.4167 }
-    });
-  }
-
-
- </script>
-
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
-    async defer></script>
 
   </body>
 </html>
