@@ -47,7 +47,7 @@
     </style>
   </head>
   <body>
-   <p>Current Route</p>
+   <p>Current Route:</p>
    <table border="1" style="width:60%">
       <tr>
           <td> ID: {{ route.route_id }}            
@@ -101,31 +101,33 @@ function showSavedMap() {
     async defer></script>
 
 
-<!-- ####################################### -->
-
-
-
 
 {% if route.runs %}
+    <div>Run History for {{ route.route_name }}:</div>
 
-<div>RunHistory for {{ route.route_name }}:</div>
+    <table border="1" style="width:60%">
+        <tr>
+            <th>Run Date</th>
+            <th>Distance (km)</th>
+            <th>Run Duration</th>
+        </tr>
 
-<table border="1" style="width:60%">
-    <tr>
-        <th>Run Date</th>
-        <th>Distance (km)</th>
-        <th>Run Duration</th>
-    </tr>
+        {% for run in route.runs %}
+        <tr>
+          <td>{{ run.run_date }}</td>
+          <td>{{ route.route_distance }}</td>
+          <td>{{ run.duration }}</td>
+        </tr>
+        {% endfor %}
 
-  {% for run in route.runs %}
-    <tr>
-      <td>Run Date: {{ run.run_date }}</td>
-      <td>Distance: {{ route.route_distance }}</td>
-      <td>Run Duration: {{ run.duration }}</td>
-    </tr>
-  {% endfor %}
+    </table>
+{% else %}
+    <table style ="width:60%">
+      <tr>
+        <td><br>You have not run this route yet</td>
+      </tr>
+    </table>
+{% endif %}
 
-</table>
- {% endif %}
 </body>
 </html>
