@@ -3,6 +3,8 @@
   <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
+      <script src="http://code.jquery.com/jquery.js"></script>
+
     <title>Basic Directions</title>
 
     <!-- Specify sizes in style, so that CSS works in both quirks and standard mode -->
@@ -64,7 +66,7 @@
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
       <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
       <input type="text" name="distance" id="total-distance-field1" value=""><br>
-      <input type="checkbox" name="favorite" value="true"> Favorite?<br>
+      <input type="checkbox" name="favorite" id="favorite-field1" value="true"> Favorite?<br>
       <input type="submit" id="save-route-button" value="Submit Route">
   </form> 
   </div>
@@ -80,14 +82,13 @@
       <input type="text" name="start" id="start-field" value="lat: {{ start_lat }}, lng: {{start_long}}">
       <input type="text" name="end" id="end-field" value="lat: {{ end_lat }}, lng: {{end_long}}">
       <input type="text" name="distance" id="total-distance-field2" value=""><br>
-      <input type="checkbox" name="favorite" value="true"> Favorite?<br>
+      <input type="checkbox" name="favorite" id="favorite-field2" value="true"> Favorite?<br>
       <input type="text" name="date" id="run-date-field" placeholder="Date of run: MM/DD/YYYY"><br>
       <input type="text" name="duration" id="run-duration-field" placeholder="Duration in minutes"><br>
       <input type="submit" id="add-run-form-submit" value="Submit Route and Run">
   </form> 
   </div>
   
-  <script src="http://code.jquery.com/jquery.js"></script>
 
 <script>
     "use strict";
@@ -158,7 +159,8 @@ function saveRoute(evt){
     "route": $("#route-name").val(),
     "start": $("#start-field").val(),
     "end": $("#end-field").val(),
-    "distance":$("#total-distance-field1").val()
+    "distance":$("#total-distance-field1").val(),
+    "favorite":$("#favorite-field1").val()
   }; 
   $.post("/new-route", formInputs, showRouteResults);
 }

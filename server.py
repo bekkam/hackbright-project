@@ -49,7 +49,7 @@ def get_addresses():
 
 
 # ROUTES
-@app.route("/new-route", methods=['POST'])
+@app.route("/new-route", methods=["POST"])
 def add_route():
     """Add a running route to the database"""
 
@@ -65,7 +65,7 @@ def add_route():
     db.session.add(new_route)
     db.session.commit()
 
-    # print "start is %s, end is %s, name is %s, distance is %s, favorite is %s" % (start, end, route, distance, favorite)
+    print "start is %s, end is %s, name is %s, distance is %s, favorite is %s" % (start, end, route, distance, favorite)
     return "Route %s has been saved to your routes" % route
 
 
