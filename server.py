@@ -139,7 +139,7 @@ def add_route_and_run():
     db.session.commit()
 
     # print "d is %s, duration is %s" % (d, duration)
-    return "your run was saved"
+    return "Your run was saved"
 
 
 # USER PROFILE
@@ -147,9 +147,10 @@ def add_route_and_run():
 def show_profile():
     """Show the current user's profile page."""
 
-    # TODO: Add user, routes and runs, and pass to template
-    # runs = Run.query.order_by('run_date').all()
-    return render_template("profile.html")
+    ran_routes = db.session.query(Run, Route).join(Route).order_by(Run.run_date.desc()).limit(3).all()
+    # runs = Run.query.order_by(Run.run_date.desc()).limit(3).all()
+    routes = Route.query.order_by(Route.add_date.desc()).limit(3).all()
+    return render_template("profile.html", routes=routes, ran_routes=ran_routes)
 
 
 if __name__ == "__main__":
