@@ -112,7 +112,7 @@ def run_detail(run_id):
     return render_template("run.html", run=run, route=route)
 
 
-@app.route('/new-run', methods=['POST'])
+@app.route('/new-run', methods=["POST"])
 def add_route_and_run():
     """Add a run to the database"""
 
