@@ -103,8 +103,12 @@ function showSavedMap() {
 
 
 {% if route.runs %}
-    <div>Run History for {{ route.route_name }}:</div>
 
+    <table style ="width:60%">
+      <tr>
+        <td>Run History for {{ route.route_name }}:</td>
+      </tr>
+    </table>
     <table border="1" style="width:60%">
         <tr>
             <th>Run Date</th>
