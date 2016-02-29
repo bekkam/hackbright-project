@@ -47,22 +47,63 @@
   </head>
   <body>
 
-<div>Current run: {{ run.run_id }}</div>
+<div>Run ID #:{{ run.run_id }}</div>
 <table border="1" style="width:60%">
     <tr>
-    <td>Date of Run:</td>
+    <th>Route Name:</th>
+    <th>Date of Run:</th>
     <th>Distance</th>
     <th>Duration</th>
-    <th>Start LatLng</th>
-
     </tr>
     <tr>
+    <td>{{ route.route_name }}</td>
     <td>{{ run.run_date }}</td>
     <td>{{ route.route_distance }}</td>
     <td>{{ run.duration }}</td>
-    <td>{{ route.start_lat_long }}</td>
-
     </tr>
 </table>
+
+  <div id="map2"></div>
+  <div id="right-panel"></div>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+
+    <script>
+    "use strict";
+  var directionsDisplay;
+  var directionsService;
+  var map2;
+
+function showSavedMap() {
+   alert("called showSavedMap");
+   directionsDisplay = new google.maps.DirectionsRenderer();
+   directionsService = new google.maps.DirectionsService();
+
+   map2 = new google.maps.Map(document.getElementById('map2'), {
+    zoom: 14,
+    center: { {{ route.start_lat_long }} }
+  });
+
+
+    directionsDisplay.setMap(map2);
+    directionsDisplay.setPanel(document.getElementById("right-panel"));
+
+    directionsService.route({
+      origin: { {{ route.start_lat_long }} },
+      destination: { {{ route.end_lat_long }} },
+      travelMode: google.maps.TravelMode.WALKING,
+      avoidTolls: true
+    }, function(response, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);  
+      } else {
+        alert('Could not display directions due to: ' + status);
+      }
+    });
+}
+
+</script>
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
+    async defer></script>
 </body>
 </html>
