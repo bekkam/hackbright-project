@@ -97,10 +97,10 @@ def search_route_detail_by_name():
 #  RUNS
 @app.route("/runs")
 def run_list():
-    """Show list of runs."""
+    """Show list of runs, and the route information for each."""
 
-    runs = Run.query.order_by('run_date').all()
-    return render_template("run_list.html", runs=runs)
+    ran_routes = db.session.query(Run, Route).join(Route).all()
+    return render_template("run_list.html", ran_routes=ran_routes)
 
 
 @app.route("/runs/<int:run_id>")
@@ -108,8 +108,8 @@ def run_detail(run_id):
     """Show info about route."""
 
     run = Run.query.get(run_id)
-
-    return render_template("run.html", run=run)
+    route = Route.query.get(run.route_id)
+    return render_template("run.html", run=run, route=route)
 
 
 @app.route('/new-run', methods=['POST'])

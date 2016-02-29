@@ -3,10 +3,10 @@
 
     <h2>Runs</h2>
     <ul>
-      {% for run in runs %}
+      {% for run, route in ran_routes %}
           <li>
               <a href="/runs/{{ run.run_id }}">
-                ({{ run.run_id }}) ({{ run.run_date }}) ({{ run.duration }})</a>
+                ({{ run.run_id }}) ({{ run.run_date }}) ({{ run.duration }}) ({{ run.route_id}}) ({{ route.route_distance }}) ({{ route.route_name}}) </a>
           </li>
       {% endfor %}
     </ul>
@@ -15,16 +15,28 @@
 
     <table border="1" style="width:60%">
         <tr>
-        <th>ID</th>
-        <th>Run Date</th>      
+        <th>Run ID</th>
+        <th>Route ID</th>
+        <th>Route Name</th>
+        <th>Date of Run</th>
+        <th>Run Distance</th>
         <th>Duration (km)</th>
+        <th>Favorite</th>
+
         </tr>
-        {% for run in runs %}
+        {% for run, route in ran_routes %}
           <tr>
               <td> <a href="/runs/{{ run.run_id }}">({{ run.run_id }}) </td>
-              <td> ({{ run.run_date }})            
+              <td> ({{ route.route_id }})
+              <td> {{ route.route_name }}
+              <td> {{ run.run_date }}
+              <td> {{ route.route_distance }}
               <td> {{ run.duration }}
+              <td> {{ route.favorite }}               
           </tr>
         {% endfor %}
     </table>
 {% endblock %}
+
+
+{{ route.route_name}}
