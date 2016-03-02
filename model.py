@@ -72,6 +72,20 @@ class Run(db.Model):
         return "<Run_id=%s Route_id=%s run_date=%s duration=%s>" % (self.run_id, self.route_id, self.run_date, self.duration)
 
 
+class Outage(db.Model):
+    """A location on a map, corresponding to a streetlight outage."""
+
+    __tablename__ = "outages"
+
+    marker_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    outage_id = db.Column(db.String(64), nullable=True)
+    outage_lat = db.Column(db.String(20))
+    outage_long = db.Column(db.String(20))
+
+    def __repr__(self):
+        """Provide helpful representation when printed."""
+
+        return "<outage_id=%s outage_lat=%s run_date=%s duration=%s>" % (self.outage_id, self.outage_lat, self.outage_long)
 
 ##############################################################################
 # Helper functions
