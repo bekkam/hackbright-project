@@ -6,7 +6,7 @@ import re
 def get_outage_latlngs():
     """Get streetlight outage lat longs from data file."""
 
-    data_file = open("test-data.csv")
+    data_file = open("streetlight-data.csv")
     for row in data_file:
         row = row.rstrip()
 
