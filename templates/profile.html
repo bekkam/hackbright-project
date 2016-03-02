@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h2>Profile</h2>
+
+    <h3>Distance</h3>
+    <div class="distance-chart">
+    <canvas id="lineChartDistance"></canvas>
+    <div id="lineLegendDistance" class="chart-legend"></div>
+    </div>
+
+    <h3>Pace</h3>
+    <div class="pace-chart">
+    <canvas id="lineChartPace"></canvas>
+    <div id="lineLegendPace" class="chart-legend"></div>
+    </div>
+
+    <script>
+    // Line chart for user's run distance over time
+        var options = {
+          responsive: true,
+          scaleBeginAtZero: false
+        };
+        var ctxLineDistance = $("#lineChartDistance").get(0).getContext("2d");
+
+        $.get("/user-distance.json", function (data) {
+          var lineChartUserDistance = new Chart(ctxLineDistance).Line(data, options);
+          $("#lineLegendDistance").html(lineChartUserDistance.generateLegend());
+        });
+
+     // Line chart for user's running pace over time
+        var options = {
+          responsive: true,
+          scaleBeginAtZero: false
+        };
+        var ctxLinePace = $("#lineChartPace").get(0).getContext("2d");
+
+        $.get("/user-pace.json", function (data) {
+          var lineChartUserPace = new Chart(ctxLinePace).Line(data, options);
+          $("#lineLegendPace").html(lineChartUserPace.generateLegend());
+        });
+
+    </script>
+
+
+    <p>Table initialized to list three most recently added routes</p>
+
+    <table border="1" style="width:60%">
+        <tr>
+        <th>Route ID</th>
+        <th>Route Name</th>
+        <th>Date Added</th>      
+        <th>Distance (km)</th>
+        <th>Favorite</th>
+        </tr>
+    
+        {% for route in routes %}
+          <tr>
+              <td> ({{ route.route_id }})            
+              <td> <a href="/routes/{{ route.route_id }}">{{ route.route_name }}</td>
+              <td> {{ route.add_date }}            
+              <td> {{ route.route_distance }}
+              <td> {{ route.favorite }}
+          </tr>
+        {% endfor %}
+        
+    </table>
+
+    <p>Table initialized to list three most recent runs</p>
+
+    <table border="1" style="width:60%">
+        <tr>
+        <th>Run ID</th>
+        <th>Route Name</th>
+        <th>Run Date</th>      
+        <th>Distance (km)</th>
+        <th>Duration</th>
+        </tr>
+        {% for run, route in ran_routes %}
+          <tr>
+              <td> <a href="/runs/{{ run.run_id }}">({{ run.run_id }}) </td>
+              <td> {{ route.route_name }}
+              <td> {{ run.run_date }}
+              <td> {{ route.route_distance }}
+              <td> {{ run.duration }}
+          </tr>
+        {% endfor %}
+    </table>
+
+
+{% endblock %}
