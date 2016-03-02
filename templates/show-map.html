@@ -51,10 +51,16 @@
   <body>
 
 
-<!-- Create a div element named 'map' to hold Map -->
-    <div id="map"></div>
-    <div id="right-panel"></div>
-    
+<!-- Elements for map and panel for directions -->
+  <div id="map"></div>
+  <div id="right-panel"></div>
+ 
+  <div id="view-streetlight-markers">
+      <input type="checkbox" name="streetlight-data">View Streetlight Data</form>
+  <br> 
+  <br>
+  </div>
+
 
 <!-- "Save this Route" displays a form if user clicks it -->
 <!-- TODO: Hide lat long inputs & distance-->
@@ -86,8 +92,9 @@
       <input type="text" name="date" id="run-date-field" placeholder="Date of run: MM/DD/YYYY"><br>
       <input type="text" name="duration" id="run-duration-field" placeholder="Duration in minutes"><br>
       <input type="submit" id="add-run-form-submit" value="Submit Route and Run">
-  </form> 
-  </div>
+  </form>
+
+
   
 
 <script>
