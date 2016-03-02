@@ -72,6 +72,7 @@ class Run(db.Model):
         return "<Run_id=%s Route_id=%s run_date=%s duration=%s>" % (self.run_id, self.route_id, self.run_date, self.duration)
 
 
+
 ##############################################################################
 # Helper functions
 

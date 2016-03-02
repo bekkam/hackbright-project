@@ -153,6 +153,83 @@ def show_profile():
     return render_template("profile.html", routes=routes, ran_routes=ran_routes)
 
 
+# Line chart of distance over time
+@app.route('/user-distance.json')
+def user_distance_data():
+    """Return the data of User's distance (km)."""
+    labels = []
+    data = []
+
+    # Get the run date and route distance for all of a user's runs, in chronological order:
+    run_date_distance = db.session.query(Run.run_date, Route.route_distance).order_by(Run.run_date).join(Route).all()
+
+    # For each date, distance tuple, add the date to labels array and the distance
+    # to the data array, in string format
+
+    for item in run_date_distance:
+        date = item[0]
+        labels.append(str(date))
+        distance = item[1]
+        distance = str(distance)
+        data.append(distance)
+
+    data_dict = {
+        "labels": labels,
+        "datasets": [
+            {
+                "label": "Run Distance(km)",
+                "fillColor": "rgba(151,187,205,0.2)",
+                "strokeColor": "rgba(151,187,205,1)",
+                "pointColor": "rgba(151,187,205,1)",
+                "pointStrokeColor": "#fff",
+                "pointHighlightFill": "#fff",
+                "pointHighlightStroke": "rgba(151,187,205,1)",
+                "data": data
+            }
+        ]
+    }
+    return jsonify(data_dict)
+
+# Line chart for pace over time
+@app.route('/user-pace.json')
+def user_data():
+    """Return the data of User's avg pace over time (km)."""
+    labels = []
+    data = []
+
+   # Get the run date, duration, and route distance for all of a user's runs:
+    run_date_distance_duration = db.session.query(Run.run_date, Route.route_distance, Run.duration).join(Route).all()
+
+    for item in run_date_distance_duration:
+        date = item[0]
+        labels.append(str(date))
+
+        distance = item[1]
+        duration = item[2]
+        km_per_hour = (distance/duration) * 60
+        km_per_hour = str(round(km_per_hour, 2))
+        data.append(km_per_hour)
+
+    data_dict = {
+        "labels": labels,
+        "datasets": [
+            {
+                "label": "Pace (kilometers/hour)",
+                "fillColor": "rgba(34,139,34,0.2)",
+                "strokeColor": "rgba(34,139,34, 1)",
+                "pointColor": "rgba(134,139,34,1)",
+                "pointStrokeColor": "#fff",
+                "pointHighlightFill": "#fff",
+                "pointHighlightStroke": "rgba(34,139,34,1)",
+                "data": data
+            }
+        ]
+    }
+    return jsonify(data_dict)
+
+# ##################################################
+
+
 if __name__ == "__main__":
     app.debug = True
 
