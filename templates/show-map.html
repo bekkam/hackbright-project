@@ -113,20 +113,47 @@
 
 function updateMap() {
    alert("called updateMap");
-   directionsDisplay = new google.maps.DirectionsRenderer();
    directionsService = new google.maps.DirectionsService();
 
+   // new code:
+   $("#right-panel").empty();
+   //
    map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 14,
-    center: {lat: {{ start_lat }}, lng: {{start_long}} }
-  });
+        zoom: 14,
+        center: {lat: {{ start_lat }}, lng: {{start_long}} }
+    });
 
-    directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById("right-panel"));
+   directionsDisplay = new google.maps.DirectionsRenderer({
+        draggable: true,
+        map:map,
+        panel: document.getElementById('right-panel')
+    });
 
-    directionsService.route({
-      origin: {lat: {{ start_lat }}, lng: {{start_long}} },
-      destination: {lat: {{ end_lat }}, lng: {{end_long}} },
+      //new code:
+    directionsDisplay.addListener('directions_changed', function() {
+      // commented out
+        // computeTotalDistance(directionsDisplay.getDirections());
+
+        //new code
+        calculateTotalDistanceInKilometers(directionsDisplay.getDirections());
+        //
+        // waypoints = directionsDisplay.getDirections();
+        // console.log("waypoints are ");
+        // console.log(waypoints);
+    });
+    //
+    displayRoute("san francisco, ca", "oakland, ca", directionsService, directionsDisplay)
+}
+    // directionsDisplay.setMap(map);
+    // directionsDisplay.setPanel(document.getElementById("right-panel"));
+
+
+function displayRoute(origin, destination, service, display){
+    service.route({
+      // origin: {lat: {{ start_lat }}, lng: {{start_long}} },
+      // destination: {lat: {{ end_lat }}, lng: {{end_long}} },
+      origin: origin,
+      destination: destination,
       travelMode: google.maps.TravelMode.WALKING,
       avoidTolls: true
     }, function(response, status) {
@@ -137,6 +164,9 @@ function updateMap() {
         alert('Could not display directions due to: ' + status);
       }
     });
+    // new code
+    // setMap(map);
+    // 
 }
 
 //UTILITY METHOD TO CALC ROUTE DISTANCE IN KM
@@ -222,7 +252,7 @@ function clearMarkers() {
 }
 
 
-// 2. Functions to add markers to the map:
+// 2. Function to add markers to the map:
 // Define a marker for each latlng. Add it to the map, and to the marker array.
 // Set hasMarkers to true
 function makeMarkers(outages){
