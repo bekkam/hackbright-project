@@ -5,7 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, jsonify, redirect
 from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
-from model import connect_to_db, db, Route, Run
+from model import connect_to_db, db, Route, Run, Outage
 from datetime import datetime
 
 app = Flask(__name__)
@@ -226,6 +226,20 @@ def user_data():
         ]
     }
     return jsonify(data_dict)
+
+
+@app.route('/outages.json')
+def get_markers():
+    """JSON information about streetlight outages"""
+
+    markers = {}
+
+    outages = Outage.query.all()
+
+    for outage in outages:
+        markers[outage.marker_id] = {"outage_lat": outage.outage_lat, "outage_long": outage.outage_long}
+
+    return jsonify(markers)
 
 # ##################################################
 

@@ -56,9 +56,11 @@
   <div id="right-panel"></div>
  
   <div id="view-streetlight-markers">
-      <input type="checkbox" name="streetlight-data">View Streetlight Data</form>
+  <form id="show-streelight-form" action="/outages.json">
+      <input type="checkbox" name="streetlight-data">View Streetlight Data
   <br> 
   <br>
+  </form>
   </div>
 
 
@@ -103,6 +105,7 @@
   var directionsService;
   var map;
   var totalDistance;
+  var marker;
 
 
 function updateMap() {
@@ -199,10 +202,31 @@ function saveRun(evt){
 $("#save-run-form").on("submit", saveRun);
 
 
-// POPULATE MAP WITH MARKERS/REMOVE MARKERS ON USER CLICK
-// function showMarkers(evt){
+// POPULATE MAP WITH MARKERS/REMOVE MARKERS ON USER CLICK:
 
-// $("#streetlight-data").on("click", showMarkers);
+// Define a marker for each latlng, & add it to the map
+function showMarkers(outages){
+  alert(outages);
+  console.log(outages);
+
+  for (var key in outages) {
+      var outage = outages[key];
+
+      marker = new google.maps.Marker({
+          position: new google.maps.LatLng(outage.outage_lat, outage.outage_long),
+          map: map,
+          title: 'Marker ID: ' + outage.marker_id
+      });
+  }
+}
+// Get the streetlight outage data
+function getData(evt){
+  alert("you clicked the checkbox");
+  $.get("/outages.json", showMarkers);
+  alert("processed get request");
+}
+// call getDataFunction when user checks box
+$("#show-streelight-form").on("change", getData);
 
 
  
