@@ -5,20 +5,20 @@
 
     <h3>Distance</h3>
     <div class="distance-chart">
-    <canvas id="lineChartDistance"></canvas>
+    <canvas id="lineChartDistance" width="500" height="300"></canvas>
     <div id="lineLegendDistance" class="chart-legend"></div>
     </div>
 
     <h3>Pace</h3>
     <div class="pace-chart">
-    <canvas id="lineChartPace"></canvas>
+    <canvas id="lineChartPace" width="500" height="300"></canvas>
     <div id="lineLegendPace" class="chart-legend"></div>
     </div>
 
     <script>
     // Line chart for user's run distance over time
         var options = {
-          responsive: true,
+          responsive: false,
           scaleBeginAtZero: false
         };
         var ctxLineDistance = $("#lineChartDistance").get(0).getContext("2d");
@@ -30,7 +30,7 @@
 
      // Line chart for user's running pace over time
         var options = {
-          responsive: true,
+          responsive: false,
           scaleBeginAtZero: false
         };
         var ctxLinePace = $("#lineChartPace").get(0).getContext("2d");

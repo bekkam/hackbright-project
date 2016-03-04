@@ -199,7 +199,7 @@ def user_data():
     data = []
 
    # Get the run date, duration, and route distance for all of a user's runs:
-    run_date_distance_duration = db.session.query(Run.run_date, Route.route_distance, Run.duration).join(Route).all()
+    run_date_distance_duration = db.session.query(Run.run_date, Route.route_distance, Run.duration).order_by(Run.run_date).join(Route).all()
 
     for item in run_date_distance_duration:
         date = item[0]
