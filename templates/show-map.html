@@ -110,7 +110,6 @@
   var hasMarkers = false;
 
 
-
 function updateMap() {
    alert("called updateMap");
    directionsService = new google.maps.DirectionsService();
@@ -131,10 +130,6 @@ function updateMap() {
 
       //new code:
     directionsDisplay.addListener('directions_changed', function() {
-      // commented out
-        // computeTotalDistance(directionsDisplay.getDirections());
-
-        //new code
         calculateTotalDistanceInKilometers(directionsDisplay.getDirections());
         //
         // waypoints = directionsDisplay.getDirections();
@@ -142,16 +137,17 @@ function updateMap() {
         // console.log(waypoints);
     });
     //
-    displayRoute("san francisco, ca", "oakland, ca", directionsService, directionsDisplay)
+    displayRoute({lat: {{ start_lat }}, lng: {{start_long}} }, {lat: {{ end_lat }}, lng: {{end_long}} }, directionsService, directionsDisplay)
 }
     // directionsDisplay.setMap(map);
     // directionsDisplay.setPanel(document.getElementById("right-panel"));
 
 
 function displayRoute(origin, destination, service, display){
+    // console.log(service.route);
+    // console.log(service.routes[0].legs[0]);
+
     service.route({
-      // origin: {lat: {{ start_lat }}, lng: {{start_long}} },
-      // destination: {lat: {{ end_lat }}, lng: {{end_long}} },
       origin: origin,
       destination: destination,
       travelMode: google.maps.TravelMode.WALKING,
