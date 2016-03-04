@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, jsonify, redirect
-from flask_debugtoolbar import DebugToolbarExtension
+# from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
 from model import connect_to_db, db, Route, Run, Outage
 from datetime import datetime
@@ -190,6 +190,7 @@ def user_distance_data():
     }
     return jsonify(data_dict)
 
+
 # Line chart for pace over time
 @app.route('/user-pace.json')
 def user_data():
@@ -248,5 +249,5 @@ if __name__ == "__main__":
     app.debug = True
 
     connect_to_db(app)
-    DebugToolbarExtension(app)
+    # DebugToolbarExtension(app)
     app.run()

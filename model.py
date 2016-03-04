@@ -89,15 +89,12 @@ class Outage(db.Model):
 ##############################################################################
 # Helper functions
 
+
 def connect_to_db(app):
     """Connect the database to our Flask app."""
 
     # Configure to use PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://' + username + ':' + password + '@localhost/runningapp'
-    # app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://rmurphy:hackbright@localhost/runningapp'
-
-
-    # in seed file, use db.create_all() to create tables .. or by hand for now
 
     db.app = app
     db.init_app(app)

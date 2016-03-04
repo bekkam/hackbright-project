@@ -153,7 +153,7 @@ function displayRoute(origin, destination, service, display){
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);  
         calculateTotalDistanceInKilometers(response);
-        console.log(response);  
+        // console.log(response);  
       } else {
         alert('Could not display directions due to: ' + status);
       }
@@ -163,6 +163,8 @@ function displayRoute(origin, destination, service, display){
 //UTILITY METHOD TO CALC ROUTE DISTANCE IN KM
 function calculateTotalDistanceInKilometers(response) {
   alert("calculateTotalDistanceInKilometers function called");
+  console.log(response);  
+
   // get route data needed for db: total distance:
   totalDistance = 0;
   var currentRoute = response.routes[0];
