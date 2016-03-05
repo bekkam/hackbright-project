@@ -1,52 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
-    <meta charset="utf-8">
-    <title>Basic Directions</title>
-    <!-- Specify sizes in style, so that CSS works in both quirks and standard mode -->
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map2 {
-        height: 100%;
-        float: left;
-        width: 63%;
-        height: 55%;
-      }
-      #right-panel {
-        float: right;
-        width: 34%;
-        height: 100%;
-      }
-      #right-panel {
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
+{% extends 'base.html' %}
 
-      #right-panel select, #right-panel input {
-        font-size: 15px;
-      }
+{% block title %}Lumina Index Map{% endblock %}
 
-      #right-panel select {
-        width: 100%;
-      }
 
-      #right-panel i {
-        font-size: 12px;
-      }
-      .panel {
-        height: 100%;
-        overflow: auto;
-      }
-    </style>
-  </head>
-  <body>
-
+{% block content %}
 
    <p>Current Route:</p>
    <table border="1" style="width:60%">
@@ -58,50 +15,10 @@
           <td> Favorite: {{ route.favorite }}
       </tr>
     </table>
-  <div id="map2"></div>
+
+  <div id="map"></div>
   <div id="right-panel"></div>
-
-    <script src="http://code.jquery.com/jquery.js"></script>
-
-    <script>
-    "use strict";
-  var directionsDisplay;
-  var directionsService;
-  var map2;
-
-function showSavedMap() {
-   alert("called showSavedMap");
-   directionsDisplay = new google.maps.DirectionsRenderer();
-   directionsService = new google.maps.DirectionsService();
-
-   map2 = new google.maps.Map(document.getElementById('map2'), {
-    zoom: 14,
-    center: { {{ route.start_lat_long }} }
-  });
-
-
-    directionsDisplay.setMap(map2);
-    directionsDisplay.setPanel(document.getElementById("right-panel"));
-
-    directionsService.route({
-      origin: { {{ route.start_lat_long }} },
-      destination: { {{ route.end_lat_long }} },
-      travelMode: google.maps.TravelMode.WALKING,
-      avoidTolls: true
-    }, function(response, status) {
-      if (status === google.maps.DirectionsStatus.OK) {
-        directionsDisplay.setDirections(response);  
-      } else {
-        alert('Could not display directions due to: ' + status);
-      }
-    });
-}
-
-</script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
-    async defer></script>
-
-
+  <div id="mapdata" data-getstartlat="{{ route.start_lat }}" data-getstartlong="{{ route.start_long }}" data-getendlat="{{ route.end_lat }}" data-getendlong="{{ route.end_long }}"></div>
 
 {% if route.runs %}
 
@@ -133,7 +50,11 @@ function showSavedMap() {
       </tr>
     </table>
 {% endif %}
-</body>
-</html>
 
 
+    <script src="/static/js/getsavedmap.js"></script>
+
+   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
+    async defer></script>
+    
+{% endblock %}

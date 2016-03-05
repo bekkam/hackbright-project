@@ -1,66 +1,21 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" content="initial-scale=1.0">
-    <meta charset="utf-8">
-    <style>
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #map {
-        height: 100%;
-        float: left;
-        width: 63%;
-        height: 55%;
-      }
-      #right-panel {
-        float: right;
-        width: 34%;
-        height: 100%;
-      }
-      #right-panel {
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
+{% extends 'base.html' %}
 
-      #right-panel select, #right-panel input {
-        font-size: 15px;
-      }
-
-      #right-panel select {
-        width: 100%;
-      }
-
-      #right-panel i {
-        font-size: 12px;
-      }
-      .panel {
-        height: 100%;
-        overflow: auto;
-      }
-    </style>
-   <script src="http://code.jquery.com/jquery.js"></script>
-  <script src="static/js/map.js"></script>
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=initMap"
-    async defer></script>
+{% block title %}Lumena Home{% endblock %}
 
 
+{% block content %}
 
-  </head>
-  <body>
+  <h4> Welcome to Lumena </h4>
+<!-- Replace the value of the key parameter with your own API key. -->
 
-  <!-- links for navbar -->
-  <span><a href="/profile">Profile</a></span>
+<!--  <span><a href="/profile">Profile</a></span>
   <br>
   <span><a href="/routes">Routes</a></span>
   <br>
   <span><a href="/runs">Runs</a></span>
   <br>
 
-
+ -->
 
   <!-- form for start and end addresses -->
   <form id="address-form" method="get" action="/draw-route">
@@ -86,5 +41,8 @@
   </form>
   </div>
 
-  </body>
-</html>
+    <script src="static/js/simplemap.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&callback=initMap"
+    async defer></script>
+
+{% endblock %}

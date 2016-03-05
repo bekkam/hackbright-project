@@ -3,7 +3,7 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, jsonify, redirect
-# from flask_debugtoolbar import DebugToolbarExtension
+from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
 from model import connect_to_db, db, Route, Run, Outage
 from datetime import datetime
@@ -47,25 +47,35 @@ def get_addresses():
     # return jsonify({"start_latitude": start_lat, "start_longitude": start_long,
     #             "end_latitude": end_lat, "end_longitude": end_long})
 
+# @app.route('/get-lat-longs')
+# def get_addresses_for_map():
+#     """Get the lat longs for the map"""
+
+#     return jsonify()
+
 
 # ROUTES
 @app.route("/new-route", methods=["POST"])
 def add_route():
     """Add a running route to the database"""
 
-    start = request.form.get("start")
-    end = request.form.get("end")
+    start_lat = request.form.get("start_lat")
+    start_long = request.form.get("start_long")
+    end_lat = request.form.get("end_lat")
+    end_long = request.form.get("end_long")
+
+    # end = request.form.get("end")
     date = datetime.now()
     route = request.form.get("route")
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
 
     # # write to db
-    new_route = Route(route_name=route, add_date=date, start_lat_long=start, end_lat_long=end, route_distance=distance, favorite=favorite)
+    new_route = Route(route_name=route, add_date=date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
 
-    print "start is %s, end is %s, name is %s, distance is %s, favorite is %s" % (start, end, route, distance, favorite)
+    print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
     return "Route %s has been saved to your routes" % route
 
 
@@ -116,15 +126,19 @@ def run_detail(run_id):
 def add_route_and_run():
     """Add a run to the database"""
 
-    start = request.form.get("start")
-    end = request.form.get("end")
+    start_lat = request.form.get("start_lat")
+    start_long = request.form.get("start_long")
+    end_lat = request.form.get("end_lat")
+    end_long = request.form.get("end_long")
+
     date = datetime.now()
     route = request.form.get("route")
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
 
     print "route name is %s" % route
-    new_route = Route(route_name=route, add_date=date, start_lat_long=start, end_lat_long=end, route_distance=distance, favorite=favorite)
+    print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
+    new_route = Route(route_name=route, add_date=date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
 
@@ -249,5 +263,5 @@ if __name__ == "__main__":
     app.debug = True
 
     connect_to_db(app)
-    # DebugToolbarExtension(app)
+    DebugToolbarExtension(app)
     app.run()

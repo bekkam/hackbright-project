@@ -37,8 +37,10 @@ class Route(db.Model):
     # user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     route_name = db.Column(db.String(100))
     add_date = db.Column(db.DateTime)
-    start_lat_long = db.Column(db.String(80))
-    end_lat_long = db.Column(db.String(80))
+    start_lat = db.Column(db.Float)
+    start_long = db.Column(db.Float)
+    end_lat = db.Column(db.Float)
+    end_long = db.Column(db.Float)
     route_distance = db.Column(db.Float)
     favorite = db.Column(db.Boolean)
 

@@ -3,13 +3,18 @@
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <title>Lumina</title>
-      <link rel="stylesheet"
+    <title>{% block title %}TITLE GOES HERE{% endblock %}</title>
+
+    <link href="/static/css/style.css" rel="stylesheet"></link>
+     <link rel="stylesheet"
         href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.css">
-    <script src="https://code.jquery.com/jquery.js"></script>
+
+    <script src="http://code.jquery.com/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.js"></script>
+
 </head>
 <body>
+
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -24,7 +29,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="#">Lumina</a>
+      <a class="navbar-brand" href="#">Lumena</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -40,20 +45,9 @@
   </div>
 </nav>
 
+    {% block content %}
+    BODY CONTENT GOES HERE
 
-
-    <!-- Lumina -->
-    <!-- <br> -->
-      <!-- links for navbar -->
- <!--    <span><a href="/profile">Profile</a></span>
-    <br>
-    <span><a href="/routes">Routes</a></span>
-    <br>
-    <span><a href="/runs">Runs</a></span>
-    <br> -->
-{% block content %}
-    Put your body here.
-{% endblock %}
-
+    {% endblock %}
 </body>
 </html>
