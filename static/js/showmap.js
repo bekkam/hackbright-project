@@ -1,11 +1,11 @@
-    "use strict";
-  var directionsDisplay;
-  var directionsService;
-  var map;
-  var totalDistance;
-  var marker;
-  var markers = [];
-  var hasMarkers = false;
+"use strict";
+var directionsDisplay;
+var directionsService;
+var map;
+var totalDistance;
+var marker;
+var markers = [];
+var hasMarkers = false;
 
 
 function updateMap() {
@@ -17,9 +17,7 @@ function updateMap() {
 
    directionsService = new google.maps.DirectionsService();
 
-   // new code:
    $("#right-panel").empty();
-   //
    map = new google.maps.Map(document.getElementById('map'), {
         zoom: 14,
         center: {lat: startLat, lng: startLong} 
@@ -31,18 +29,16 @@ function updateMap() {
         panel: document.getElementById('right-panel')
     });
 
-      //new code:
     directionsDisplay.addListener('directions_changed', function() {
         calculateTotalDistanceInKilometers(directionsDisplay.getDirections());
     });
-    //
+    
     displayRoute({lat: startLat, lng: startLong }, {lat: endLat, lng: endLong }, directionsService, directionsDisplay)
 
 }
 
 
 function displayRoute(origin, destination, service, display){
-
 
     service.route({
       origin: origin,
@@ -95,13 +91,12 @@ function saveRoute(evt){
 
   var formInputs = {
     "route": $("#route-name").val(),
-    // "start": $("#start-field").val(),
+
     "start_lat": $("#start-lat-field").val(),
     "start_long": $("#start-long-field").val(),
     "end_lat": $("#end-lat-field").val(),
     "end_long": $("#end-long-field").val(),
 
-    // "end": $("#end-field").val(),
     "distance":$("#total-distance-field1").val(),
     "favorite":$("#favorite-field1").val()
   }; 

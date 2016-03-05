@@ -44,14 +44,6 @@ def get_addresses():
                            start_long=start_long,
                            end_lat=end_lat,
                            end_long=end_long)
-    # return jsonify({"start_latitude": start_lat, "start_longitude": start_long,
-    #             "end_latitude": end_lat, "end_longitude": end_long})
-
-# @app.route('/get-lat-longs')
-# def get_addresses_for_map():
-#     """Get the lat longs for the map"""
-
-#     return jsonify()
 
 
 # ROUTES
