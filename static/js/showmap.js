@@ -99,7 +99,19 @@ function saveRoute(evt){
   }; 
   $.post("/new-route", formInputs, showRouteResults);
 }
-$("#save-route-form").on("submit", saveRoute);
+
+function validateRouteForm(event){
+  event.preventDefault();
+
+  var charInput = $("#route-name").val().length;
+  if (charInput < 2) {
+    alert("Please enter at least two characters name for the Route");
+  } else {
+    saveRoute(event);
+  }
+}
+
+$("#save-route-form").on("submit", validateRouteForm);
 
 
 
@@ -127,6 +139,21 @@ function saveRun(evt){
   }; 
   $.post("/new-run", formInputs, showRunResults);
 }
+
+// function validateRunForm(event){
+//   event.preventDefault();
+
+//   // var nameInput = $("#route-name").val().length;
+//   var nameInput = $("#route-name").val().length;
+//   var dateInput = $("#run-date-field").val().length;
+//   var durationInput = $("#run-duration-field").val().length;
+ 
+//   if (nameInput < 2) {
+//     alert("Please enter at least two characters name for the Route");
+//   } else {
+//     saveRun(event);
+//   }
+// }
 
 $("#save-run-form").on("submit", saveRun);
 
