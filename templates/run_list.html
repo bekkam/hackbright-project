@@ -5,16 +5,7 @@
 
 {% block content %}
 
-    <h2>Runs</h2>
-    <ul>
-      {% for run, route in ran_routes %}
-          <li>
-              <a href="/runs/{{ run.run_id }}">
-                ({{ run.run_id }}) ({{ run.run_date }}) ({{ run.duration }}) ({{ run.route_id}}) ({{ route.route_distance }}) ({{ route.route_name}}) </a>
-          </li>
-      {% endfor %}
-    </ul>
-
+   <h2>Runs</h2>
    <p>Table of all runs</p>
 
     <table border="1" style="width:60%">
