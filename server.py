@@ -79,6 +79,23 @@ def route_list():
     return render_template("route_list.html", routes=routes)
 
 
+# ################ new code #######################
+@app.route("/get-all-routes.json")
+def route_list_json():
+    """JSON information about saved routes."""
+
+    rows = {}
+    routes = Route.query.all()
+    # return render_template("route_list.html", routes=routes)
+
+    for route in routes:
+        rows[route.route_id] = {"route_name": route.route_name, "add_date": route.add_date, "route_distance": route.route_distance, "favorite": route.favorite}
+
+    return jsonify(rows)
+
+# ####################################
+
+
 @app.route("/routes/<int:route_id>")
 def route_detail(route_id):
     """Show info about route."""
@@ -163,6 +180,7 @@ def show_profile():
 @app.route('/user-distance.json')
 def user_distance_data():
     """Return the data of User's distance (km)."""
+    
     labels = []
     data = []
 
@@ -201,6 +219,7 @@ def user_distance_data():
 @app.route('/user-pace.json')
 def user_data():
     """Return the data of User's avg pace over time (km)."""
+    
     labels = []
     data = []
 
