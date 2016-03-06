@@ -17,33 +17,15 @@
         <th>Favorite</th>
         </tr>
 
-</table>
-
-
-    <script>
-var name;
-var add_date;
-var rowArray;
-// var textToAdd = "";
-
-  $.get("/get-all-routes.json", function (routes) {
-    for (var key in routes) {
-      var textToAdd = "";
-      var route = routes[key];
-      rowArray = [key, route.route_name, route.add_date, route.route_distance, route.favorite]
-      // name = route.route_name;
-      // addDate = route.add_date;
-      // console.log(name);
-      // console.log(addDate);
-    // }
-    $.each(rowArray, function(count, item) {
-      console.log(item);
-      textToAdd += "<td>" + item + "</td>";
-    });
-    $("#route-list-table").append("<tr>" + textToAdd + "</tr>");
-  }
-})
-
-    </script>
+        {% for route in routes %}
+          <tr>
+              <td> ({{ route.route_id }})            
+              <td> <a href="/routes/{{ route.route_id }}">{{ route.route_name }}</td>
+              <td> ({{ route.add_date }})            
+              <td> {{ route.route_distance }}
+              <td> {{ route.favorite }}
+          </tr>
+        {% endfor %}
+    </table>
 
 {% endblock %}
