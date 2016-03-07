@@ -30,7 +30,7 @@
         <th>Route Name</th>
         <th>Date Added</th>      
         <th>Distance (km)</th>
-        <th>Favorite</th>
+        <!-- <th>Favorite</th> -->
         </tr>
     
         {% for route in routes %}
@@ -39,7 +39,7 @@
               <td> <a href="/routes/{{ route.route_id }}">{{ route.route_name }}</td>
               <td> {{ route.add_date }}            
               <td> {{ route.route_distance }}
-              <td> {{ route.favorite }}
+              <!-- <td> {{ route.favorite }} -->
           </tr>
         {% endfor %}
         

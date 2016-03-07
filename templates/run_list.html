@@ -15,7 +15,7 @@
         <th>Date of Run</th>
         <th>Run Distance</th>
         <th>Duration (km)</th>
-        <th>Favorite</th>
+        <!-- <th>Favorite</th> -->
 
         </tr>
         {% for run, route in ran_routes %}
@@ -25,7 +25,7 @@
               <td> {{ run.run_date }}
               <td> {{ route.route_distance }}
               <td> {{ run.duration }}
-              <td> {{ route.favorite }}               
+              <!-- <td> {{ route.favorite }}                -->
           </tr>
         {% endfor %}
     </table>
