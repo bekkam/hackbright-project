@@ -219,7 +219,7 @@ def user_distance_data():
 @app.route('/user-pace.json')
 def user_data():
     """Return the data of User's avg pace over time (km)."""
-    
+
     labels = []
     data = []
 

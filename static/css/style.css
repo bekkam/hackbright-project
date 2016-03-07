@@ -8,6 +8,7 @@ height: 100%;
 float: left;
 width: 63%;
 height: 55%;
+
 }
 #right-panel {
 float: right;
@@ -34,10 +35,4 @@ font-size: 12px;
 .panel {
 height: 100%;
 overflow: auto;
-}
-
-
-
-h4 {
-    color: blue;
 }
