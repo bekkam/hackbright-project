@@ -3,6 +3,7 @@ height: 100%;
 margin: 0;
 padding: 0;
 }
+
 #map {
 height: 100px;
 float: left;
@@ -36,25 +37,3 @@ font-size: 12px;
 height: 100%;
 overflow: auto;
 }
-
-.subheader {
-
-}
-
-.header {
-
-}
-
-.table {
-    table table-striped table-bordered">
-    table table-striped table-bordered;
-}
-/*.chart {
-    width: 600px;
-    height: 300px;
-}*/
-
-/*#lineChartDistance {
-    width: 500px;
-    height: 500px;
-}*/

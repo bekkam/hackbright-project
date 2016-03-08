@@ -3,7 +3,7 @@
   // var map;
 
   function initMap() {
-     alert("called initMap");
+     // alert("called initMap");
 
      var map = new google.maps.Map(document.getElementById('map'), {
       zoom: 14,

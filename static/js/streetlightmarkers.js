@@ -30,7 +30,13 @@ function makeMarkers(outages){
       marker = new google.maps.Marker({
           position: new google.maps.LatLng(outage.outage_lat, outage.outage_long),
           map: map,
-          title: 'Marker ID: ' + key
+          title: 'Marker ID: ' + key,
+          icon: {
+              path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+              strokeColor: "navy",
+              scale: 3,
+              fillOpacity: 0.6
+            }
       });
       markers.push(marker);
   }
@@ -41,12 +47,12 @@ function makeMarkers(outages){
 // Populate the map with markers if none are there; otherwise, remove markers from the map
 function getData(evt){
   if (hasMarkers == false) {
-      alert("you clicked the checkbox");
+      // alert("you clicked the checkbox");
       $.get("/outages.json", makeMarkers);
-      alert("processed get request");
+      // alert("processed get request");
   }
   else {
-    alert("markers already present");
+    // alert("markers already present");
     clearMarkers();
   }
 }

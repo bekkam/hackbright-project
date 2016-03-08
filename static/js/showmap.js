@@ -56,8 +56,8 @@ function displayRoute(origin, destination, service, display){
 
 //UTILITY METHOD TO CALC ROUTE DISTANCE IN KM
 function calculateTotalDistanceInKilometers(response) {
-  alert("calculateTotalDistanceInKilometers function called");
-  console.log(response);  
+  // alert("calculateTotalDistanceInKilometers function called");
+  // console.log(response);  
 
   // get route data needed for db: total distance:
   totalDistance = 0;
@@ -68,7 +68,7 @@ function calculateTotalDistanceInKilometers(response) {
   }
   //because distance.value contains value expressed in meters, convert meters to kilometers
   totalDistance = totalDistance/1000;
-  alert("total km is " + totalDistance);
+  // alert("total km is " + totalDistance);
   //set the value of the total-distance field in the form
 
   // Hacking for now; can css later

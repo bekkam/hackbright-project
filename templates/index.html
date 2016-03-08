@@ -4,33 +4,35 @@
 
 
 {% block content %}
-  <div class="container-fluid">
-    <div class="index-header">
-      <h4> Welcome to SafeRun </h4>
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <h2> SafeRun </h2>
+        </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-12">    
+            <form id="address-form" method="get" action="/draw-route">
+                <br><h3>Map a new route</h3>
+                    <input type="text" name="start" id="pointOne" placeholder="Start Address">
+                    <input type="text" name="end" id="pointTwo" placeholder="End Address">
+                <input type="submit" id="submit-button" value="Map my run!">
+            </form>
+        </div>
     </div>
-  </div>
-  <!-- form for start and end addresses -->
-  <form id="address-form" method="get" action="/draw-route">
-    <br>Map a new route<br>
-    <span>Start:</span>
-      <input type="text" name="start" id="pointOne">
-     <span>End:</span>
-      <input type="text" name="end" id="pointTwo">
-      <input type="submit" id="submit-button" value="Map my run!">
-  </form>
 
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-12">  
+            <div id="search-route-form-div">
+                <br>
+                <form id="get-route-form" method="get" action="/get-saved-route">
+                    <span><h3>Search for a saved route</h3></span>
+                          <input type="text" name="search" id="search-term" placeholder="Name of Route">
+                          <input type="submit" id="submit-button" value="Get saved route">
+                </form>
+            </div>
+        </div>
+    </div>
 
-  <!-- form to search for a route -->
-  <div id="search-route-form-div">
-    <br>
-  <form id="get-route-form" method="get" action="/get-saved-route">
-    <span>Search for a saved route</span>
-    <br>
-    <span>Enter name of route:</span>
-      <input type="text" name="search" id="search-term">
-      <input type="submit" id="submit-button" value="Get saved route">
-  </form>
-  </div>
 
     <script src="static/js/simplemap.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&callback=initMap"
