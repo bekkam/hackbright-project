@@ -151,7 +151,7 @@ def add_route_and_run():
     db.session.add(new_route)
     db.session.commit()
 
-    run_date = request.form.get("date")
+    # run_date = request.form.get("date")
     d = datetime.strptime(run_date, "%m/%d/%Y")
 
     duration = request.form.get("duration")
