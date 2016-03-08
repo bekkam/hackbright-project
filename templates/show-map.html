@@ -32,16 +32,16 @@
 
 
 <!-- "Save this Route" displays a form if user clicks it -->
-  <div class="row">
+<!--   <div class="row">
   <div class="col-xs-12 col-md-6 col-lg-9">
     <div id="add-route"></div> 
     <button type="button">Save this Route</button>
   </div>
-  </div>
+  </div> -->
 
   <div class="row">
-  <div class="col-xs-12 col-md-6 col-lg-9">
-    <span>Form fields that will become visible if user saves the route: </span>
+  <div class="col-xs-12 col-md-6 col-lg-4">
+    <span>Save this Route: </span>
     <form id="save-route-form" method="post" action="/new-route">
         <input type="text" name="route" id="route-name" placeholder="Route Name">
         <input type="hidden" name="start-lat" id="start-lat-field" value="{{ start_lat }}" data-startlat="{{ start_lat }}">
@@ -53,22 +53,23 @@
         <input type="submit" id="save-route-button" value="Submit Route">
     </form> 
     </div>
+ <!--    <br>
     <br>
-    <br>
-    <br>
-  </div>
+    <br> -->
+  <!-- </div> -->
 
-  <div class="row">
-  <div class="col-xs-12 col-md-6 col-lg-9">
+  <!-- <div class="row"> -->
+<!--   <div class="col-xs-12 col-md-6 col-lg-4">
       <div id="add-run">
       <button type="button">I've Run this Route</button>
       <span>Form fields that will become visible if user ran the route: </span>
       </div>
-  </div>
-  </div>
+  </div> -->
+  <!-- </div> -->
 
-  <div class="row">
-  <div class="col-xs-12 col-md-6 col-lg-9">
+  <!-- <div class="row"> -->
+  <div class="col-xs-12 col-md-6 col-lg-4">
+  <span>I've Run this Route: </span>
       <form id="save-run-form" method="post" action="/new-run"  >
           <input type="text" name="route" id="route-name2" placeholder="Route Name"><br>
           <input type="hidden" name="start-lat" id="start-lat-field" value="{{ start_lat }}" data-startlat="{{ start_lat }}">
@@ -82,7 +83,7 @@
           <input type="submit" id="add-run-form-submit" value="Submit Route and Run">
       </form>
       </div>
-  </div>
+  <!-- </div> -->
 
 </div>
     <script src="static/js/showmap.js"></script>
