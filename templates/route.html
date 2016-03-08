@@ -5,56 +5,73 @@
 
 {% block content %}
 
-   <p>Current Route:</p>
-   <table border="1" style="width:60%">
-      <tr>
-          <td> ID: {{ route.route_id }}            
-          <td> Route Name: {{ route.route_name }}
-          <td> Add Date: {{ route.add_date }}            
-          <td> Distance (km): {{ route.route_distance }}
-          <!-- <td> Favorite: {{ route.favorite }} -->
-      </tr>
-    </table>
+<div class="container-fluid">
 
-  <div id="map"></div>
-  <div id="right-panel"></div>
-  <div id="mapdata" data-getstartlat="{{ route.start_lat }}" data-getstartlong="{{ route.start_long }}" data-getendlat="{{ route.end_lat }}" data-getendlong="{{ route.end_long }}"></div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-12">
+            <div class="header">        
+                <h3>Route: {{ route.route_name }}</h3>
+            </div>
+        </div>
+    </div>
 
-{% if route.runs %}
+    <div class="row">
+        <div class="col-xs-12 col-md-9">
+            <div id="map" style="height:500px; width: 900px;"></div>
+       </div>
+       <div class="col-xs-12 col-md-3">
+            <div id="right-panel" style="height:500px; width: 400px;"></div>
+       </div>
+       <div id="mapdata" data-getstartlat="{{ route.start_lat }}" data-getstartlong="{{ route.start_long }}" data-getendlat="{{ route.end_lat }}" data-getendlong="{{ route.end_long }}">
+    </div>
 
-    <table style ="width:60%">
-      <tr>
-        <td>Run History for {{ route.route_name }}:</td>
-      </tr>
-    </table>
-    <table border="1" style="width:60%">
-        <tr>
-            <th>Run Date</th>
-            <th>Distance (km)</th>
-            <th>Run Duration</th>
-        </tr>
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-8">
 
-        {% for run in route.runs %}
-        <tr>
-          <td>{{ run.run_date }}</td>
-          <td>{{ route.route_distance }}</td>
-          <td>{{ run.duration }}</td>
-        </tr>
-        {% endfor %}
+            <h4>Route Data</h4>
+            <table class="table table-bordered" >
+                <tr>
+                    <th>ID</th>
+                    <th>Add Date (km)</th>
+                    <th>Distance (km)</th>
+                </tr>
+                <tr>
+                    <td>{{ route.route_id }}</td>            
+                    <td>{{ route.add_date }}    </td>        
+                    <td>{{ route.route_distance }}</td>
+                    <!-- <td> Favorite: {{ route.favorite }} -->
+                </tr>
+            </table>
+        {% if route.runs %}
 
-    </table>
-{% else %}
-    <table style ="width:60%">
-      <tr>
-        <td><br>You have not run this route yet</td>
-      </tr>
-    </table>
-{% endif %}
+            <h4>Run History for {{ route.route_name }}</h4>
+            <table class="table table-bordered" >
+                <tr>
+                    <th>Run Date</th>
+                    <th>Distance (km)</th>
+                    <th>Run Duration</th>
+                </tr>
+
+                {% for run in route.runs %}
+                <tr>
+                  <td>{{ run.run_date }}</td>
+                  <td>{{ route.route_distance }}</td>
+                  <td>{{ run.duration }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+
+        {% else %}
+            <br>
+            <h4>You have not run this route yet</h4>
+        {% endif %}
+        </div>
+    </div>
 
 
-    <script src="/static/js/getsavedmap.js"></script>
+<script src="/static/js/getsavedmap.js"></script>
 
-   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
-    async defer></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
+async defer></script>
     
 {% endblock %}

@@ -42,7 +42,12 @@ overflow: auto;
 }
 
 .header {
-    
+
+}
+
+.table {
+    table table-striped table-bordered">
+    table table-striped table-bordered;
 }
 /*.chart {
     width: 600px;
