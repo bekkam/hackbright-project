@@ -13,7 +13,9 @@ function showSavedMap() {
 
    var map = new google.maps.Map(document.getElementById('map'), {
     zoom: 14,
-    center: {lat: startLat, lng: startLong} 
+    center: {lat: startLat, lng: startLong},
+            styles: MAPSTYLES
+ 
   });
 
 
