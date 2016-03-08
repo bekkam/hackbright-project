@@ -1,7 +1,7 @@
 
 // Line chart for user's run distance over time
 var options = {
-  responsive: false,
+  responsive: true,
   scaleBeginAtZero: false
 };
 var ctxLineDistance = $("#lineChartDistance").get(0).getContext("2d");
@@ -13,7 +13,7 @@ $.get("/user-distance.json", function (data) {
 
 // Line chart for user's running pace over time
 var options = {
-  responsive: false,
+  responsive: true,
   scaleBeginAtZero: false
 };
 var ctxLinePace = $("#lineChartPace").get(0).getContext("2d");

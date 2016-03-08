@@ -6,32 +6,40 @@
 {% block content %}
 
  <!-- Elements for map and panel for directions -->
- <div class="container">
-  <div class="col-xs-12 col-md-6 col-lg-9">
-      <div id="map"></div>
+<div class="container-fluid">
+
+  <div class="row">
+<!--   <div class="col-xs-12 col-md-6 col-lg-9">
+-->   <div class="col-xs-12 col-md-9">
+        <div id="map" style="height:500px; width: 900px;"></div>
+     </div>
+     <div class="col-xs-12 col-md-3">
+        <div id="right-panel" style="height:500px; width: 400px;"></div>
+     </div>
   </div>
 
-  <div class="col-xs-12 col-md-6 col-lg-3">
-      <div id="right-panel"></div>
-  </div>
-
-  <div class="col-xs-12 col-md-6 col-lg-9">
-      <div id="view-streetlight-markers">
-      <form id="show-streelight-form" action="/outages.json">
-          <input type="checkbox" name="streetlight-data">View Streetlight Data
-      <br> 
-      <br>
-      </form>
+  <div class="row">
+  <div class="col-xs-12 col-md-6">
+      <div id="view-streetlight-markers" >
+        <form id="show-streelight-form" action="/outages.json">
+            <input type="checkbox" name="streetlight-data">View Streetlight Data
+            <br> 
+            <br>
+        </form>
       </div>
+    </div>
   </div>
 
 
 <!-- "Save this Route" displays a form if user clicks it -->
+  <div class="row">
   <div class="col-xs-12 col-md-6 col-lg-9">
-    <div id="add-route"> 
+    <div id="add-route"></div> 
     <button type="button">Save this Route</button>
   </div>
+  </div>
 
+  <div class="row">
   <div class="col-xs-12 col-md-6 col-lg-9">
     <span>Form fields that will become visible if user saves the route: </span>
     <form id="save-route-form" method="post" action="/new-route">
@@ -50,13 +58,16 @@
     <br>
   </div>
 
+  <div class="row">
   <div class="col-xs-12 col-md-6 col-lg-9">
       <div id="add-run">
       <button type="button">I've Run this Route</button>
       <span>Form fields that will become visible if user ran the route: </span>
       </div>
   </div>
+  </div>
 
+  <div class="row">
   <div class="col-xs-12 col-md-6 col-lg-9">
       <form id="save-run-form" method="post" action="/new-run"  >
           <input type="text" name="route" id="route-name2" placeholder="Route Name"><br>
