@@ -3,7 +3,6 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, jsonify, redirect
-# from flask_debugtoolbar import DebugToolbarExtension
 import geocoder
 from model import connect_to_db, db, Route, Run, Outage
 from datetime import datetime
@@ -56,7 +55,6 @@ def add_route():
     end_lat = request.form.get("end_lat")
     end_long = request.form.get("end_long")
 
-    # end = request.form.get("end")
     date = datetime.now()
     route = request.form.get("route")
     distance = request.form.get("distance")
@@ -77,23 +75,6 @@ def route_list():
 
     routes = Route.query.all()
     return render_template("route_list.html", routes=routes)
-
-
-# ################ new code #######################
-# @app.route("/get-all-routes.json")
-# def route_list_json():
-#     """JSON information about saved routes."""
-
-#     rows = {}
-#     routes = Route.query.all()
-#     # return render_template("route_list.html", routes=routes)
-
-#     for route in routes:
-#         rows[route.route_id] = {"route_name": route.route_name, "add_date": route.add_date, "route_distance": route.route_distance, "favorite": route.favorite}
-
-#     return jsonify(rows)
-
-# # ####################################
 
 
 @app.route("/routes/<int:route_id>")
@@ -140,28 +121,30 @@ def add_route_and_run():
     end_lat = request.form.get("end_lat")
     end_long = request.form.get("end_long")
 
-    date = datetime.now()
+    add_date = datetime.now()
     route = request.form.get("route")
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
+    date = request.form.get("date")
 
-    print "route name is %s" % route
-    print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
-    new_route = Route(route_name=route, add_date=date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
+    print "date is %s" % date
+
+    # print "route name is %s" % route
+    # print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
+    new_route = Route(route_name=route, add_date=add_date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
-
-    # run_date = request.form.get("date")
-    d = datetime.strptime(run_date, "%m/%d/%Y")
+    print "route committed"
+    d = datetime.strptime(date, "%m/%d/%Y")
 
     duration = request.form.get("duration")
     duration = int(duration)
+    print "d is %s" % (d)
 
     new_run = Run(run_date=d, route_id=new_route.route_id, duration=duration)
     db.session.add(new_run)
     db.session.commit()
 
-    # print "d is %s, duration is %s" % (d, duration)
     return "Your run was saved"
 
 
@@ -171,7 +154,6 @@ def show_profile():
     """Show the current user's profile page."""
 
     ran_routes = db.session.query(Run, Route).join(Route).order_by(Run.run_date.desc()).limit(3).all()
-    # runs = Run.query.order_by(Run.run_date.desc()).limit(3).all()
     routes = Route.query.order_by(Route.add_date.desc()).limit(3).all()
     return render_template("profile.html", routes=routes, ran_routes=ran_routes)
 
@@ -271,8 +253,6 @@ def get_markers():
 
 
 if __name__ == "__main__":
-    # app.debug = True
 
     connect_to_db(app)
-    # DebugToolbarExtension(app)
     app.run()

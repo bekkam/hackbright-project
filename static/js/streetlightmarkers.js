@@ -22,7 +22,6 @@ function clearMarkers() {
 // Define a marker for each latlng. Add it to the map, and to the marker array.
 // Set hasMarkers to true
 function makeMarkers(outages){
-  // console.log(outages);
 
   for (var key in outages) {
       var outage = outages[key];
@@ -47,12 +46,9 @@ function makeMarkers(outages){
 // Populate the map with markers if none are there; otherwise, remove markers from the map
 function getData(evt){
   if (hasMarkers == false) {
-      // alert("you clicked the checkbox");
       $.get("/outages.json", makeMarkers);
-      // alert("processed get request");
   }
   else {
-    // alert("markers already present");
     clearMarkers();
   }
 }

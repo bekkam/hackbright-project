@@ -1,4 +1,3 @@
-
 // Line chart for user's run distance over time
 var options = {
   responsive: true,

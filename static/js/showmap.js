@@ -47,7 +47,6 @@ function displayRoute(origin, destination, service, display){
       if (status === google.maps.DirectionsStatus.OK) {
         directionsDisplay.setDirections(response);  
         calculateTotalDistanceInKilometers(response);
-        // console.log(response);  
       } else {
         alert('Could not display directions due to: ' + status);
       }
@@ -55,9 +54,7 @@ function displayRoute(origin, destination, service, display){
 }
 
 //UTILITY METHOD TO CALC ROUTE DISTANCE IN KM
-function calculateTotalDistanceInKilometers(response) {
-  // alert("calculateTotalDistanceInKilometers function called");
-  // console.log(response);  
+function calculateTotalDistanceInKilometers(response) { 
 
   // get route data needed for db: total distance:
   totalDistance = 0;
@@ -68,10 +65,8 @@ function calculateTotalDistanceInKilometers(response) {
   }
   //because distance.value contains value expressed in meters, convert meters to kilometers
   totalDistance = totalDistance/1000;
-  // alert("total km is " + totalDistance);
   //set the value of the total-distance field in the form
 
-  // Hacking for now; can css later
   $("#total-distance-field1").val(totalDistance);
   $("#total-distance-field2").val(totalDistance);
 
