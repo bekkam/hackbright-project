@@ -36,7 +36,7 @@ class Route(db.Model):
     route_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     # user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     route_name = db.Column(db.String(100))
-    add_date = db.Column(db.DateTime)
+    add_date = db.Column(db.Date)
     start_lat = db.Column(db.Float)
     start_long = db.Column(db.Float)
     end_lat = db.Column(db.Float)

@@ -1,7 +1,6 @@
-"""Basic Map App using Google's API"""
+"""SafeRun App using Google's API"""
 
 from jinja2 import StrictUndefined
-
 from flask import Flask, render_template, request, jsonify, redirect
 import geocoder
 from model import connect_to_db, db, Route, Run, Outage
@@ -9,7 +8,6 @@ from datetime import datetime
 
 app = Flask(__name__)
 
-# Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 
 app.jinja_env.undefined = StrictUndefined
@@ -29,7 +27,6 @@ def get_addresses():
     # get user entered start addresses, and convert it to latlng
     start = request.args.get("start")
     end = request.args.get("end")
-    print "start is ", start
 
     start_lat = geocoder.google(start).latlng[0]
     start_long = geocoder.google(start).latlng[1]
@@ -37,7 +34,6 @@ def get_addresses():
     end_lat = geocoder.google(end).latlng[0]
     end_long = geocoder.google(end).latlng[1]
 
-    print "start_lat is ", start_lat
     return render_template("show-map.html",
                            start_lat=start_lat,
                            start_long=start_long,
@@ -55,13 +51,14 @@ def add_route():
     end_lat = request.form.get("end_lat")
     end_long = request.form.get("end_long")
 
-    date = datetime.now()
     route = request.form.get("route")
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
 
-    # # write to db
-    new_route = Route(route_name=route, add_date=date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
+    date = datetime.now()
+    d = datetime.strptime(date, "%m/%d/%Y")
+    print "d is %s" % d
+    new_route = Route(route_name=route, add_date=d, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
 
@@ -125,9 +122,6 @@ def add_route_and_run():
     route = request.form.get("route")
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
-    date = request.form.get("date")
-
-    print "date is %s" % date
 
     # print "route name is %s" % route
     # print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
@@ -135,7 +129,10 @@ def add_route_and_run():
     db.session.add(new_route)
     db.session.commit()
     print "route committed"
+
+    date = request.form.get("date")
     d = datetime.strptime(date, "%m/%d/%Y")
+    print "date is %s" % date
 
     duration = request.form.get("duration")
     duration = int(duration)
@@ -158,7 +155,7 @@ def show_profile():
     return render_template("profile.html", routes=routes, ran_routes=ran_routes)
 
 
-# Line chart of distance over time
+# CHARTS
 @app.route('/user-distance.json')
 def user_distance_data():
     """Return the data of User's distance (km)."""
@@ -197,7 +194,6 @@ def user_distance_data():
     return jsonify(data_dict)
 
 
-# Line chart for pace over time
 @app.route('/user-pace.json')
 def user_data():
     """Return the data of User's avg pace over time (km)."""
@@ -236,6 +232,7 @@ def user_data():
     return jsonify(data_dict)
 
 
+# STREETLIGHT DATA
 @app.route('/outages.json')
 def get_markers():
     """JSON information about streetlight outages"""
