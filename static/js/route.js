@@ -5,7 +5,6 @@ function showRouteResults(result){
 
 function saveRoute(evt){
   evt.preventDefault();
-
   var formValues = $("#save-route-form").serialize();
   $.post("/new-route", formValues, showRouteResults);
 }

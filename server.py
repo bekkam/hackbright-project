@@ -50,10 +50,10 @@ def get_addresses():
 def add_route():
     """Add a running route to the database"""
 
-    start_lat = request.form.get("start_lat")
-    start_long = request.form.get("start_long")
-    end_lat = request.form.get("end_lat")
-    end_long = request.form.get("end_long")
+    start_lat = request.form.get("start-lat")
+    start_long = request.form.get("start-long")
+    end_lat = request.form.get("end-lat")
+    end_long = request.form.get("end-long")
 
     date = datetime.now()
     route = request.form.get("route")
@@ -116,10 +116,10 @@ def run_detail(run_id):
 def add_route_and_run():
     """Add a run to the database"""
 
-    start_lat = request.form.get("start_lat")
-    start_long = request.form.get("start_long")
-    end_lat = request.form.get("end_lat")
-    end_long = request.form.get("end_long")
+    start_lat = request.form.get("start-lat")
+    start_long = request.form.get("start-long")
+    end_lat = request.form.get("end-lat")
+    end_long = request.form.get("end-long")
 
     add_date = datetime.now()
     route = request.form.get("route")
@@ -130,7 +130,7 @@ def add_route_and_run():
     print "date is %s" % date
 
     # print "route name is %s" % route
-    # print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
+    print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
     new_route = Route(route_name=route, add_date=add_date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
