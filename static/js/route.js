@@ -5,22 +5,9 @@ function showRouteResults(result){
 
 function saveRoute(evt){
   evt.preventDefault();
-  
+
   var formValues = $("#save-route-form").serialize();
   $.post("/new-route", formValues, showRouteResults);
-
-  // var formInputs = {
-  //   "route": $("#route-name").val(),
-
-  //   "start_lat": $("#start-lat-field").val(),
-  //   "start_long": $("#start-long-field").val(),
-  //   "end_lat": $("#end-lat-field").val(),
-  //   "end_long": $("#end-long-field").val(),
-
-  //   "distance":$("#total-distance-field1").val(),
-  //   "favorite":$("#favorite-field1").val()
-  // }; 
-  // $.post("/new-route", formInputs, showRouteResults);
 }
 
 function validateRouteForm(event){
