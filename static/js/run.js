@@ -5,7 +5,6 @@ function showRunResults(result){
 
 function saveRun(evt){
   evt.preventDefault();
-  alert("save Run fxn called");
   var formInputs = {
     "route": $("#route-name2").val(),
 
@@ -19,7 +18,6 @@ function saveRun(evt){
     "date": $("#run-date-field").val(),
     "duration": $("#run-duration-field").val()
   }; 
-  alert("end of formInputs");
   $.post("/new-run", formInputs, showRunResults);
 }
 
