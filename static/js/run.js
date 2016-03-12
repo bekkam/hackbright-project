@@ -9,17 +9,19 @@ function saveRun(evt){
   $.post("/new-run", saveRunFormValues, showRunResults);
 }
 
-
 function validateRunForm(event){
   event.preventDefault();
 
-  var charInput = $("#run-name").val().length;
+  var charInput = $("#route-name2").val().length;
+  var duration = $("#run-duration-field").val();
+  // alert(duration);
   if (charInput < 2) {
     alert("Please enter at least two characters name for the Route");
+  } else if (isNaN(+duration) == true) {
+    alert("Please enter a number for the duration of the Route");
   } else {
-    saveRoute(event);
+    saveRun(event);
   }
 }
 
-
-$("#save-run-form").on("submit", saveRun);
+$("#save-run-form").on("submit", validateRunForm);
