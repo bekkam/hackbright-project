@@ -15,15 +15,7 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-12 col-md-9">
-            <div id="map" style="height:500px; width: 900px;"></div>
-       </div>
-       <div class="col-xs-12 col-md-3">
-            <div id="right-panel" style="height:500px; width: 400px;"></div>
-       </div>
-       <div id="mapdata" data-getstartlat="{{ route.start_lat }}" data-getstartlong="{{ route.start_long }}" data-getendlat="{{ route.end_lat }}" data-getendlong="{{ route.end_long }}">
-    </div>
+    {% include 'helper_templates/map.html' %}
 
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-8">
@@ -47,9 +39,9 @@
             <h4>Run History for {{ route.route_name }}</h4>
             <table class="table table-bordered" >
                 <tr>
-                    <th>Run Date</th>
+                    <th>Date of Run</th>
                     <th>Distance (km)</th>
-                    <th>Run Duration</th>
+                    <th>Duration</th>
                 </tr>
 
                 {% for run in route.runs %}

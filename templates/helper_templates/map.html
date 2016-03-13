@@ -1,0 +1,11 @@
+ <!-- Helper template that shows map and directions panel -->
+
+    <div class="row">
+        <div class="col-xs-12 col-md-9">
+            <div id="map" style="height:500px; width: 900px;"></div>
+            <div id="mapdata" data-getstartlat="{{ route.start_lat }}" data-getstartlong="{{ route.start_long }}" data-getendlat="{{ route.end_lat }}" data-getendlong="{{ route.end_long }}"></div>
+       </div>
+       <div class="col-xs-12 col-md-3">
+            <div id="right-panel" style="height:500px; width: 400px;"></div>
+       </div>
+    </div>
