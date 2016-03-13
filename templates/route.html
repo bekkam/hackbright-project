@@ -3,6 +3,7 @@
 {% block title %}Route Detail{% endblock %}
 
 
+
 {% block content %}
 
 <div class="container-fluid">
@@ -21,22 +22,16 @@
         <div class="col-xs-12 col-md-12 col-lg-8">
 
             <h4>Route Data</h4>
-            <table class="table table-bordered" >
-                <tr>
-                    <th>Route ID</th>
-                    <th>Date Added </th>
-                    <th>Distance (km)</th>
-                </tr>
-                <tr>
-                    <td>{{ route.route_id }}</td>            
-                    <td>{{ route.add_date }}    </td>        
-                    <td>{{ route.route_distance }}</td>
-                    <!-- <td> Favorite: {{ route.favorite }} -->
-                </tr>
-            </table>
+
+            {% import 'helper_templates/tables.html' as tables %}
+
+            {{ tables.row(header1='Route ID', header2='Date Added', header3='Distance (km)', data1=route.route_id , data2=route.add_date, data3=route.route_distance) }}      
+
         {% if route.runs %}
 
             <h4>Run History for {{ route.route_name }}</h4>
+
+
             <table class="table table-bordered" >
                 <tr>
                     <th>Date of Run</th>

@@ -1,0 +1,22 @@
+{% macro row(header1='text', header2='text', header3='text', header4='', data1='text', data2='text', data3='text', data4='') -%}
+   <table class="table table-bordered table-bordered" >
+        <tr>
+            <th>{{ header1 }}</th>
+            <th>{{ header2 }} </th>
+            <th>{{ header3 }} </th>
+            {% if header4 %}
+            <th>{{ header4 }} </th>
+           {% endif %}
+         
+        </tr>
+        <tr>
+            <td>{{ data1 }}</td>            
+            <td>{{ data2 }}</td> 
+            <td>{{ data3 }}</td> 
+            {% if data4 %}
+            <td>{{ data4 }}</td>               
+           {% endif %}
+
+        </tr>
+    </table>
+{%- endmacro %}
