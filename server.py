@@ -110,12 +110,28 @@ def run_detail(run_id):
 
     run = Run.query.get(run_id)
     route = Route.query.get(run.route_id)
+
     return render_template("run.html", run=run, route=route)
+
+
+# ############# new code ##########33
+@app.route("/route-detail.json")
+def get_route_by_id(id_number):
+    """Show info about the route using jsonify."""
+
+    current = Route.get_by_id(id_number)
+
+    # for column in current_route:
+    current.id_number = {"route_name": current.route_name, "add_date": current.add_date}
+    print current
+
+    # return jsonify(current_route)
+# # ########################################3
 
 
 @app.route('/new-run', methods=["POST"])
 def add_route_and_run():
-    """Add a run to the database"""
+    """Add a run to the database."""
 
     start_lat = request.form.get("start-lat")
     start_long = request.form.get("start-long")
@@ -128,10 +144,10 @@ def add_route_and_run():
     favorite = request.form.get("favorite")
     date = request.form.get("date")
 
-    print "date is %s" % date
+    print "add_date is %s" % add_date
 
     # print "route name is %s" % route
-    # print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
+    print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
     new_route = Route(route_name=route, add_date=add_date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
