@@ -5,6 +5,7 @@ from jinja2 import StrictUndefined
 from flask import Flask, render_template, request, jsonify, redirect
 import geocoder
 from model import connect_to_db, db, Route, Run, Outage
+import server_utilities
 from datetime import datetime
 
 app = Flask(__name__)
@@ -130,7 +131,7 @@ def add_route_and_run():
     print "date is %s" % date
 
     # print "route name is %s" % route
-    print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
+    # print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
     new_route = Route(route_name=route, add_date=add_date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
@@ -173,11 +174,9 @@ def user_distance_data():
     # to the data array, in string format
 
     for item in run_date_distance:
-        date = item[0]
+        date, distance = item
         labels.append(str(date))
-        distance = item[1]
-        distance = str(distance)
-        data.append(distance)
+        data.append(str(distance))
 
     data_dict = {
         "labels": labels,
@@ -209,13 +208,9 @@ def user_data():
     run_date_distance_duration = db.session.query(Run.run_date, Route.route_distance, Run.duration).order_by(Run.run_date).join(Route).all()
 
     for item in run_date_distance_duration:
-        date = item[0]
+        date, distance, duration = item
         labels.append(str(date))
-
-        distance = item[1]
-        duration = item[2]
-        km_per_hour = (distance/duration) * 60
-        km_per_hour = str(round(km_per_hour, 2))
+        km_per_hour = str(server_utilities.get_distance_per_hour(distance, duration))
         data.append(km_per_hour)
 
     data_dict = {

@@ -14,9 +14,9 @@ function validateRunForm(event){
 
   var charInput = $("#route-name2").val().length;
   var duration = $("#run-duration-field").val();
-  // alert(duration);
   if (charInput < 2) {
     alert("Please enter at least two characters name for the Route");
+    // Alert the user if their input for duration is not purely numeric
   } else if (isNaN(+duration) == true) {
     alert("Please enter a number for the duration of the Route");
   } else {
