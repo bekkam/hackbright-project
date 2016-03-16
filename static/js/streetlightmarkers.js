@@ -22,35 +22,43 @@ function clearMarkers() {
 // Define a marker for each latlng. Add it to the map, and to the marker array.
 // Set hasMarkers to true
 function makeMarkers(outages){
+  // Make the query string for SODA API
+  url = "https://data.sfgov.org/resource/vw6y-z8j6.json?"
+    +"category=Streetlights"
+    +"&Status=Open"
 
-  for (var key in outages) {
-      var outage = outages[key];
+    // Get data, and add marker to lat/long on map
+    $.getJSON(url, function(data) {
+          $.each(data, function(i, entry) {
+            // console.log(entry.point);
+              var marker = new google.maps.Marker({
+                  position: new google.maps.LatLng(entry.point.latitude, 
+                                                   entry.point.longitude),
+                  map: map,
+                  title: entry.point.latitude + ", " + entry.point.longitude,
+                  icon: {
+                      path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
+                      strokeColor: "navy",
+                      scale: 3,
+                      fillOpacity: 0.6
+                  }
+              });
+              markers.push(marker);
+          });
+          hasMarkers = true;
 
-      marker = new google.maps.Marker({
-          position: new google.maps.LatLng(outage.outage_lat, outage.outage_long),
-          map: map,
-          title: 'Marker ID: ' + key,
-          icon: {
-              path: google.maps.SymbolPath.BACKWARD_CLOSED_ARROW,
-              strokeColor: "navy",
-              scale: 3,
-              fillOpacity: 0.6
-            }
-      });
-      markers.push(marker);
-  }
-  hasMarkers = true;
+    });
 }
 
 
-// Populate the map with markers if none are there; otherwise, remove markers from the map
-function getData(evt){
+// Call makeMarkers if the map does not have markers; otherwise, remove markers from the map
+function checkForMarkers(evt){
   if (hasMarkers == false) {
-      $.get("/outages.json", makeMarkers);
+      makeMarkers();
   }
   else {
     clearMarkers();
   }
 }
-// call getDataFunction when user checks box
-$("#show-streelight-form").on("change", getData);
+// call checkForMarkers when user checks box
+$("#show-streelight-form").on("change", checkForMarkers);
