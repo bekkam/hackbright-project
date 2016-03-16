@@ -23,7 +23,9 @@
       <div id="view-streetlight-markers" >
         <form id="show-streelight-form" action="/outages.json">
           <h4>
-            <input type="checkbox" name="streetlight-data"> View Streetlight Data</h4>
+            <input type="checkbox" name="streetlight-data"> View Streetlight Data Markers</h4>
+          <h4>
+            <input type="checkbox" name="streetlight-data-heatmap"> View Heatmap</h4>
             <br> 
         </form>
       </div>
@@ -79,5 +81,8 @@
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&callback=updateMap"
 async defer></script>
+
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&libraries=visualization">
 {% endblock %}
 
