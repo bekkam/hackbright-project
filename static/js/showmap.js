@@ -3,7 +3,8 @@ var directionsDisplay;
 var directionsService;
 var map;
 var totalDistance;
-
+var newRoute;
+var waypoints;
 
 function updateMap() {
   var startLat = $('#start-lat-field').data('startlat');
@@ -29,8 +30,12 @@ function updateMap() {
 
     directionsDisplay.addListener('directions_changed', function() {
         calculateTotalDistanceInKilometers(directionsDisplay.getDirections());
+        // everytime the directions change (including user dragging), update the polyline
+        getPolyline(directionsDisplay.getDirections());
+        getWaypoints(directionsDisplay.getDirections());
     });
     
+
     displayRoute({lat: startLat, lng: startLong }, {lat: endLat, lng: endLong }, directionsService, directionsDisplay)
 
 }
@@ -45,6 +50,8 @@ function displayRoute(origin, destination, service, display){
       avoidTolls: true
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
+        // debugging: log the response object
+        console.log(response.routes[0]);
         directionsDisplay.setDirections(response);  
         calculateTotalDistanceInKilometers(response);
       } else {
@@ -71,4 +78,66 @@ function calculateTotalDistanceInKilometers(response) {
   $("#total-distance-field2").val(totalDistance);
 
 }
+
+
+
+
+
+function Route(name, polyline) {
+  this.name = name;
+  this.polyline = polyline;
+}
+
+Route.prototype.getName = function() {
+  return this.name;
+}
+
+
+// GET THE POLYLINE FOR THE CURRENT ROUTE
+function getPolyline(response) {
+  var poly = response.routes[0]["overview_polyline"];
+  console.log(poly);
+  // return poly;
+  // newRoute = new Route("testName", poly);
+  // console.log(newRoute);
+  // console.log(newRoute.getName());
+}
+
+function getWaypoints(response) {
+  var overviewPath = response.routes[0]["overview_path"];
+  console.log(overviewPath);
+  waypoints = JSON.stringify(overviewPath);
+  console.log(JSON.stringify(overviewPath));
+  console.log(waypoints);
+
+  // iterate over each latlng pair in overviewPath, convert it to a JSON representation
+  // and add it to our waypoints array
+  // for (var i = 0; i < overviewPath.length; i++) {
+  //   var latlng = JSON.stringify(overviewPath[i]);
+  //   console.log(latlng);
+  //   waypoints.push(latlng);
+  // }
+  console.log(typeof(waypoints));
+}
+
+
+function recenterMap() {
+  // var startLat = waypoints[1];
+  // console.log(startLat.length);
+
+
+  //  var dataArray = google.maps.Data.MultiPoint({lat:37.78083,lng:-122.4145});
+  //  console.log(dataArray);
+  //  directionsService = new google.maps.DirectionsService();
+
+  //  $("#right-panel").empty();
+  //  var map2 = new google.maps.Map(document.getElementById('map2'), {
+  //       zoom: 14,
+  //       center: {lat:37.78083,lng:-122.4145}, 
+  //       styles: MAPSTYLES
+  //   });
+
+
+}
+
 

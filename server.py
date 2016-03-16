@@ -260,6 +260,13 @@ def get_markers():
 
     return jsonify(markers)
 
+
+@app.route("/test")
+def test_live_data():
+
+    return render_template("test_live_data_map.html")
+
+
 # ##################################################
 
 
