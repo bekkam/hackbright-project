@@ -1,8 +1,7 @@
 var marker;
 var markers = [];
 var hasMarkers = false;
-var heatmap;
-var latLngs =[];
+
 // POPULATE MAP WITH MARKERS/REMOVE MARKERS ON USER CLICK:
 
 // 1. Functions to remove markers from map:
@@ -23,7 +22,7 @@ function clearMarkers() {
 // 2. Function to add markers to the map:
 // Define a marker for each latlng. Add it to the map, and to the marker array.
 // Set hasMarkers to true
-function makeMarkers(outages){
+function makeMarkers(){
   // Make the query string for SODA API
   url = "https://data.sfgov.org/resource/vw6y-z8j6.json?"
     +"category=Streetlights"
@@ -64,26 +63,3 @@ function checkForMarkers(evt){
 }
 // call checkForMarkers when user checks box
 $("#show-streelight-form").on("change", checkForMarkers);
-
-
-function getLatLongs() {
-  for (var i = 0; i < markers.length; i++) {
-    latLngs.append(marker.position);
-  }
-  return latLngs;
-}
-
-function generateHeatMap() {
-  alert("generateHeatMap called");
-   heatmap = new google.maps.visualization.HeatmapLayer({
-      data: getLatLongs(),
-      map: map
-    });
-
-   heatmap.setMap(map);
-}
-
-
-
-$("#streetlight-data-heatmap").on("change", generateHeatMap);
-

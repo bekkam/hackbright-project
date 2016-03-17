@@ -96,7 +96,7 @@ Route.prototype.getName = function() {
 // GET THE POLYLINE FOR THE CURRENT ROUTE
 function getPolyline(response) {
   var poly = response.routes[0]["overview_polyline"];
-  console.log(poly);
+  // console.log(poly);
   // return poly;
   // newRoute = new Route("testName", poly);
   // console.log(newRoute);
@@ -105,10 +105,10 @@ function getPolyline(response) {
 
 function getWaypoints(response) {
   var overviewPath = response.routes[0]["overview_path"];
-  console.log(overviewPath);
+  // console.log(overviewPath);
   waypoints = JSON.stringify(overviewPath);
-  console.log(JSON.stringify(overviewPath));
-  console.log(waypoints);
+  // console.log(JSON.stringify(overviewPath));
+  // console.log(waypoints);
 
   // iterate over each latlng pair in overviewPath, convert it to a JSON representation
   // and add it to our waypoints array

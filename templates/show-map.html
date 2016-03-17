@@ -24,14 +24,21 @@
         <form id="show-streelight-form" action="/outages.json">
           <h4>
             <input type="checkbox" name="streetlight-data"> View Streetlight Data Markers</h4>
-          <h4>
-            <input type="checkbox" name="streetlight-data-heatmap"> View Heatmap</h4>
-            <br> 
         </form>
       </div>
     </div>
   </div>
 
+ <div class="row">
+  <div class="col-xs-12 col-md-6">
+      <div id="view-heatmap" >
+        <form id="show-streelight-form">
+          <h4>
+            <input type="checkbox" name="streetlight-data-heatmap" id="heatmap"> View Heatmap</h4>
+        </form>
+      </div>
+  </div>
+</div>
 
   <div class="row">
   <div class="col-xs-12 col-md-6 col-lg-4">
@@ -67,7 +74,6 @@
           <input type="submit" id="add-run-form-submit" value="Submit Route and Run">
       </form>
   </div>
-
 </div>
 
 
@@ -75,14 +81,12 @@
 <script src="/static/js/mapstyles.js"></script>
 
 <script src="static/js/streetlightmarkers.js"></script>
+<script src="static/js/streetlightheatmap.js"></script>
+
 <script src="static/js/route.js"></script>
 <script src="static/js/run.js"></script>
 
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&callback=updateMap"
-async defer></script>
-
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&libraries=visualization">
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&libraries=visualization&callback=updateMap"async defer></script>
 {% endblock %}
 
