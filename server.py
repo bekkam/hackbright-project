@@ -89,7 +89,8 @@ def all_route_data():
     courses = Route.query.all()
 
     for course in courses:
-        table[course.route_id] = {"route_id": course.route_id, "route_name": course.route_name, "route_distance": course.route_distance}
+        string_add_date = datetime.strftime(course.add_date, "%m/%d/%Y")
+        table[course.route_id] = {"route_id": course.route_id, "route_name": course.route_name, "add_date": string_add_date, "route_distance": course.route_distance}
 
     return jsonify(table)
 
