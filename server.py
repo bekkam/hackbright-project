@@ -78,7 +78,6 @@ def route_list():
     return render_template("route_list.html", routes=routes)
 
 
-# ############################################
 # route to return json of data for all routes
 @app.route('/tables.json')
 def all_route_data():
