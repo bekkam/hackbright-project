@@ -1,6 +1,6 @@
 "use strict";
 
-$.getJSON('tables.json', function(data) {
+$.getJSON('all-route-data.json', function(data) {
       $.each(data, function(id, route) {
             console.log(id);
             console.log(route);

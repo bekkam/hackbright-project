@@ -79,19 +79,19 @@ def route_list():
 
 
 # route to return json of data for all routes
-@app.route('/tables.json')
+@app.route('/all-route-data.json')
 def all_route_data():
     """Return JSON of all routes."""
 
-    table = {}
+    allroutedata = {}
 
-    courses = Route.query.all()
+    routes = Route.query.all()
 
-    for course in courses:
-        string_add_date = datetime.strftime(course.add_date, "%m/%d/%Y")
-        table[course.route_id] = {"route_id": course.route_id, "route_name": course.route_name, "add_date": string_add_date, "route_distance": course.route_distance}
+    for route in routes:
+        string_add_date = datetime.strftime(route.add_date, "%m/%d/%Y")
+        allroutedata[route.route_id] = {"route_id": route.route_id, "route_name": route.route_name, "add_date": string_add_date, "route_distance": route.route_distance}
 
-    return jsonify(table)
+    return jsonify(allroutedata)
 
 
 @app.route("/routes/<int:route_id>")
