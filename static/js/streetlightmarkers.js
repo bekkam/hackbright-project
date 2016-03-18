@@ -63,4 +63,4 @@ function checkForMarkers(evt){
 }
 
 // call checkForMarkers when user checks box
-$("#show-streelight-form").on("change", checkForMarkers);
+$("#marker-checkbox").on("change", checkForMarkers);

@@ -21,10 +21,8 @@
   <div class="row">
   <div class="col-xs-12 col-md-6">
       <div id="view-streetlight-markers" >
-        <form id="show-streelight-form" action="/outages.json">
           <h4>
-            <input type="checkbox" name="streetlight-data"> View Streetlight Data Markers</h4>
-        </form>
+            <input type="checkbox" name="streetlight-data" id="marker-checkbox"> View Streetlight Data Markers</h4>
       </div>
     </div>
   </div>
@@ -32,10 +30,8 @@
  <div class="row">
   <div class="col-xs-12 col-md-6">
       <div id="view-heatmap" >
-        <form id="show-streelight-form">
           <h4>
             <input type="checkbox" name="streetlight-data-heatmap" id="heatmap"> View Heatmap</h4>
-        </form>
       </div>
   </div>
 </div>
@@ -76,17 +72,21 @@
   </div>
 </div>
 
-
+<!-- show the map -->
 <script src="static/js/showmap.js"></script>
+<!-- style the map -->
 <script src="/static/js/mapstyles.js"></script>
 
+<!-- add marker and heatmap features to map -->
 <script src="static/js/streetlightmarkers.js"></script>
 <script src="static/js/streetlightheatmap.js"></script>
 
+<!-- process form data for a new route, or a new run -->
 <script src="static/js/route.js"></script>
 <script src="static/js/run.js"></script>
 
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&libraries=visualization&callback=updateMap"async defer></script>
+
 {% endblock %}
 

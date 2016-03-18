@@ -30,20 +30,15 @@ def get_addresses():
     # get user entered start addresses, and convert it to latlng
     start = request.args.get("start")
     end = request.args.get("end")
-    print "start is ", start
 
-    start_lat = geocoder.google(start).latlng[0]
-    start_long = geocoder.google(start).latlng[1]
+    start_lat_long = server_utilities.get_lat_long(start)
+    end_lat_long = server_utilities.get_lat_long(end)
 
-    end_lat = geocoder.google(end).latlng[0]
-    end_long = geocoder.google(end).latlng[1]
-
-    print "start_lat is ", start_lat
     return render_template("show-map.html",
-                           start_lat=start_lat,
-                           start_long=start_long,
-                           end_lat=end_lat,
-                           end_long=end_long)
+                           start_lat=start_lat_long[0],
+                           start_long=start_lat_long[1],
+                           end_lat=end_lat_long[0],
+                           end_long=end_lat_long[1])
 
 
 # ROUTES
