@@ -1,15 +1,22 @@
 """Helper functions for server.py"""
 
-import geocoder
-
 
 def get_distance_per_hour(distance, duration_in_minutes):
-    """Calculates distance per hour, rounded to two decimals"""
+    """Calculates pace (distance over time) per hour, rounded to two decimals
 
-    return ((distance/duration_in_minutes) * 60)
+    distance: a float
+    duration: a float
+    returns: distance over duration, multiplied by 60
 
 
-def get_lat_long(string_location):
-    """Returns array of lat, longitude for a given location"""
+        >>> get_distance_per_hour(1.2, 10)
+        '7.20'
+    """
+    result = (distance/duration_in_minutes) * 60
+    return "{0:.2f}".format(result)
 
-    return geocoder.google(string_location)
+
+# def get_lat_long(string_location):
+#     """Returns array of lat, longitude for a given location"""
+
+#     return geocoder.google(string_location)

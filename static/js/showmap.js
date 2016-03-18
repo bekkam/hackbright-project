@@ -8,6 +8,8 @@ var newRoute;
 var waypoints;
 
 function updateMap() {
+
+
   var startLat = $('#start-lat-field').data('startlat');
   var startLong = $('#start-long-field').data('startlong');
 

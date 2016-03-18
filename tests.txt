@@ -1,0 +1,11 @@
+Testing
+-------
+
+import function::
+
+    >>> from server_utilities import get_distance_per_hour
+
+Then, let's try it out::
+
+    >>> get_distance_per_hour(1.2, 10)
+    '7.20'

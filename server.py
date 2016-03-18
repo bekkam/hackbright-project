@@ -30,15 +30,24 @@ def get_addresses():
     # get user entered start addresses, and convert it to latlng
     start = request.args.get("start")
     end = request.args.get("end")
+    # print start
+    # print end
 
-    start_lat_long = server_utilities.get_lat_long(start)
-    end_lat_long = server_utilities.get_lat_long(end)
+    print "start is ", start
 
+    start_lat = geocoder.google(start).latlng[0]
+    start_long = geocoder.google(start).latlng[1]
+    # start_lat_long = server_utilities.get_lat_long(start)
+    # end_lat_long = server_utilities.get_lat_long(end)
+    end_lat = geocoder.google(end).latlng[0]
+    end_long = geocoder.google(end).latlng[1]
+
+    print "start_lat is ", start_lat
     return render_template("show-map.html",
-                           start_lat=start_lat_long[0],
-                           start_long=start_lat_long[1],
-                           end_lat=end_lat_long[0],
-                           end_long=end_lat_long[1])
+                           start_lat=start_lat,
+                           start_long=start_long,
+                           end_lat=end_lat,
+                           end_long=end_long)
 
 
 # ROUTES
@@ -88,6 +97,17 @@ def all_route_data():
 
     return jsonify(allroutedata)
 
+# route to return json of data for single route
+# @app.route("/single-route-data.json")
+# def get_route_by_id():
+#     """Return JSON of single route."""
+
+#     current = Route.get_by_id(id_number)
+
+#     # for column in current_route:
+#     current.id_number = {"route_name": current.route_name, "add_date": current.add_date}
+#     print current
+
 
 @app.route("/routes/<int:route_id>")
 def route_detail(route_id):
@@ -123,21 +143,6 @@ def run_detail(run_id):
     route = Route.query.get(run.route_id)
 
     return render_template("run.html", run=run, route=route)
-
-
-# ############# new code ##########33
-@app.route("/route-detail.json")
-def get_route_by_id(id_number):
-    """Show info about the route using jsonify."""
-
-    current = Route.get_by_id(id_number)
-
-    # for column in current_route:
-    current.id_number = {"route_name": current.route_name, "add_date": current.add_date}
-    print current
-
-    # return jsonify(current_route)
-# # ########################################3
 
 
 @app.route('/new-run', methods=["POST"])
@@ -237,7 +242,7 @@ def user_data():
     for item in run_date_distance_duration:
         date, distance, duration = item
         labels.append(str(date))
-        km_per_hour = str(server_utilities.get_distance_per_hour(distance, duration))
+        km_per_hour = server_utilities.get_distance_per_hour(distance, duration)
         data.append(km_per_hour)
 
     data_dict = {
@@ -279,4 +284,5 @@ def get_markers():
 if __name__ == "__main__":
 
     connect_to_db(app)
+    # app.run(debug=True)
     app.run()
