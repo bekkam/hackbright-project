@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
@@ -7,10 +7,21 @@
 
 </head>
 
-<body>
+<body> -->
+
+{% extends 'base.html' %}
+
+{% block title %}Route List{% endblock %}
+
+
+{% block content %}
+
+
+<div class="container-fluid">
+      <h2>Routes</h2>
 <script src="static/js/routejsontest.js"></script>
 
-          <table id="personDataTable" border="1">
+          <table id="allRoutesDataTable" border="1">
               <tr>
               <th>Route Id</th>
               <th>Route Name</th>
@@ -21,8 +32,9 @@
     
           </table>
 
+</div>
+{% endblock %}
 
-
-</body>
-</html>
+<!-- </body>
+</html> -->
 
