@@ -9,8 +9,6 @@ password = os.environ['PGPASSWORD']
 
 db = SQLAlchemy()
 
-from datetime import datetime
-
 ##############################################################################
 # Model definitions
 
@@ -38,7 +36,7 @@ class Route(db.Model):
     # _SELECT_SQL = "SELECT * FROM Routes WHERE route_id = :route_id"
 
     route_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    # user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     route_name = db.Column(db.String(100))
     add_date = db.Column(db.Date)
     start_lat = db.Column(db.Float)
@@ -49,8 +47,8 @@ class Route(db.Model):
     favorite = db.Column(db.Boolean)
 
     # Define relationship to user: a user has many routes
-    # user = db.relationship("User",
-    #                        backref=db.backref("routes"))
+    user = db.relationship("User",
+                           backref=db.backref("routes"))
     # def __init__(self, name):
     #     self.name = name
 
@@ -76,12 +74,17 @@ class Run(db.Model):
 
     run_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     run_date = db.Column(db.Date)
     duration = db.Column(db.Integer)
 
     # Define relationship to route: a route has many runs
     route = db.relationship("Route",
                             backref=db.backref("runs", order_by=run_id))
+
+    # Define relationship to user: a user has many runs
+    user = db.relationship("User",
+                           backref=db.backref("users"))
 
     def __repr__(self):
         """Provide helpful representation when printed."""

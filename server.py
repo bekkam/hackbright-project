@@ -20,7 +20,7 @@ app.jinja_env.undefined = StrictUndefined
 def index():
     """Show blank map and form for addresses"""
 
-    return render_template("index.html")
+    return render_template("login.html")
 
 
 @app.route('/draw-route')

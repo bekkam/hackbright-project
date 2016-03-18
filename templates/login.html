@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Login Page{% endblock %}
+
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="hero-unit">
+            <h2> SafeRun </h2>
+        </div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-12">    
+            <form id="address-form" method="get" action="/draw-route">
+                <br><h3>Login</h3>
+                    <input type="text" name="start" id="pointOne" placeholder="email address"><br>
+                    <input type="text" name="end" id="pointTwo" placeholder="password"><br>
+                <input type="submit" id="submit-button" value="Sign in">
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
