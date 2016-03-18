@@ -2,9 +2,9 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, request, jsonify, redirect
+from flask import Flask, render_template, request, jsonify, redirect, session, flash
 import geocoder
-from model import connect_to_db, db, Route, Run, Outage
+from model import connect_to_db, db, User, Route, Run, Outage
 import server_utilities
 from datetime import datetime
 
@@ -17,10 +17,82 @@ app.jinja_env.undefined = StrictUndefined
 
 
 @app.route('/', methods=['GET'])
-def index():
-    """Show blank map and form for addresses"""
+def login_form():
+    """Show form for user signup"""
 
-    return render_template("login.html")
+    return render_template("login_form.html")
+
+# ############## Process User login, logout, and registration ######
+
+
+@app.route('/register', methods=['POST'])
+def register_process():
+    """Process registration."""
+
+    email = request.form["email"]
+    password = request.form["password"]
+
+    # TODO: check if username is already taken
+    user = User.query.filter_by(email=email).first()
+    print "user is ", user
+
+    if user is not None:
+        print "user is not None"
+        # flash("That email is already taken." % email)
+    #     return redirect("/")
+    # else:
+
+    new_user = User(email=email, password=password)
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    flash("User %s added." % email)
+    print "new user added"
+    return redirect("/")
+
+
+@app.route('/homepage', methods=['POST'])
+def login_process():
+    """Process login."""
+
+    # Get form variables
+    email = request.form["email"]
+    password = request.form["password"]
+
+    user = User.query.filter_by(email=email).first()
+
+    if not user:
+        flash("No such user")
+        return redirect("/")
+
+    if user.password != password:
+        flash("Incorrect password")
+        return redirect("/")
+
+    session["user_id"] = user.user_id
+
+    flash("Logged in.  Welcome %s!" % email)
+    # return redirect("/users/%s" % user.user_id)
+    return render_template("homepage.html")
+
+
+@app.route('/logout')
+def logout():
+    """Log out."""
+
+    del session["user_id"]
+    flash("Logged Out.")
+    return redirect("/")
+
+
+@app.route('/homepage')
+def index():
+    """Show user homepage"""
+
+    return render_template("homepage.html")
+
+# ##############################################
 
 
 @app.route('/draw-route')

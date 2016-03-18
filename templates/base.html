@@ -15,6 +15,7 @@
 </head>
 <body>
 
+
 <nav class="navbar navbar-default" >
   <div class="container-fluid">
     <div class="navbar-header">
@@ -29,7 +30,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="/">SafeRun</a>
+      <a class="navbar-brand" href="/homepage">SafeRun</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -38,11 +39,21 @@
         <li><a href="/runs">Runs</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Log Out</a></li>
+        <li>
+          {% if "user_id" in session %}
+              <a href="/logout">Logout</a>
+          {% else %}
+              <a href="/login">Login</a>
+          {% endif %}
+          <!-- <a href="#">Log Out</a> -->
+        </li>
       </ul>
     </div>
   </div>
 </nav>
+    {% for flash in get_flashed_messages() %}
+      {{ flash }}
+    {% endfor %}
 
     {% block content %}
     BODY CONTENT GOES HERE
