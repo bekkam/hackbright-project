@@ -1,17 +1,28 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <script src="http://code.jquery.com/jquery.js"></script>
 
-{% block title %}Route List{% endblock %}
+</head>
+
+<body>
+<script src="static/js/routejsontest.js"></script>
+
+          <table id="personDataTable" border="1">
+              <tr>
+              <th>Route Id</th>
+              <th>Route Name</th>
+              <!-- <th>Date Added</th> -->
+              <th>Distance</th>
+
+              </tr>
+    
+          </table>
 
 
-{% block content %}
 
+</body>
+</html>
 
-<div class="container-fluid">
-
-  <h2>Routes</h2>
-
-  {% include 'helper_templates/route_table.html' %}
-
-
-</div>
-{% endblock %}

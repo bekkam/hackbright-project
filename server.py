@@ -78,6 +78,22 @@ def route_list():
     return render_template("route_list.html", routes=routes)
 
 
+# ############################################
+# route to return json of data for all routes
+@app.route('/tables.json')
+def all_route_data():
+    """Return JSON of all routes."""
+
+    table = {}
+
+    courses = Route.query.all()
+
+    for course in courses:
+        table[course.route_id] = {"route_id": course.route_id, "route_name": course.route_name, "route_distance": course.route_distance}
+
+    return jsonify(table)
+
+
 @app.route("/routes/<int:route_id>")
 def route_detail(route_id):
     """Show info about route."""
@@ -247,6 +263,7 @@ def user_data():
     return jsonify(data_dict)
 
 
+# MARKER DATA
 @app.route('/outages.json')
 def get_markers():
     """JSON information about streetlight outages"""
@@ -259,12 +276,6 @@ def get_markers():
         markers[outage.marker_id] = {"outage_lat": outage.outage_lat, "outage_long": outage.outage_long}
 
     return jsonify(markers)
-
-
-@app.route("/test")
-def test_live_data():
-
-    return render_template("test_live_data_map.html")
 
 
 # ##################################################

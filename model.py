@@ -33,7 +33,7 @@ class Route(db.Model):
 
     __tablename__ = "routes"
 
-    _SELECT_SQL = "SELECT * FROM Routes WHERE route_id = :route_id"
+    # _SELECT_SQL = "SELECT * FROM Routes WHERE route_id = :route_id"
 
     route_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     # user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -58,11 +58,11 @@ class Route(db.Model):
         return "<Route route_id=%s, route_name=%s, add_date=%s, start_lat=%s, start_long=%s, end_lat=%s, end_long=%s, route_distance=%s, favorite=%s>" % (self.route_id, self.route_name, self.add_date, self.start_lat, self.start_long, self.end_lat, self.end_long, self.route_distance, self.favorite)
 
 # ################# new code
-    @classmethod
-    def get_by_id(cls, route_id):
-        """Get a route with a given id from database."""
+    # @classmethod
+    # def get_by_id(cls, route_id):
+    #     """Get a route with a given id from database."""
 
-        return cls.query.get(route_id)
+    #     return cls.query.get(route_id)
 # ############## new code
 
 
