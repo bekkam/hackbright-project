@@ -1,4 +1,6 @@
-// SAVE A RUN ON USER CLICK
+"use strict";
+
+// Save a run on user click
 function showRunResults(result){
   alert(result);
 }

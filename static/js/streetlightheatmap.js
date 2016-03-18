@@ -1,7 +1,9 @@
+"user strict";
+
 var latLngs = [];
 var heatmap;
+
 function generateHeatMap(evt) {
-  alert("generateHeatMap called");
   // Make the query string for SODA API
   url = "https://data.sfgov.org/resource/vw6y-z8j6.json?"
     +"category=Streetlights"

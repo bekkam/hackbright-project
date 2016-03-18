@@ -1,4 +1,6 @@
-// SAVE A ROUTE ON USER CLICK
+"use strict";
+
+// Save a route on user click
 function showRouteResults(result){
   alert(result);
 }

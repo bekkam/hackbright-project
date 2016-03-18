@@ -1,8 +1,10 @@
+"use strict";
+
 var marker;
 var markers = [];
 var hasMarkers = false;
 
-// POPULATE MAP WITH MARKERS/REMOVE MARKERS ON USER CLICK:
+// Populate map with markers/remove markers on user click:
 
 // 1. Functions to remove markers from map:
 // Set the map to show all markers in the array.
@@ -19,12 +21,12 @@ function clearMarkers() {
 }
 
 
-// 2. Function to add markers to the map:
+// 2. makeMarkers() adds markers to the map:
 // Define a marker for each latlng. Add it to the map, and to the marker array.
 // Set hasMarkers to true
-function makeMarkers(){
+function makeMarkers() {
   // Make the query string for SODA API
-  url = "https://data.sfgov.org/resource/vw6y-z8j6.json?"
+  var url = "https://data.sfgov.org/resource/vw6y-z8j6.json?"
     +"category=Streetlights"
     +"&Status=Open"
 
@@ -47,10 +49,8 @@ function makeMarkers(){
               markers.push(marker);
           });
           hasMarkers = true;
-
     });
 }
-
 
 // Call makeMarkers if the map does not have markers; otherwise, remove markers from the map
 function checkForMarkers(evt){
@@ -61,5 +61,6 @@ function checkForMarkers(evt){
     clearMarkers();
   }
 }
+
 // call checkForMarkers when user checks box
 $("#show-streelight-form").on("change", checkForMarkers);
