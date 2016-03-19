@@ -22,41 +22,36 @@ def login_form():
 
     return render_template("login_form.html")
 
-# ############## Process User login, logout, and registration ######
 
-
+# Login, logout, and registration functions
 @app.route('/register', methods=['POST'])
 def register_process():
     """Process registration."""
 
-    email = request.form["email"]
+    register_email = request.form["register-email"]
     password = request.form["password"]
 
+    print register_email
     # TODO: check if username is already taken
-    user = User.query.filter_by(email=email).first()
-    print "user is ", user
 
-    if user is not None:
-        print "user is not None"
-        # flash("That email is already taken." % email)
-    #     return redirect("/")
-    # else:
-
-    new_user = User(email=email, password=password)
+    if User.email_in_database(register_email) is not None:
+        print "not none"
+    new_user = User(email=register_email, password=password)
+    print new_user
 
     db.session.add(new_user)
     db.session.commit()
 
-    flash("User %s added." % email)
+    flash("User %s added." % register_email)
     print "new user added"
+
     return redirect("/")
 
 
-@app.route('/homepage', methods=['POST'])
+@app.route('/login_form', methods=['POST'])
 def login_process():
     """Process login."""
 
-    # Get form variables
     email = request.form["email"]
     password = request.form["password"]
 
@@ -87,12 +82,10 @@ def logout():
 
 
 @app.route('/homepage')
-def index():
-    """Show user homepage"""
+def show_homepage():
+    """Show homepage"""
 
-    return render_template("homepage.html")
-
-# ##############################################
+    return render_template('homepage.html')
 
 
 @app.route('/draw-route')

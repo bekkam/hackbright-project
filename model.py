@@ -19,13 +19,23 @@ class User(db.Model):
     __tablename__ = "users"
 
     user_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    email = db.Column(db.String(64), nullable=False)
+    email = db.Column(db.String(64), nullable=False, unique=True)
     password = db.Column(db.String(64), nullable=False)
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s email=%s>" % (self.user_id, self.email)
+        return "<User user_id=%s email=%s password=%s>" % (self.user_id, self.email, self.password)
+
+    def __init__(self, email, password):
+        self.email = email
+        self.password = password
+
+    @classmethod
+    def email_in_database(cls, some_email):
+        """Return true if a given email is in the User table"""
+
+        return True if User.query.filter_by(email=some_email).first() is not None else False
 
 
 class Route(db.Model):
