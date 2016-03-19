@@ -1,4 +1,5 @@
 """Helper functions for server.py"""
+from geocoder import google
 
 
 def get_distance_per_hour(distance, duration_in_minutes):
@@ -16,7 +17,8 @@ def get_distance_per_hour(distance, duration_in_minutes):
     return "{0:.2f}".format(result)
 
 
-# def get_lat_long(string_location):
-#     """Returns array of lat, longitude for a given location"""
+def get_lat_long(string_location):
+    """Returns array of lat, longitude for a given location"""
 
-#     return geocoder.google(string_location)
+    result = google(string_location).latlng
+    return result

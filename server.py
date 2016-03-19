@@ -3,9 +3,9 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, jsonify, redirect, session, flash
-import geocoder
+# import geocoder
 from model import connect_to_db, db, User, Route, Run, Outage
-import server_utilities
+import server_utilities as util
 from datetime import datetime
 
 app = Flask(__name__)
@@ -92,22 +92,15 @@ def show_homepage():
 def get_addresses():
     """Draw route on map based on user entered text for start and end address"""
 
-    # get user entered start addresses, and convert it to latlng
     start = request.args.get("start")
     end = request.args.get("end")
-    # print start
-    # print end
 
-    print "start is ", start
+    start_coordinates = util.get_lat_long(start)
+    end_coordinates = util.get_lat_long(end)
 
-    start_lat = geocoder.google(start).latlng[0]
-    start_long = geocoder.google(start).latlng[1]
-    # start_lat_long = server_utilities.get_lat_long(start)
-    # end_lat_long = server_utilities.get_lat_long(end)
-    end_lat = geocoder.google(end).latlng[0]
-    end_long = geocoder.google(end).latlng[1]
+    start_lat, start_long = start_coordinates
+    end_lat, end_long = end_coordinates
 
-    print "start_lat is ", start_lat
     return render_template("show-map.html",
                            start_lat=start_lat,
                            start_long=start_long,
@@ -308,7 +301,7 @@ def user_data():
     for item in run_date_distance_duration:
         date, distance, duration = item
         labels.append(str(date))
-        km_per_hour = server_utilities.get_distance_per_hour(distance, duration)
+        km_per_hour = util.get_distance_per_hour(distance, duration)
         data.append(km_per_hour)
 
     data_dict = {
