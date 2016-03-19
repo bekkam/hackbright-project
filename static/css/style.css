@@ -37,3 +37,14 @@ font-size: 12px;
 height: 100%;
 overflow: auto;
 }
+
+#ui-datepicker-div {
+    /*background-color: #fff ;*/
+    background-color: white;
+    color: #333 ;
+}
+
+/*make the background opaque*/
+#ui-state-default .a {
+    color: #fff;
+}
