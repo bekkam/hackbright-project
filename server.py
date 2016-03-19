@@ -217,18 +217,18 @@ def add_route_and_run():
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
     date = request.form.get("date")
-    date_type = type(date)
-    print "date of run is type %s" % date_type
-    print "add_date is %s" % add_date
+    # date_type = type(date)
+    # print "date of run is type %s" % date_type
+    # print "add_date is %s" % add_date
 
     # print "route name is %s" % route
-    print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
+    # print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
     new_route = Route(route_name=route, add_date=add_date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
     db.session.add(new_route)
     db.session.commit()
-    print "route committed"
+    # print "route committed"
     d = datetime.strptime(date, "%m/%d/%Y")
-    print "d is %s" % (d)
+    # print "d is %s" % (d)
 
     duration = request.form.get("duration")
     duration = int(duration)

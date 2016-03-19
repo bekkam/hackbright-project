@@ -1,5 +1,5 @@
 import server
-import server_utilities
+import server_utilities as util
 import unittest
 import doctest
 
@@ -9,8 +9,8 @@ def load_tests(loader, tests, ignore):
 
     """
 
-    tests.addTests(doctest.DocTestSuite(server_utilities))
-    tests.addTests(doctest.DocFileSuite("tests.txt"))
+    tests.addTests(doctest.DocTestSuite(util))
+    # tests.addTests(doctest.DocFileSuite("tests.txt"))
     return tests
 
 
@@ -18,7 +18,10 @@ class RunSafeUnitTestCase(unittest.TestCase):
     """Unit tests: discrete code testing."""
 
     def get_distance_per_hour(self):
-        assert server_utilities.get_distance_per_hour(1.2, 10) == '7.20'
+        assert util.get_distance_per_hour(1.2, 10) == '7.20'
+
+    def get_lat_long(self):
+        assert util.get_lat_long("Mountain View, CA") == [37.3860517, -122.0838511]
 
     # Add tests for queries to db
 
@@ -40,8 +43,8 @@ class RunSafeTestCase(unittest.TestCase):
 
         result = self.client.get('/')
         self.assertEqual(result.status_code, 200)
-        self.assertIn('<h3>Map a new route</h3>', result.data)
-        self.assertIn('<h3>Search for a saved route</h3>', result.data)
+        self.assertIn('<h4>Login</h4>', result.data)
+        self.assertIn('<h4>Register</h4>', result.data)
 
     # def test_profile_page(self):
     #     """Test that the profile page returns the correct html"""
