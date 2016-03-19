@@ -3,6 +3,7 @@
 import os
 
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
 
 username = os.environ['PGUSER']
 password = os.environ['PGPASSWORD']
@@ -32,7 +33,13 @@ class User(db.Model):
         self.password = password
 
     @classmethod
-    def email_in_database(cls, some_email):
+    def add(cls, email, password):
+        new_user = User(email=email, password=password)
+        db.session.add(new_user)
+        db.session.commit()
+
+    @classmethod
+    def get_email(cls, some_email):
         """Return true if a given email is in the User table"""
 
         return True if User.query.filter_by(email=some_email).first() is not None else False
@@ -129,6 +136,12 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
+
+def session_commit():
+    try:
+        db.session.commit()
+    except SQLAlchemyError as e:
+        reason = str(e)
 
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave

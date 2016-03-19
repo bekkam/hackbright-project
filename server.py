@@ -24,28 +24,24 @@ def login_form():
 
 
 # Login, logout, and registration functions
-@app.route('/register', methods=['POST'])
-def register_process():
+@app.route('/register', methods=['POST', 'GET'])
+def registration_process():
     """Process registration."""
 
-    register_email = request.form["register-email"]
+    email = request.form["register-email"]
     password = request.form["password"]
 
-    print register_email
-    # TODO: check if username is already taken
+    if User.get_email(email):
+        flash("That email is already registered.  ")
+        flash("Please register with a different email.")
 
-    if User.email_in_database(register_email) is not None:
-        print "not none"
-    new_user = User(email=register_email, password=password)
-    print new_user
+        print "email already taken"
+        return redirect("/")
 
-    db.session.add(new_user)
-    db.session.commit()
+    User.add(email, password)
 
-    flash("User %s added." % register_email)
-    print "new user added"
-
-    return redirect("/")
+    flash("Registration successful.  Welcome %s!" % email)
+    return render_template("homepage.html")
 
 
 @app.route('/login_form', methods=['POST'])
@@ -68,7 +64,6 @@ def login_process():
     session["user_id"] = user.user_id
 
     flash("Logged in.  Welcome %s!" % email)
-    # return redirect("/users/%s" % user.user_id)
     return render_template("homepage.html")
 
 
