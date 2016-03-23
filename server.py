@@ -126,7 +126,6 @@ def route_list():
     return render_template("route_list.html")
 
 
-# route to return json of data for all routes
 @app.route('/all-route-data.json')
 def all_route_data():
     """Return JSON of all routes."""
@@ -183,7 +182,6 @@ def add_route_and_run():
     """Add a run to the database."""
 
     # print "/new-run in server.py called"
-
     start_lat = request.form.get("start-lat")
     start_long = request.form.get("start-long")
     end_lat = request.form.get("end-lat")
@@ -194,10 +192,8 @@ def add_route_and_run():
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
     date = request.form.get("date")
-
-    # print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
-
     user_id = session["user_id"]
+    # print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
 
     new_route = Route(user_id=user_id, route_name=route, add_date=add_date,
                       start_lat=start_lat, start_long=start_long,
@@ -206,11 +202,9 @@ def add_route_and_run():
 
     new_route.add()
     # print "route committed"
+
     route_id = Route.get_by_route_name(route).route_id
-
     d = datetime.strptime(date, "%m/%d/%Y")
-    # print "d is %s" % (d)
-
     duration = request.form.get("duration")
     duration = int(duration)
 
