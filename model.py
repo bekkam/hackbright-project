@@ -3,7 +3,7 @@
 import os
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.inspection import inspect
 
 username = os.environ['PGUSER']
 password = os.environ['PGPASSWORD']
@@ -15,7 +15,7 @@ db = SQLAlchemy()
 
 
 class User(db.Model):
-    """User of run mapping website."""
+    """User of SafeRun website."""
 
     __tablename__ = "users"
 
@@ -34,23 +34,23 @@ class User(db.Model):
 
     @classmethod
     def add(cls, email, password):
+        """Add a new user to the database"""
+
         new_user = User(email=email, password=password)
         db.session.add(new_user)
         db.session.commit()
 
     @classmethod
-    def get_email(cls, some_email):
-        """Return true if a given email is in the User table"""
+    def get_by_email(cls, some_email):
+        """Return the user with the specified email from the database"""
 
-        return True if User.query.filter_by(email=some_email).first() is not None else False
+        return User.query.filter_by(email=some_email).first()
 
 
 class Route(db.Model):
     """A route on a map"""
 
     __tablename__ = "routes"
-
-    # _SELECT_SQL = "SELECT * FROM Routes WHERE route_id = :route_id"
 
     route_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
@@ -64,24 +64,54 @@ class Route(db.Model):
     favorite = db.Column(db.Boolean)
 
     # Define relationship to user: a user has many routes
-    user = db.relationship("User",
-                           backref=db.backref("routes"))
-    # def __init__(self, name):
-    #     self.name = name
+    user = db.relationship("User", backref=db.backref("routes"))
+
+    _SELECT_SQL = "SELECT * FROM Routes WHERE name = :name"
+
+    def __init__(self, user_id, route_name, add_date, start_lat, start_long,
+                 end_lat, end_long, route_distance, favorite):
+        self.user_id = user_id
+        self.route_name = route_name
+        self.add_date = add_date
+        self.start_lat = start_lat
+        self.start_long = start_long
+        self.end_lat = end_lat
+        self.end_long = end_long
+        self.route_distance = route_distance
+        self.favorite = favorite
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Route route_id=%s, route_name=%s, add_date=%s, start_lat=%s, start_long=%s, end_lat=%s, end_long=%s, route_distance=%s, favorite=%s>" % (self.route_id, self.route_name, self.add_date, self.start_lat, self.start_long, self.end_lat, self.end_long, self.route_distance, self.favorite)
+        return "<Route route_id=%s, route_name=%s, add_date=%s, start_lat=%s,start_long=%s, end_lat=%s, end_long=%s, route_distance=%s, favorite=%s>" % (self.route_id, self.route_name, self.add_date, self.start_lat, self.start_long, self.end_lat, self.end_long, self.route_distance, self.favorite)
 
-# ################# new code
+    @classmethod
+    def get_all(cls):
+        """Return all routes from the database"""
+
+        return Route.query.all()
+
     @classmethod
     def get_by_id(cls, route_id):
-        """Get a route with a given id from database."""
+        """Return a route with a given id from the database"""
 
-        return cls.query.get(route_id)
+        return Route.query.get(route_id)
 
-# ############## new code
+    @classmethod
+    def get_by_route_name(cls, search_term):
+        """Return a route with a given name from the database"""
+
+        return Route.query.filter_by(route_name=search_term).first()
+
+    def add(self):
+        """Add a new route to the database"""
+
+        new_route = Route(user_id=self.user_id, route_name=self.route_name, add_date=self.add_date,
+                          start_lat=self.start_lat, start_long=self.start_long, end_lat=self.end_lat,
+                          end_long=self.end_long, route_distance=self.route_distance, favorite=self.favorite)
+        db.session.add(new_route)
+        db.session.commit()
+        print "route added in model"
 
 
 class Run(db.Model):
@@ -90,23 +120,36 @@ class Run(db.Model):
     __tablename__ = "runs"
 
     run_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    route_id = db.Column(db.Integer, db.ForeignKey('routes.route_id'))
     run_date = db.Column(db.Date)
     duration = db.Column(db.Integer)
 
     # Define relationship to route: a route has many runs
-    route = db.relationship("Route",
-                            backref=db.backref("runs", order_by=run_id))
+    route = db.relationship("Route", backref=db.backref("runs", order_by=run_id))
 
     # Define relationship to user: a user has many runs
-    user = db.relationship("User",
-                           backref=db.backref("users"))
+    user = db.relationship("User", backref=db.backref("users"))
+
+    def __init__(self, user_id, route_id, run_date, duration):
+        self.user_id = user_id
+        self.route_id = route_id
+        self.run_date = run_date
+        self.duration = duration
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
         return "<Run_id=%s Route_id=%s run_date=%s duration=%s>" % (self.run_id, self.route_id, self.run_date, self.duration)
+
+    def add(self):
+        """Add a new run to the database"""
+
+        new_run = Run(user_id=self.user_id, route_id=self.route_id, run_date=self.run_date,
+                      duration=self.duration)
+        db.session.add(new_run)
+        db.session.commit()
+        print "run added in model"
 
 
 class Outage(db.Model):
@@ -136,12 +179,6 @@ def connect_to_db(app):
     db.app = app
     db.init_app(app)
 
-
-def session_commit():
-    try:
-        db.session.commit()
-    except SQLAlchemyError as e:
-        reason = str(e)
 
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave

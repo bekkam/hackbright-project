@@ -3,7 +3,6 @@
 from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, request, jsonify, redirect, session, flash
-# import geocoder
 from model import connect_to_db, db, User, Route, Run, Outage
 import server_utilities as util
 from datetime import datetime
@@ -12,7 +11,6 @@ app = Flask(__name__)
 
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
-
 app.jinja_env.undefined = StrictUndefined
 
 
@@ -31,7 +29,7 @@ def registration_process():
     email = request.form["register-email"]
     password = request.form["password"]
 
-    if User.get_email(email):
+    if User.get_by_email(email):
         flash("That email is already registered.  ")
         flash("Please register with a different email.")
 
@@ -51,7 +49,7 @@ def login_process():
     email = request.form["email"]
     password = request.form["password"]
 
-    user = User.query.filter_by(email=email).first()
+    user = User.get_by_email(email)
 
     if not user:
         flash("No such user")
@@ -90,11 +88,8 @@ def get_addresses():
     start = request.args.get("start")
     end = request.args.get("end")
 
-    start_coordinates = util.get_lat_long(start)
-    end_coordinates = util.get_lat_long(end)
-
-    start_lat, start_long = start_coordinates
-    end_lat, end_long = end_coordinates
+    start_lat, start_long = util.get_lat_long(start)
+    end_lat, end_long = util.get_lat_long(end)
 
     return render_template("show-map.html",
                            start_lat=start_lat,
@@ -108,22 +103,19 @@ def get_addresses():
 def add_route():
     """Add a running route to the database"""
 
-    start_lat = request.form.get("start-lat")
-    start_long = request.form.get("start-long")
-    end_lat = request.form.get("end-lat")
-    end_long = request.form.get("end-long")
-
-    date = datetime.now()
+    user_id = session["user_id"]
     route = request.form.get("route")
-    distance = request.form.get("distance")
-    favorite = request.form.get("favorite")
 
-    # # write to db
-    new_route = Route(route_name=route, add_date=date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
-    db.session.add(new_route)
-    db.session.commit()
+    new_route = Route(user_id=user_id, route_name=route,
+                      add_date=datetime.now(),
+                      start_lat=request.form.get("start-lat"),
+                      start_long=request.form.get("start-long"),
+                      end_lat=request.form.get("end-lat"),
+                      end_long=request.form.get("end-long"),
+                      route_distance=request.form.get("distance"),
+                      favorite=request.form.get("favorite"))
+    new_route.add()
 
-    print "start_lat is %s, start_long is %s, end_long is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
     return "Route %s has been saved to your routes" % route
 
 
@@ -131,8 +123,7 @@ def add_route():
 def route_list():
     """Show list of routes."""
 
-    routes = Route.query.all()
-    return render_template("route_list.html", routes=routes)
+    return render_template("route_list.html")
 
 
 # route to return json of data for all routes
@@ -142,7 +133,7 @@ def all_route_data():
 
     allroutedata = {}
 
-    routes = Route.query.all()
+    routes = Route.get_all()
 
     for route in routes:
         string_add_date = datetime.strftime(route.add_date, "%m/%d/%Y")
@@ -150,32 +141,21 @@ def all_route_data():
 
     return jsonify(allroutedata)
 
-# route to return json of data for single route
-# @app.route("/single-route-data.json")
-# def get_route_by_id():
-#     """Return JSON of single route."""
-
-#     current = Route.get_by_id(id_number)
-
-#     # for column in current_route:
-#     current.id_number = {"route_name": current.route_name, "add_date": current.add_date}
-#     print current
-
 
 @app.route("/routes/<int:route_id>")
 def route_detail(route_id):
     """Show info about route."""
 
-    route = Route.query.get(route_id)
-    return render_template("route.html", route=route)
+    print Route.get_by_id(route_id)
+    return render_template("route.html", route=Route.get_by_id(route_id))
 
 
 @app.route("/get-saved-route")
 def search_route_detail_by_name():
     """Show info about route."""
 
-    search = request.args.get("search")
-    route = Route.query.filter_by(route_name=search).first()
+    route = Route.get_by_route_name(request.args.get("search"))
+
     return redirect("routes/%s" % route.route_id)
 
 
@@ -202,6 +182,8 @@ def run_detail(run_id):
 def add_route_and_run():
     """Add a run to the database."""
 
+    # print "/new-run in server.py called"
+
     start_lat = request.form.get("start-lat")
     start_long = request.form.get("start-long")
     end_lat = request.form.get("end-lat")
@@ -212,25 +194,28 @@ def add_route_and_run():
     distance = request.form.get("distance")
     favorite = request.form.get("favorite")
     date = request.form.get("date")
-    # date_type = type(date)
-    # print "date of run is type %s" % date_type
-    # print "add_date is %s" % add_date
 
-    # print "route name is %s" % route
     # print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
-    new_route = Route(route_name=route, add_date=add_date, start_lat=start_lat, start_long=start_long, end_lat=end_lat, end_long=end_long, route_distance=distance, favorite=favorite)
-    db.session.add(new_route)
-    db.session.commit()
+
+    user_id = session["user_id"]
+
+    new_route = Route(user_id=user_id, route_name=route, add_date=add_date,
+                      start_lat=start_lat, start_long=start_long,
+                      end_lat=end_lat, end_long=end_long,
+                      route_distance=distance, favorite=favorite)
+
+    new_route.add()
     # print "route committed"
+    route_id = Route.get_by_route_name(route).route_id
+
     d = datetime.strptime(date, "%m/%d/%Y")
     # print "d is %s" % (d)
 
     duration = request.form.get("duration")
     duration = int(duration)
 
-    new_run = Run(run_date=d, route_id=new_route.route_id, duration=duration)
-    db.session.add(new_run)
-    db.session.commit()
+    new_run = Run(user_id=user_id, route_id=route_id, run_date=d, duration=duration)
+    new_run.add()
 
     return "Your run was saved"
 
