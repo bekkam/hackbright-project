@@ -1,11 +1,8 @@
-"""Models and database functions for Running App project."""
-# To access operating system environment variables
-import os
+"""Models and database functions for Running App."""
 
 from flask_sqlalchemy import SQLAlchemy
+from config import username, password
 
-username = os.environ['PGUSER']
-password = os.environ['PGPASSWORD']
 
 db = SQLAlchemy()
 
@@ -180,7 +177,6 @@ def connect_to_db(app):
 def connect_to_test_db(app):
     """Connect a test database to our Flask app."""
 
-    # Configure to use PostgreSQL database
     app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://' + username + ':' + password + '@localhost/testdb'
 
     db.app = app
