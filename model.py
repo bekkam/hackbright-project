@@ -177,6 +177,15 @@ def connect_to_db(app):
     db.init_app(app)
 
 
+def connect_to_test_db(app):
+    """Connect a test database to our Flask app."""
+
+    # Configure to use PostgreSQL database
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://' + username + ':' + password + '@localhost/testdb'
+
+    db.app = app
+    db.init_app(app)
+
 if __name__ == "__main__":
     # As a convenience, if we run this module interactively, it will leave
     # you in a state of being able to work with the database directly.

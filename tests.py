@@ -2,6 +2,7 @@ import server
 import server_utilities as util
 import unittest
 import doctest
+from model import connect_to_test_db, db
 
 
 def load_tests(loader, tests, ignore):
@@ -14,7 +15,7 @@ def load_tests(loader, tests, ignore):
     return tests
 
 
-class RunSafeUnitTestCase(unittest.TestCase):
+class UtilitiesTestCase(unittest.TestCase):
     """Unit tests: discrete code testing."""
 
     def get_distance_per_hour(self):
@@ -26,32 +27,46 @@ class RunSafeUnitTestCase(unittest.TestCase):
     # Add tests for queries to db
 
 
-class RunSafeTestCase(unittest.TestCase):
-    """Integration tests: testing Flask server."""
+class TemplateTestCase(unittest.TestCase):
+    """Integration tests: test that Flask server renders correct templates."""
 
     def setUp(self):
+
         print "(setUp ran)"
         self.client = server.app.test_client()
         server.app.config['TESTING'] = True
+        connect_to_test_db(server.app)
+        db.create_all()
 
     def tearDown(self):
         """Stub function for later."""
         print "(tearDown ran)"
+        db.session.close()
+        db.drop_all()
 
-    def test_home_page(self):
-        """Test that the homepage returns the correct html"""
+    def test_index_page(self):
+        """Test that the index returns the correct html"""
 
         result = self.client.get('/')
         self.assertEqual(result.status_code, 200)
         self.assertIn('<h4>Login</h4>', result.data)
         self.assertIn('<h4>Register</h4>', result.data)
 
-    # def test_profile_page(self):
-    #     """Test that the profile page returns the correct html"""
+    # Test registration form with valid and invalid credentials
+    # Test login form with valid and invalid credentials
+    # Test logout
+    # def test_logout(self):
+    #     """Test /logout"""
 
-    #     result = self.client.get('/profile')
+    #     result = self.client.get('/logout')
     #     self.assertEqual(result.status_code, 200)
-    #     self.assertIn("<h2>Profile</h2>", result.data)
+
+    def test_homepage(self):
+        """Test that the homepage returns the correct html"""
+
+        result = self.client.get('/homepage')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("<h3>Map a new route</h3>", result.data)
 
     def test_draw_route(self):
         """Test that the map page returns the correct html"""
@@ -65,12 +80,27 @@ class RunSafeTestCase(unittest.TestCase):
         self.assertIn('<h4>Save this Route: </h4>', result.data)
         self.assertIn("<h4>I've Run this Route: </h4>", result.data)
 
-    # def test_routes_page(self):
-    #     """Test that the routes page returns the correct html"""
+    def test_profile_page(self):
+        """Test that the profile page returns the correct html"""
 
-    #     result = self.client.get('/routes')
-    #     self.assertEqual(result.status_code, 200)
-        # self.assertIn("<h2>Profile</h2>", result.data)
+        result = self.client.get('/profile')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("<h2>Profile</h2>", result.data)
+
+    def test_routes_page(self):
+        """Test that the routes page returns the correct html"""
+
+        result = self.client.get('/routes')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("<h2>Routes</h2>", result.data)
+
+    def test_runs_page(self):
+        """Test that the runs page returns the correct html"""
+
+        result = self.client.get('/runs')
+        self.assertEqual(result.status_code, 200)
+        self.assertIn("<h2>Runs</h2>", result.data)
+
 
 if __name__ == '__main__':
     # Run these tests if file is called like a script
