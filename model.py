@@ -3,7 +3,6 @@
 import os
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy.inspection import inspect
 
 username = os.environ['PGUSER']
 password = os.environ['PGPASSWORD']
@@ -65,8 +64,6 @@ class Route(db.Model):
 
     # Define relationship to user: a user has many routes
     user = db.relationship("User", backref=db.backref("routes"))
-
-    _SELECT_SQL = "SELECT * FROM Routes WHERE name = :name"
 
     def __init__(self, user_id, route_name, add_date, start_lat, start_long,
                  end_lat, end_long, route_distance, favorite):
