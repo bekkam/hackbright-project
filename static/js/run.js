@@ -41,35 +41,36 @@ function checkDurationType(duration) {
 // return false if duration is not purely numeric
     var re = /^\d*$/;
 
-    console.log(duration.search(re) );
     if (duration.search(re) == -1) {
         return false;
     }
 }
 
 
-// ############### Methods to Validate and Submit Forms ###########
+// ############### Utility Methods for Submitting Forms ###########
 
-// Save a run on user click
-function showRunResults(result) {
-    console.log("showRunResults function called");
+function showResults(result) {
+// show user a confirmatory message
     alert(result);
 }
 
-function saveRun(evt) {
-    console.log("saveRun function called");
+function saveToDb(evt, url) {
+// send form data to server
+
     evt.preventDefault();
 
-    var saveRunFormValues = $("#save-run-form").serialize();
-    console.log("saveRunFormValues is ");
-    console.log(saveRunFormValues);
+    // get the id for the form
+    var id = evt.currentTarget.id;
+    var formValues = $("#" + id +"").serialize();
 
-    $.post("/new-run", saveRunFormValues, showRunResults);
+    $.post(url, formValues, showResults);
 }
+
+
+// ############### Methods to Validate Forms ###########
 
 function validateRunForm(event) {
 
-    console.log("validateRunForm called");
     event.preventDefault();
 
     var charInput = $("#route-name2").val().length;
@@ -91,11 +92,27 @@ function validateRunForm(event) {
         alert("Please enter a number for the duration of the Run");
 
     } else {
-        saveRun(event);
+        saveToDb(event, "/new-run");
     }
 }
 
 $("#save-run-form").on("submit", validateRunForm);
+
+
+function validateRouteForm(event){
+    event.preventDefault();
+
+    var charInput = $("#route-name").val().length;
+
+    if (checkMinimumInputLength(charInput) == false) {
+        alert("Please enter at least two characters for the name of the Route");
+    
+    } else {
+        saveToDb(event, "/new-route");
+    }
+}
+
+$("#save-route-form").on("submit", validateRouteForm);
 
 
 // ####################  Datepicker ##############################
