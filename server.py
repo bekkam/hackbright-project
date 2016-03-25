@@ -151,7 +151,10 @@ def all_route_data():
 
     for route in routes:
         string_add_date = datetime.strftime(route.add_date, "%m/%d/%Y")
-        allroutedata[route.route_id] = {"route_id": route.route_id, "route_name": route.route_name, "add_date": string_add_date, "route_distance": route.route_distance}
+        allroutedata[route.route_id] = {"route_id": route.route_id,
+                                        "route_name": route.route_name,
+                                        "add_date": string_add_date,
+                                        "route_distance": route.route_distance}
 
     return jsonify(allroutedata)
 
@@ -250,9 +253,42 @@ def add_route_and_run():
 def show_profile():
     """Show the current user's profile page."""
 
-    ran_routes = db.session.query(Run, Route).join(Route).order_by(Run.run_date.desc()).limit(3).all()
-    routes = Route.query.order_by(Route.add_date.desc()).limit(3).all()
-    return render_template("profile.html", routes=routes, ran_routes=ran_routes)
+    return render_template("profile.html")
+
+
+@app.route('/three-recent-routes.json')
+def recent_route_data():
+    """Return JSON of the three most recently added routes."""
+
+    recent_routes_data = {}
+    recent_routes = Route.query.order_by(Route.add_date.desc()).limit(3).all()
+
+    for recent_route in recent_routes:
+        string_add_date = datetime.strftime(recent_route.add_date, "%m/%d/%Y")
+        recent_routes_data[recent_route.route_id] = {"route_id": recent_route.route_id,
+                                                     "route_name": recent_route.route_name,
+                                                     "add_date": string_add_date,
+                                                     "route_distance": recent_route.route_distance}
+
+    return jsonify(recent_routes_data)
+
+
+@app.route('/three-recent-runs.json')
+def recent_run_data():
+    """Return JSON of the three most recent runs."""
+
+    recent_runs_data = {}
+    recent_runs = db.session.query(Run, Route).join(Route).order_by(Run.run_date.desc()).limit(3).all()
+
+    for recent_run in recent_runs:
+        string_run_date = datetime.strftime(recent_run[0].run_date, "%m/%d/%Y")
+        recent_runs_data[recent_run[0].run_id] = {"run_id": recent_run[0].run_id,
+                                                  "route_name": recent_run[1].route_name,
+                                                  "run_date": string_run_date,
+                                                  "route_distance": recent_run[1].route_distance,
+                                                  "duration": recent_run[0].duration}
+
+    return jsonify(recent_runs_data)
 
 
 # Line chart of distance over time
