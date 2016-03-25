@@ -16,7 +16,7 @@ def load_tests(loader, tests, ignore):
 
 
 class UtilitiesTestCase(unittest.TestCase):
-    """Unit tests: discrete code testing."""
+    """Unit tests for functions in utilitites file."""
 
     def get_distance_per_hour(self):
         assert util.get_distance_per_hour(1.2, 10) == '7.20'
@@ -27,7 +27,7 @@ class UtilitiesTestCase(unittest.TestCase):
     # Add tests for queries to db
 
 
-class TemplateTestCase(unittest.TestCase):
+class ServerTemplatesTestCase(unittest.TestCase):
     """Integration tests: test that Flask server renders correct templates."""
 
     def setUp(self):
@@ -58,7 +58,7 @@ class TemplateTestCase(unittest.TestCase):
     # def test_logout(self):
     #     """Test /logout"""
 
-    #     result = self.client.get('/logout')
+    #     result = self.client.get('/logout', follow_redirects=True)
     #     self.assertEqual(result.status_code, 200)
 
     def test_homepage(self):
@@ -101,6 +101,12 @@ class TemplateTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn("<h2>Runs</h2>", result.data)
 
+
+# class UserTestCase(unittest.TestCase):
+#     """Integration tests for login/logout and registration functions."""
+
+    # Inherit setup, tear down
+    # instantiate a session
 
 if __name__ == '__main__':
     # Run these tests if file is called like a script

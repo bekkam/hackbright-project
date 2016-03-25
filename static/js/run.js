@@ -1,5 +1,16 @@
 "use strict";
 
+
+$(document).ready(function() {
+    $( "#run-date-field" ).datepicker({ maxDate: "+0D" });
+});
+
+
+function checkMinimumInputLength(inputLength) {
+    return inputLength < 2 ? false : true;
+}
+
+
 // Save a run on user click
 function showRunResults(result) {
     console.log("showRunResults function called");
@@ -26,8 +37,10 @@ function validateRunForm(event) {
     var duration = $("#run-duration-field").val();
 
     // Alert user is they are missing a date
-    if (charInput < 2) {
-        alert("Please enter at least two characters name for the Route");
+    // if (charInput < 2) {
+    //     alert("Please enter at least two characters name for the Route");
+    if (checkMinimumInputLength(charInput) == false) {
+        alert("Please enter at least two characters for the name of the Route");
 
       // Alert user is they are missing a date
     } else if (isNaN(runDate) == false) {
@@ -45,10 +58,10 @@ function validateRunForm(event) {
     }
 }
 
+
+
+
 $("#save-run-form").on("submit", validateRunForm);
 
 
-$(document).ready(function() {
-    $( "#run-date-field" ).datepicker({ maxDate: "+0D" });
-});
 

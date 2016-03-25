@@ -2,7 +2,7 @@
 
 from jinja2 import StrictUndefined
 
-from flask import Flask, render_template, request, jsonify, redirect, session, flash
+from flask import Flask, render_template, request, jsonify, redirect, session, flash, g
 from model import connect_to_db, db, User, Route, Run, Outage
 import server_utilities as util
 from datetime import datetime
@@ -12,6 +12,20 @@ app = Flask(__name__)
 # Required to use Flask sessions and the debug toolbar
 app.secret_key = "ABC"
 app.jinja_env.undefined = StrictUndefined
+
+JS_TESTING_MODE = False
+
+
+# @app.before_request runs before every web request - we put code here
+# that should execute then
+@app.before_request
+def add_tests():
+
+    # g variable is Flask's "request global", an object you can attach
+    # arbitrary instance attributes to.  It is automatically passsed to each
+    # template rendering, so we can use it as a way to pass info to templates
+    # w/o having to explicitly wire that into each call to render_template()
+    g.jasmine_tests = JS_TESTING_MODE
 
 
 @app.route('/', methods=['GET'])
@@ -316,6 +330,11 @@ def get_markers():
 
 if __name__ == "__main__":
 
+    import sys
+    if sys.argv[-1] == "jstest":
+        JS_TESTING_MODE = True
+
     connect_to_db(app)
-    # app.run(debug=True)
-    app.run()
+    app.run(debug=True)
+
+    # app.run()
