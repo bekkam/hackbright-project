@@ -3,16 +3,13 @@
 {% block title %}Route Detail{% endblock %}
 
 
-
 {% block content %}
 
 <div class="container-fluid">
 
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-12">
-            <div class="header">        
-                <h3>Route: {{ route.route_name }}</h3>
-            </div>
+            <div id="header"></div>
         </div>
     </div>
 
@@ -20,12 +17,8 @@
 
     <div class="row">
         <div class="col-xs-12 col-md-12 col-lg-8">
-
-            <h4>Route Data</h4>
-
-            {% import 'helper_templates/tables.html' as tables %}
-
-            {{ tables.row(header1='Route ID', header2='Date Added', header3='Distance (km)', data1=route.route_id , data2=route.add_date, data3=route.route_distance) }}      
+            <div id="route-detail-data"></div>
+            <table class="table table-bordered" id="route-detail-table" ></table>
 
         {% if route.runs %}
 
@@ -58,6 +51,8 @@
 
 <script src="/static/js/getsavedmap.js"></script>
 <script src="/static/js/mapstyles.js"></script>
+
+<script src="/static/js/routedetail.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
 async defer></script>

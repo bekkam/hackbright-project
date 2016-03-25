@@ -1,6 +1,8 @@
 "use strict";
 
-// Charts 
+// Create charts for workout data
+
+
 // Line chart for user's run distance over time
 var options = {
   responsive: true,
@@ -24,6 +26,7 @@ $.get("/user-pace.json", function (data) {
   var lineChartUserPace = new Chart(ctxLinePace).Line(data, options);
   $("#lineLegendPace").html(lineChartUserPace.generateLegend());
 });
+
 
 
 // Create table with data on three most recently added routes
@@ -60,3 +63,5 @@ $( document ).ready(function() {
               });
       });
 });
+
+

@@ -163,8 +163,26 @@ def all_route_data():
 def route_detail(route_id):
     """Show info about route."""
 
-    print Route.get_by_id(route_id)
     return render_template("route.html", route=Route.get_by_id(route_id))
+
+
+# ##########  new code
+@app.route("/route-detail.json", methods=['POST'])
+def route_detail_json():
+    """Return JSON of individual route."""
+
+    route_data = {}
+    route_id = request.form.get("routeId")
+    print route_id
+    route = Route.get_by_id(route_id)
+    string_add_date = datetime.strftime(route.add_date, "%m/%d/%Y")
+    route_data = {"route_id": route.route_id,
+                  "route_name": route.route_name,
+                  "add_date": string_add_date,
+                  "route_distance": route.route_distance}
+    print route_data
+    return jsonify(route_data)
+# #################
 
 
 @app.route("/get-saved-route")
