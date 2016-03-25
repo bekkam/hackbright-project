@@ -6,26 +6,24 @@
 {% block content %}
 
 <div class="container-fluid">
-
-<h3>Run ID:{{ run.run_id }}</h3>
+    <div id="run-header"></div>
 
 {% include 'helper_templates/map.html' %}
 
-
-<h4>Run Data</h4>
-      <div class="row">
-      <div class="col-xs-12 col-md-12 col-lg-8">
-
-      {% import 'helper_templates/tables.html' as tables %}
-
-      {{ tables.row(header1='Route Name', header2='Date of Run', header3='Distance (km)', header4='Duration', data1=route.route_name , data2=run.run_date, data3=route.route_distance, data4=run.duration) }} 
-
-      </div>
+    <div class="row">
+        <div class="col-xs-12 col-md-12 col-lg-8">
+            <div id="run-detail-data"></div>
+            <table class="table table-bordered" id="run-detail-table" ></table>
+        </div>
   </div>
 
 </div>
+
+
 <script src="/static/js/getsavedmap.js"></script>
 <script src="/static/js/mapstyles.js"></script>
+
+<script src="/static/js/rundetail.js"></script>
 
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD0V7FNkiwsUwxhsQd8hscYoMsuklxOFhg&signed_in=true&callback=showSavedMap"
 async defer></script>

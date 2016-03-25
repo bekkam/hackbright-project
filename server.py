@@ -229,6 +229,27 @@ def run_detail(run_id):
     return render_template("run.html", run=run, route=route)
 
 
+# ##########  new code
+@app.route("/run-detail.json", methods=['POST'])
+def run_detail_json():
+    """Return JSON of individual run."""
+
+    run_data = {}
+    run_id = request.form.get("runId")
+    print run_id
+    run = Run.query.get(run_id)
+    route = Route.get_by_id(run.route_id)
+    string_run_date = datetime.strftime(run.run_date, "%m/%d/%Y")
+    run_data = {"run_id": run.run_id,
+                "route_name": route.route_name,
+                "run_date": string_run_date,
+                "route_distance": route.route_distance,
+                "duration": run.duration}
+    print run_data
+    return jsonify(run_data)
+# #################
+
+
 @app.route('/new-run', methods=["POST"])
 def add_route_and_run():
     """Add a run to the database."""
