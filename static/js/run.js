@@ -1,15 +1,54 @@
 "use strict";
 
 
-$(document).ready(function() {
-    $( "#run-date-field" ).datepicker({ maxDate: "+0D" });
-});
-
-
+// ################ Utility Methods for Form Validation #########################
 function checkMinimumInputLength(inputLength) {
     return inputLength < 2 ? false : true;
 }
 
+function checkDateFormat(date) {
+// return false if date is not in mm/dd/yyy format
+
+    var re = /^\d{2}?\/\d{2}?\/\d{4}?$/;
+    if (date.search(re) == -1) {
+        return false;
+    }
+}
+
+function checkDateBoundaries(date) {
+// return false if date does not exist, or is out of bounds
+
+    var date_elements = date.split("/");
+    var day = parseInt(date_elements[1], 10);
+    var month = parseInt(date_elements[0], 10);
+    var year = parseInt(date_elements[2], 10);
+
+    // Check the ranges of month and year
+    if(year < 1990 || year > 2016 || month == 0 || month > 12)
+        return false;
+
+    var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+
+    // Adjust for leap years
+    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+        monthLength[1] = 29;
+
+    // Check the range of the day
+    return day > 0 && day <= monthLength[month - 1];
+}
+
+function checkDurationType(duration) {
+// return false if duration is not purely numeric
+    var re = /^\d*$/;
+
+    console.log(duration.search(re) );
+    if (duration.search(re) == -1) {
+        return false;
+    }
+}
+
+
+// ############### Methods to Validate and Submit Forms ###########
 
 // Save a run on user click
 function showRunResults(result) {
@@ -20,10 +59,11 @@ function showRunResults(result) {
 function saveRun(evt) {
     console.log("saveRun function called");
     evt.preventDefault();
-    // console.log("called saveRun function");
+
     var saveRunFormValues = $("#save-run-form").serialize();
     console.log("saveRunFormValues is ");
     console.log(saveRunFormValues);
+
     $.post("/new-run", saveRunFormValues, showRunResults);
 }
 
@@ -36,32 +76,31 @@ function validateRunForm(event) {
     var runDate = $("#run-date-field").val();
     var duration = $("#run-duration-field").val();
 
-    // Alert user is they are missing a date
-    // if (charInput < 2) {
-    //     alert("Please enter at least two characters name for the Route");
+    // validate form fields. only submit to server if all fields are valid.
     if (checkMinimumInputLength(charInput) == false) {
         alert("Please enter at least two characters for the name of the Route");
 
-      // Alert user is they are missing a date
-    } else if (isNaN(runDate) == false) {
-        alert("Please enter a run date");
+    } else if (checkDateFormat(runDate) == false) {
+        alert("Please enter a run date in appropriate format");
 
-      // Alert the user if their input for duration is not purely numeric, or is absent
-    // } else if (isNaN(duration) == false) {
-    //     alert("Please enter a value for the duration of the Run");
+    } else if (checkDateBoundaries(runDate) == false) {
+        alert("That date is out of range. " +
+              "Please enter a date from 01/01/1990 to present");
 
-    // } else if (typeof(duration) != 'number') {
-    //     alert("Please enter a number for the duration of the Run");
+    } else if (checkDurationType(duration) == false) {
+        alert("Please enter a number for the duration of the Run");
 
     } else {
         saveRun(event);
     }
 }
 
-
-
-
 $("#save-run-form").on("submit", validateRunForm);
 
 
+// ####################  Datepicker ##############################
+
+$(document).ready(function() {
+    $( "#run-date-field" ).datepicker({ maxDate: "+0D" });
+});
 
