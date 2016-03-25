@@ -6,7 +6,6 @@ from flask import Flask, render_template, request, jsonify, redirect, session, f
 from model import connect_to_db, db, User, Route, Run, Outage
 import server_utilities as util
 from datetime import datetime
-import json
 
 app = Flask(__name__)
 
@@ -166,23 +165,23 @@ def route_detail(route_id):
     return render_template("route.html", route=Route.get_by_id(route_id))
 
 
-# ##########  new code
 @app.route("/route-detail.json", methods=['POST'])
 def route_detail_json():
     """Return JSON of individual route."""
 
     route_data = {}
+
     route_id = request.form.get("routeId")
-    print route_id
     route = Route.get_by_id(route_id)
+
     string_add_date = datetime.strftime(route.add_date, "%m/%d/%Y")
+
     route_data = {"route_id": route.route_id,
                   "route_name": route.route_name,
                   "add_date": string_add_date,
                   "route_distance": route.route_distance}
-    print route_data
+    # print route_data
     return jsonify(route_data)
-# #################
 
 
 @app.route("/get-saved-route")
@@ -229,25 +228,25 @@ def run_detail(run_id):
     return render_template("run.html", run=run, route=route)
 
 
-# ##########  new code
 @app.route("/run-detail.json", methods=['POST'])
 def run_detail_json():
     """Return JSON of individual run."""
 
     run_data = {}
+
     run_id = request.form.get("runId")
-    print run_id
     run = Run.query.get(run_id)
+
     route = Route.get_by_id(run.route_id)
+
     string_run_date = datetime.strftime(run.run_date, "%m/%d/%Y")
     run_data = {"run_id": run.run_id,
                 "route_name": route.route_name,
                 "run_date": string_run_date,
                 "route_distance": route.route_distance,
                 "duration": run.duration}
-    print run_data
+    # print run_data
     return jsonify(run_data)
-# #################
 
 
 @app.route('/new-run', methods=["POST"])
