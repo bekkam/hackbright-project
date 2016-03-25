@@ -75,10 +75,6 @@ class ServerTemplatesTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn('<div id="map" style="height:500px; width: 900px;"></div>', result.data)
         self.assertIn('<div id="right-panel" style="height:500px; width: 400px;"></div>', result.data)
-        self.assertIn('<input type="checkbox" name="streetlight-data-heatmap" id="heatmap">', result.data)
-        self.assertIn('<input type="checkbox" name="streetlight-data" id="marker-checkbox">', result.data)
-        self.assertIn('<h4>Save this Route: </h4>', result.data)
-        self.assertIn("<h4>I've Run this Route: </h4>", result.data)
 
     def test_profile_page(self):
         """Test that the profile page returns the correct html"""
@@ -105,8 +101,7 @@ class ServerTemplatesTestCase(unittest.TestCase):
 # class UserTestCase(unittest.TestCase):
 #     """Integration tests for login/logout and registration functions."""
 
-    # Inherit setup, tear down
-    # instantiate a session
+    # Instantiate a session
 
 if __name__ == '__main__':
     # Run these tests if file is called like a script
