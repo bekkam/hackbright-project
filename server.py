@@ -6,6 +6,7 @@ from flask import Flask, render_template, request, jsonify, redirect, session, f
 from model import connect_to_db, db, User, Route, Run, Outage
 import server_utilities as util
 from datetime import datetime
+import json
 
 app = Flask(__name__)
 
@@ -177,8 +178,24 @@ def search_route_detail_by_name():
 def run_list():
     """Show list of runs, and the route information for each."""
 
+    return render_template("run_list.html")
+
+
+@app.route('/all-run-data.json')
+def all_run_data():
+    """Return JSON of all routes."""
+
+    all_run_data = {}
     ran_routes = db.session.query(Run, Route).join(Route).all()
-    return render_template("run_list.html", ran_routes=ran_routes)
+
+    for ran_route in ran_routes:
+        string_run_date = datetime.strftime(ran_route[0].run_date, "%m/%d/%Y")
+        all_run_data[ran_route[0].run_id] = {"run_id": ran_route[0].run_id,
+                                             "route_name": ran_route[1].route_name,
+                                             "run_date": string_run_date,
+                                             "route_distance": ran_route[1].route_distance,
+                                             "duration": ran_route[0].duration}
+    return jsonify(all_run_data)
 
 
 @app.route("/runs/<int:run_id>")
