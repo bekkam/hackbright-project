@@ -1,31 +1,36 @@
 "use strict";
 
-// Create charts for workout data
+
+// #####################  Utility Method to Create Charts ###################################
+
+function generateChart(url, renderingContext, lengendId) {
+// Utility method: Get chart data via ajax. Use 2d rendering context to create the chart.
+
+    $.get(url, function (data) {
+        var lineChart = new Chart(renderingContext).Line(data, chartOptions);
+        $("#" + lengendId).html(lineChart.generateLegend());
+    });
+}
+
+// #################### Utility Method to Create Tables #########################################
+
+// TODO
 
 
-// Line chart for user's run distance over time
-var options = {
-  responsive: true,
-  scaleBeginAtZero: false
-};
+// ##################### Methods to Draw Charts and Tables #############################
+
+var chartOptions = { responsive: true, scaleBeginAtZero: false };
+
+// Get the 2d rendering context for canvas element ids lineChartDistance, lineChartPace
 var ctxLineDistance = $("#lineChartDistance").get(0).getContext("2d");
-
-$.get("/user-distance.json", function (data) {
-  var lineChartUserDistance = new Chart(ctxLineDistance).Line(data, options);
-  $("#lineLegendDistance").html(lineChartUserDistance.generateLegend());
-});
-
-// Line chart for user's running pace over time
-var options = {
-  responsive: true,
-  scaleBeginAtZero: false
-};
 var ctxLinePace = $("#lineChartPace").get(0).getContext("2d");
 
-$.get("/user-pace.json", function (data) {
-  var lineChartUserPace = new Chart(ctxLinePace).Line(data, options);
-  $("#lineLegendPace").html(lineChartUserPace.generateLegend());
-});
+generateChart("/user-distance.json", ctxLineDistance, "lineLegendDistance");
+generateChart("/user-pace.json", ctxLinePace, "lineLegendDistance");
+
+
+// ################################################################################
+
 
 
 
