@@ -3,7 +3,7 @@
 
 // ################ Utility Methods for Form Validation #########################
 function checkMinimumInputLength(inputLength) {
-    return inputLength < 2 ? false : true;
+    inputLength < 2 ? return false : return true;
 }
 
 function checkDateFormat(date) {
@@ -24,15 +24,16 @@ function checkDateBoundaries(date) {
     var year = parseInt(date_elements[2], 10);
 
     // Check the ranges of month and year
-    if(year < 1990 || year > 2016 || month == 0 || month > 12)
+    if (year < 1990 || year > 2016 || month == 0 || month > 12) {
         return false;
+    }
 
     var monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
 
     // Adjust for leap years
-    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0))
+    if (year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) {
         monthLength[1] = 29;
-
+    }
     // Check the range of the day
     return day > 0 && day <= monthLength[month - 1];
 }
@@ -106,7 +107,7 @@ function validateRouteForm(event){
 
     if (checkMinimumInputLength(charInput) == false) {
         alert("Please enter at least two characters for the name of the Route");
-    
+
     } else {
         saveToDb(event, "/new-route");
     }

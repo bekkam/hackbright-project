@@ -162,6 +162,8 @@ def all_route_data():
 def route_detail(route_id):
     """Show info about route."""
 
+    print Route.get_by_id(route_id)
+
     return render_template("route.html", route=Route.get_by_id(route_id))
 
 
