@@ -3,7 +3,7 @@
 
 // ################ Utility Methods for Form Validation #########################
 function checkMinimumInputLength(inputLength) {
-    inputLength < 2 ? return false : return true;
+    return inputLength < 2 ? false : true;
 }
 
 function checkDateFormat(date) {

@@ -1,8 +1,8 @@
 """Models and database functions for Running App."""
 
 from flask_sqlalchemy import SQLAlchemy
-from config import username, password
 
+from config import username, password
 
 db = SQLAlchemy()
 

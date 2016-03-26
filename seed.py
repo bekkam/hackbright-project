@@ -1,8 +1,9 @@
 """Utility file to seed streetlight outage database with SF OpenData SF311 cases"""
 
+import re
+
 from model import Outage, connect_to_db, db
 from server import app
-import re
 
 
 def get_outages():

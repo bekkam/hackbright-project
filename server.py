@@ -1,11 +1,12 @@
 """Basic Map App using Google's API"""
 
-from jinja2 import StrictUndefined
+from datetime import datetime
 
 from flask import Flask, render_template, request, jsonify, redirect, session, flash, g
+from jinja2 import StrictUndefined
+
 from model import connect_to_db, db, User, Route, Run, Outage
 import server_utilities as util
-from datetime import datetime
 
 app = Flask(__name__)
 

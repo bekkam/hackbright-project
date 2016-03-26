@@ -1,8 +1,9 @@
+import doctest
+import unittest
+
+from model import connect_to_test_db, db
 import server
 import server_utilities as util
-import unittest
-import doctest
-from model import connect_to_test_db, db
 
 
 def load_tests(loader, tests, ignore):
