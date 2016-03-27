@@ -80,6 +80,34 @@ function calculateTotalDistanceInKilometers(response) {
 
   $("#total-distance-field1").val(totalDistance);
   $("#total-distance-field2").val(totalDistance);
+
+// ################ new code to save text directions ###############
+  console.log("response.routes[0].legs is ");
+  console.log(response.routes[0].legs);
+
+  // Save the route legs
+  var directionsRouteLegs = response.routes[0].legs;
+  console.log(directionsRouteLegs);
+  console.log("directionsRouteLegs[0] is ");
+  console.log(directionsRouteLegs[0]);
+
+  // Save start and end addresses attributes of the leg
+  var endAddress = directionsRouteLegs[0].end_address;
+  var startAddress = directionsRouteLegs[0].start_address;
+
+  // Create stepInstructionsArray and stepDistanceArray, to store the
+  // instructions attribute and distance for each step of the route leg
+  var stepInstructionsArray = [];
+  var stepDistanceArray = [];
+
+  var j;
+  for (j = 0; j < directionsRouteLegs[0].steps.length; j++) {
+    stepInstructionsArray.push(directionsRouteLegs[0].steps[j].instructions);
+    stepDistanceArray.push(directionsRouteLegs[0].steps[j].distance.text);
+  }
+  console.log(stepDistanceArray);
+
+// #####################################################
 }
 
 

@@ -60,7 +60,7 @@ function showSavedMap(response) {
     var i;
     for (i = 0; i < response.waypoints.length; i++) {
         console.log(response.waypoints[i]);
-        console.log(typeof(response.waypoints[i][0]));
+        // console.log(typeof(response.waypoints[i][0]));
 
         // FYI: Creating a latLng literal (line 68) did not work with google's API,
         // but creating a new LatLng did.  When functionality is missing, 
@@ -83,6 +83,8 @@ function showSavedMap(response) {
     directionsDisplay.setMap(map);
     directionsDisplay.setPanel(document.getElementById("right-panel"));
 
+    console.log("directionsService.route is");
+    console.log(directionsService.route);
     directionsService.route({
       origin: originCoordinates ,
       destination: destinationCoordinates ,
