@@ -31,5 +31,38 @@ function showRunData(data) {
       row.append($("<td>" + data.run_date + "</td>"));
       row.append($("<td>" + data.route_distance + "</td>"));
       row.append($("<td>" + data.duration + "</td>"));
+    
+    showSavedMap(data);
+}
+
+// Add ability to gdenerate map based on decoded polyline 
+
+function showSavedMap(response) {
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 14,
+        center: {lat: response.waypoints[0][0], lng: response.waypoints[0][1]},
+        styles: MAPSTYLES
+    });
+
+
+    var polyline = new google.maps.Polyline({
+        path: [],
+        strokeColor: 'green',
+        strokeWeight: 4
+    });
+
+    console.log(response.waypoints[0]);   
+    var i;
+    for (i = 0; i < response.waypoints.length; i++) {
+        console.log(response.waypoints[i]);
+        console.log(typeof(response.waypoints[i][0]));
+
+        // polyline.getPath().push({lat: response.waypoints[i][0], lng: response.waypoints[i][1]})
+        polyline.getPath().push(new google.maps.LatLng(response.waypoints[i][0], response.waypoints[i][1]));
+    } 
+    console.log("polyline is");
+    console.log(polyline);
+    polyline.setMap(map);
 
 }
