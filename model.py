@@ -58,7 +58,7 @@ class Route(db.Model):
     end_long = db.Column(db.Float)
     route_distance = db.Column(db.Float)
     favorite = db.Column(db.Boolean)
-    polyline = db.Column(db.String(500))
+    polyline = db.Column(db.String(1500))
 
     # Define relationship to user: a user has many routes
     user = db.relationship("User", backref=db.backref("routes"))
