@@ -34,3 +34,6 @@ function showSavedMap() {
       }
     });
 }
+
+
+// Add ability to generate map based on decoded polyline 

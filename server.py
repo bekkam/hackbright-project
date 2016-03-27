@@ -118,8 +118,13 @@ def get_addresses():
 def add_route():
     """Add a running route to the database"""
 
+    print "/new-route called"
     user_id = session["user_id"]
+    print user_id
     route = request.form.get("route")
+
+    polyline = request.form.get("overview-polyline")
+    print "polyline is ", polyline
 
     new_route = Route(user_id=user_id, route_name=route,
                       add_date=datetime.now(),
@@ -128,7 +133,9 @@ def add_route():
                       end_lat=request.form.get("end-lat"),
                       end_long=request.form.get("end-long"),
                       route_distance=request.form.get("distance"),
-                      favorite=request.form.get("favorite"))
+                      favorite=request.form.get("favorite"),
+                      polyline=polyline
+                      )
     new_route.add()
 
     return "Route %s has been saved to your routes" % route
@@ -179,10 +186,14 @@ def route_detail_json():
 
     string_add_date = datetime.strftime(route.add_date, "%m/%d/%Y")
 
+    waypoints = util.decode_polyline(route.polyline)
+
     route_data = {"route_id": route.route_id,
                   "route_name": route.route_name,
                   "add_date": string_add_date,
-                  "route_distance": route.route_distance}
+                  "route_distance": route.route_distance,
+                  "waypoints": waypoints
+                  }
     # print route_data
     return jsonify(route_data)
 
@@ -191,7 +202,9 @@ def route_detail_json():
 def search_route_detail_by_name():
     """Show info about route."""
 
+    print "search term is ", request.args.get("search")
     route = Route.get_by_route_name(request.args.get("search"))
+    print route
 
     return redirect("routes/%s" % route.route_id)
 
@@ -256,7 +269,7 @@ def run_detail_json():
 def add_route_and_run():
     """Add a run to the database."""
 
-    # print "/new-run in server.py called"
+    print "/new-run in server.py called"
     start_lat = request.form.get("start-lat")
     start_long = request.form.get("start-long")
     end_lat = request.form.get("end-lat")
@@ -268,12 +281,16 @@ def add_route_and_run():
     favorite = request.form.get("favorite")
     date = request.form.get("date")
     user_id = session["user_id"]
+    polyline = request.form.get("overview-polyline")
+
     # print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
 
     new_route = Route(user_id=user_id, route_name=route, add_date=add_date,
                       start_lat=start_lat, start_long=start_long,
                       end_lat=end_lat, end_long=end_long,
-                      route_distance=distance, favorite=favorite)
+                      route_distance=distance, favorite=favorite,
+                      polyline=polyline
+                      )
 
     new_route.add()
     # print "route committed"

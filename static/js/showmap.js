@@ -6,7 +6,7 @@ var map;
 var totalDistance;
 var newRoute;
 var waypoints;
-
+var poly;
 function updateMap() {
 
 
@@ -34,8 +34,9 @@ function updateMap() {
     directionsDisplay.addListener('directions_changed', function() {
         calculateTotalDistanceInKilometers(directionsDisplay.getDirections());
         // everytime the directions change (including user dragging), update the polyline
-        // getPolyline(directionsDisplay.getDirections());
-        // getWaypoints(directionsDisplay.getDirections());
+        setPolyline(directionsDisplay.getDirections());
+        getWaypoints(directionsDisplay.getDirections());
+        drawCustomPolyline(directionsDisplay.getDirections());
     });
     
 
@@ -79,4 +80,109 @@ function calculateTotalDistanceInKilometers(response) {
 
   $("#total-distance-field1").val(totalDistance);
   $("#total-distance-field2").val(totalDistance);
+}
+
+
+// ############ new code to test polyline creation & retrieval
+function setPolyline(response) {
+  poly = response.routes[0]["overview_polyline"];
+  console.log("getPolyline function:");
+  console.log(poly);
+  // return poly;
+  // newRoute = new Route("testName", poly);
+  // console.log(newRoute);
+  // console.log(newRoute.getName());
+  $("#overview-polyline-field1").val(poly);
+  $("#overview-polyline-field2").val(poly);
+
+}
+
+
+// Utility method to confirm accuracy of polyline encoding/decoding 
+function getWaypoints(response) {
+  var overviewPath = response.routes[0]["overview_path"];
+  console.log(overviewPath);
+  var waypoints = JSON.stringify(overviewPath);
+  // console.log(JSON.stringify(overviewPath));
+  console.log("waypoints are:");
+  console.log(waypoints);
+  // var latLongString = waypoints.substring(1, (waypoints.length - 1));  
+  // console.log(latLongString);
+  // console.log(latLongString.split("}"))
+  // console.log(typeof(waypoints));
+  drawCustomPolyline2(waypoints);
+
+}
+
+function drawCustomPolyline(response) {
+    alert("drawCustomPolyline function called");
+    var polyline = new google.maps.Polyline({
+        path: [],
+        strokeColor: '#FF0000',
+        strokeWeight: 3
+    });
+    var bounds = new google.maps.LatLngBounds();
+
+    var i = 0;
+    var j = 0;
+    var k = 0;
+    var legs = response.routes[0].legs;
+    for (i=0;i<legs.length;i++) {
+          var steps = legs[i].steps;
+          for (j=0;j<steps.length;j++) {
+              var nextSegment = steps[j].path;
+              console.log(nextSegment);
+              for (k=0;k<nextSegment.length;k++) {
+                  polyline.getPath().push(nextSegment[k]);
+                  console.log(nextSegment[k]);
+                  bounds.extend(nextSegment[k]);
+              }
+          }
+    }
+    // console.log("custom polyline is:");
+    // console.log(polyline);
+    polyline.setMap(map);
+    map.fitBounds(bounds);
+
+    // console.log(JSON.stringify(polyline));
+    // polylineJson = JSON.stringify(polyline);
+    // console.log("polylineJson is ");
+    // console.log(polylineJson);
+}
+
+function drawCustomPolyline2() {
+  alert("drawCustomPolylineTWO function called");
+
+  function drawPolyline() {
+      var polyline = new google.maps.Polyline({
+          path: [],
+          strokeColor: '#FF0000',
+          strokeWeight: 3
+      });
+
+  }
+
+  function createLatLngArray(response) {
+    // for 
+  }
+
+  $.post("/get-waypoints", encodedPolyline, createLatLngArray)
+  // alert(linePoints);
+  // console.log(linePoints);
+  // console.log(linePoints.length);
+  // linePoints.toJSON();
+  // console.log(linePoints.toJSON());
+  // for (var i = 0; i < linepoints.length)
+  // var polyline2 = new google.maps.Polyline({
+  //       path: [],
+  //       strokeColor: 'green',
+  //       strokeWeight: 3
+  //   });
+
+  // var i = 0
+  // for (i=0; i < linePoints.length; i++) {
+  //     console.log(linePoints[i].lat());
+      // polyline2.getPath().push(linePoints[i].lat());
+
+  // polyline2.setMap(map);
 }

@@ -58,12 +58,13 @@ class Route(db.Model):
     end_long = db.Column(db.Float)
     route_distance = db.Column(db.Float)
     favorite = db.Column(db.Boolean)
+    polyline = db.Column(db.String(500))
 
     # Define relationship to user: a user has many routes
     user = db.relationship("User", backref=db.backref("routes"))
 
     def __init__(self, user_id, route_name, add_date, start_lat, start_long,
-                 end_lat, end_long, route_distance, favorite):
+                 end_lat, end_long, route_distance, favorite, polyline):
         self.user_id = user_id
         self.route_name = route_name
         self.add_date = add_date
@@ -73,11 +74,12 @@ class Route(db.Model):
         self.end_long = end_long
         self.route_distance = route_distance
         self.favorite = favorite
+        self.polyline = polyline
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<Route route_id=%s, route_name=%s, add_date=%s, start_lat=%s,start_long=%s, end_lat=%s, end_long=%s, route_distance=%s, favorite=%s>" % (self.route_id, self.route_name, self.add_date, self.start_lat, self.start_long, self.end_lat, self.end_long, self.route_distance, self.favorite)
+        return "<User user_id=%s, Route route_id=%s, route_name=%s, add_date=%s, start_lat=%s,start_long=%s, end_lat=%s, end_long=%s, route_distance=%s, favorite=%s, polyline=%s>" % (self.user_id, self.route_id, self.route_name, self.add_date, self.start_lat, self.start_long, self.end_lat, self.end_long, self.route_distance, self.favorite, self.polyline)
 
     @classmethod
     def get_all(cls):
@@ -95,14 +97,20 @@ class Route(db.Model):
     def get_by_route_name(cls, search_term):
         """Return a route with a given name from the database"""
 
+        print Route.query.filter_by(route_name=search_term).first()
         return Route.query.filter_by(route_name=search_term).first()
 
     def add(self):
         """Add a new route to the database"""
 
-        new_route = Route(user_id=self.user_id, route_name=self.route_name, add_date=self.add_date,
-                          start_lat=self.start_lat, start_long=self.start_long, end_lat=self.end_lat,
-                          end_long=self.end_long, route_distance=self.route_distance, favorite=self.favorite)
+        new_route = Route(user_id=self.user_id, route_name=self.route_name,
+                          add_date=self.add_date, start_lat=self.start_lat,
+                          start_long=self.start_long, end_lat=self.end_lat,
+                          end_long=self.end_long,
+                          route_distance=self.route_distance,
+                          favorite=self.favorite,
+                          polyline=self.polyline
+                          )
         db.session.add(new_route)
         db.session.commit()
         print "route added in model"
