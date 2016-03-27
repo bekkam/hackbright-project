@@ -62,12 +62,41 @@ function showSavedMap(response) {
         console.log(response.waypoints[i]);
         console.log(typeof(response.waypoints[i][0]));
 
+        // FYI: Creating a latLng literal (line 68) did not work with google's API,
+        // but creating a new LatLng did.  When functionality is missing, 
+        // consider creating a new LatLng object instead.
         // polyline.getPath().push({lat: response.waypoints[i][0], lng: response.waypoints[i][1]})
         polyline.getPath().push(new google.maps.LatLng(response.waypoints[i][0], response.waypoints[i][1]));
     } 
     console.log("polyline is");
     console.log(polyline);
     polyline.setMap(map);
+
+    // ############ new code to get directions #################
+    var directionsDisplay = new google.maps.DirectionsRenderer();
+    var directionsService = new google.maps.DirectionsService();
+
+    var lastWaypointIndex = response.waypoints.length -1;
+    var originCoordinates = new google.maps.LatLng(response.waypoints[0][0], response.waypoints[0][1]);
+    var destinationCoordinates = new google.maps.LatLng(response.waypoints[lastWaypointIndex][0], response.waypoints[lastWaypointIndex][1]);
+
+    directionsDisplay.setMap(map);
+    directionsDisplay.setPanel(document.getElementById("right-panel"));
+
+    directionsService.route({
+      origin: originCoordinates ,
+      destination: destinationCoordinates ,
+      travelMode: google.maps.TravelMode.WALKING,
+      avoidTolls: true
+    }, function(response, status) {
+      if (status === google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);  
+      } else {
+        alert('Could not display directions due to: ' + status);
+      }
+    });
+
+    // ################################
 
 }
 
