@@ -22,9 +22,7 @@ $( document ).ready(function() {
 
 
 function showIndividualRouteData(data) {
-    // ##### new code
-    console.log(data.waypoints);
-    // ######
+
     $('#header').html("<h3>Route: " + data.route_name + "</h3>");
     $('#route-detail-data').html("<h4>Route Data</h4>");
     $("<tr><th>Route ID</th><th>Date Added</th><th>Distance (km)</th></tr></table>").appendTo('#route-detail-table');
@@ -34,7 +32,7 @@ function showIndividualRouteData(data) {
       row.append($("<td>" + data.add_date + "</td>"));
       row.append($("<td>" + data.route_distance + "</td>"));
 
-    showSavedMap(data)
+    showSavedMap(data);
 }
 
 
@@ -53,38 +51,35 @@ function showSavedMap(response) {
         strokeWeight: 4
     });
 
-    // console.log(response.waypoints[0]);   
+    // Creat a LatLngBounds object to customize map center and zoom level,
+    // based on latlng array
+    var bounds = new google.maps.LatLngBounds();
+
     var i;
     for (i = 0; i < response.waypoints.length; i++) {
-        // console.log(response.waypoints[i]);
-        // console.log(typeof(response.waypoints[i][0]));
 
         // FYI: Creating a latLng literal (line 70) did not work with google's API,
         // but creating a new LatLng did.  When functionality is missing, 
         // consider creating a new LatLng object instead.
         // polyline.getPath().push({lat: response.waypoints[i][0], lng: response.waypoints[i][1]})
         polyline.getPath().push(new google.maps.LatLng(response.waypoints[i][0], response.waypoints[i][1]));
+        bounds.extend(new google.maps.LatLng(response.waypoints[i][0], response.waypoints[i][1]));
     } 
-    console.log("polyline is");
-    console.log(polyline);
+    // console.log("polyline is");
+    // console.log(polyline);
     polyline.setMap(map);
+
+    //Adjust center and zoom of map
+    map.fitBounds(bounds)
 
     showDirections(response);
 }
 
 // ########################## Render custom directions for the polyline ###############
 function showDirections(response) {
-
-    console.log("showDirections called");
-    console.log(response.directions_text);
-    console.log(response.start_address);
-
     
     var directionsTextArray = response.directions_text.split(",");
-    console.log(directionsTextArray);
-
     var directionsDistanceArray = response.directions_distance.split(",");
-    console.log(directionsDistanceArray);
 
     var summaryPanel = document.getElementById('right-panel');
 
@@ -92,7 +87,8 @@ function showDirections(response) {
     summaryPanel.innerHTML += "<p>Walking directions are in beta. Use caution" 
     + " – This route may be missing sidewalks or pedestrian paths.<p>"
     summaryPanel.innerHTML += "Start Address: " + response.start_address + "</br>"
-    // loop over directions array to populate each direction on new line
+    // loop over directions and distance arrays
+     // to populate each direction on new line
     var m;
     for (m = 0; m < directionsTextArray.length; m++) {
         summaryPanel.innerHTML += directionsTextArray[m];
