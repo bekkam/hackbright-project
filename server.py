@@ -200,7 +200,9 @@ def route_detail_json():
                   "route_name": route.route_name,
                   "add_date": string_add_date,
                   "route_distance": route.route_distance,
-                  "waypoints": waypoints
+                  "waypoints": waypoints,
+                  "directions_text": route.directions_text,
+                  "directions_distance": route.directions_distance
                   }
     # print route_data
     return jsonify(route_data)

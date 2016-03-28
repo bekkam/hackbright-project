@@ -39,7 +39,7 @@ function showIndividualRouteData(data) {
 
 // TODO: Add function to populate run data table
 
-// Add ability to gdenerate map based on decoded polyline 
+// Add ability to generate map based on decoded polyline 
 
 function showSavedMap(response) {
 
@@ -49,20 +49,19 @@ function showSavedMap(response) {
         styles: MAPSTYLES
     });
 
-
     var polyline = new google.maps.Polyline({
         path: [],
         strokeColor: 'green',
         strokeWeight: 4
     });
 
-    console.log(response.waypoints[0]);   
+    // console.log(response.waypoints[0]);   
     var i;
     for (i = 0; i < response.waypoints.length; i++) {
-        console.log(response.waypoints[i]);
+        // console.log(response.waypoints[i]);
         // console.log(typeof(response.waypoints[i][0]));
 
-        // FYI: Creating a latLng literal (line 68) did not work with google's API,
+        // FYI: Creating a latLng literal (line 70) did not work with google's API,
         // but creating a new LatLng did.  When functionality is missing, 
         // consider creating a new LatLng object instead.
         // polyline.getPath().push({lat: response.waypoints[i][0], lng: response.waypoints[i][1]})
@@ -72,7 +71,33 @@ function showSavedMap(response) {
     console.log(polyline);
     polyline.setMap(map);
 
+
+    console.log(response.directions_text);
+    
+    var directionsTextArray = response.directions_text.split(",");
+    console.log(directionsTextArray);
+
+    var directionsDistanceArray = response.directions_distance.split(",");
+    console.log(directionsDistanceArray);
+
+    var summaryPanel = document.getElementById('right-panel');
+
+    summaryPanel.innerHTML = '';
+
+    // loop over directions array to populate each direction on new line
+    var m;
+    for (m = 0; m < directionsTextArray.length; m++) {
+        summaryPanel.innerHTML += directionsTextArray[m];
+        summaryPanel.innerHTML += "&nbsp &nbsp &nbsp &nbsp";
+
+        summaryPanel.innerHTML += directionsDistanceArray[m];
+        summaryPanel.innerHTML += "<br>";
+
+    }
+    // summaryPanel.innerHTML += response.directions_text;
     // ############ new code to get directions #################
+
+    // $.("#right-panel").html("hi");
     var directionsDisplay = new google.maps.DirectionsRenderer();
     var directionsService = new google.maps.DirectionsService();
 
@@ -92,14 +117,29 @@ function showSavedMap(response) {
       avoidTolls: true
     }, function(response, status) {
       if (status === google.maps.DirectionsStatus.OK) {
+
         directionsDisplay.setDirections(response);  
+
+
       } else {
         alert('Could not display directions due to: ' + status);
       }
     });
 
-    // ################################
 
 }
 
 
+        // console.log("response.directions_text is");
+        // console.log(response.directions_text[0]);
+        // var route = response.routes[0];
+        // var summaryPanel = document.getElementById('right-panel');
+        // summaryPanel.innerHTML = '';
+        // // For each route, display summary information.
+        // for (var i = 0; i < route.legs.length; i++) {
+        //     var routeSegment = i + 1;
+        //     summaryPanel.innerHTML += '<b>Route Segment: ' + routeSegment +
+        //         '</b><br>';
+        //     summaryPanel.innerHTML += route.legs[i].start_address + ' to ';
+        //     summaryPanel.innerHTML += route.legs[i].end_address + '<br>';
+        //     summaryPanel.innerHTML += route.legs[i].distance.text + '<br><br>';
