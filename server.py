@@ -124,7 +124,13 @@ def add_route():
     route = request.form.get("route")
 
     polyline = request.form.get("overview-polyline")
-    print "polyline is ", polyline
+    # print "polyline is ", polyline
+
+    directions_text = request.form.get("directions-text")
+    directions_distance = request.form.get("directions-distance")
+
+    print directions_text
+    print directions_distance
 
     new_route = Route(user_id=user_id, route_name=route,
                       add_date=datetime.now(),
@@ -134,7 +140,9 @@ def add_route():
                       end_long=request.form.get("end-long"),
                       route_distance=request.form.get("distance"),
                       favorite=request.form.get("favorite"),
-                      polyline=polyline
+                      polyline=polyline,
+                      directions_text=directions_text,
+                      directions_distance=directions_distance
                       )
     new_route.add()
 

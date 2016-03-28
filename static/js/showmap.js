@@ -127,6 +127,9 @@ function setCustomDirections(response) {
   }
   console.log(stepDistanceArray);
 
+  $("#directions-text-field1").val(stepInstructionsArray);
+  $("#directions-distance-field1").val(stepDistanceArray);
+
 }
 
 //  ##############################################
