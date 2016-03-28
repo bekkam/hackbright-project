@@ -1,7 +1,5 @@
 "use strict";
 
-var pathname;
-
 // function to get the last item from the url
 function getLastItemInPath(path) {
 
@@ -13,8 +11,7 @@ function getLastItemInPath(path) {
 
 $( document ).ready(function() {
 
-    pathname = window.location.pathname; // Returns path
-    var id = getLastItemInPath(pathname);
+    var id = getLastItemInPath(window.location.pathname);
     $.post("/run-detail.json", {runId: id}, showRunData);
 });
 

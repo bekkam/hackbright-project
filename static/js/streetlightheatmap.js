@@ -1,6 +1,5 @@
 "user strict";
 
-var latLngs = [];
 var heatmap;
 
 function generateHeatMap(evt) {
@@ -8,6 +7,8 @@ function generateHeatMap(evt) {
   url = "https://data.sfgov.org/resource/vw6y-z8j6.json?"
     +"category=Streetlights"
     +"&Status=Open"
+
+  var latLngs = [];
 
     // Get data, and lat/long to latLngs array
     $.getJSON(url, function(data) {

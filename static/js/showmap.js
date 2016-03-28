@@ -1,12 +1,5 @@
 "use strict";
-
-var directionsDisplay;
-var directionsService;
 var map;
-var totalDistance;
-var newRoute;
-var waypoints;
-var poly;
 
 function updateMap() {
 
@@ -17,7 +10,7 @@ function updateMap() {
   var endLat = $('#end-lat-field').data('endlat');
   var endLong = $('#end-long-field').data('endlong');
 
-   directionsService = new google.maps.DirectionsService();
+   var directionsService = new google.maps.DirectionsService();
 
    $("#right-panel").empty();
    map = new google.maps.Map(document.getElementById('map'), {
@@ -26,7 +19,7 @@ function updateMap() {
         styles: MAPSTYLES
     });
 
-   directionsDisplay = new google.maps.DirectionsRenderer({
+   var directionsDisplay = new google.maps.DirectionsRenderer({
         draggable: true,
         map:map,
         panel: document.getElementById('right-panel')
@@ -58,7 +51,7 @@ function displayRoute(origin, destination, service, display){
       if (status === google.maps.DirectionsStatus.OK) {
         // debugging: log the response object
         console.log(response.routes[0]);
-        directionsDisplay.setDirections(response);  
+        display.setDirections(response);  
         calculateTotalDistanceInKilometers(response);
       } else {
         alert('Could not display directions due to: ' + status);
@@ -70,7 +63,7 @@ function displayRoute(origin, destination, service, display){
 function calculateTotalDistanceInKilometers(response) { 
 
   // get route data needed for db: total distance:
-  totalDistance = 0;
+  var totalDistance = 0;
   var currentRoute = response.routes[0];
   // for every leg of route, get the leg's distance, and add it to totalDistance
   for (var i = 0; i < currentRoute.legs.length; i++) {
@@ -88,7 +81,7 @@ function calculateTotalDistanceInKilometers(response) {
 
 // ############ new code to test polyline creation & retrieval
 function setPolyline(response) {
-  poly = response.routes[0]["overview_polyline"];
+  var poly = response.routes[0]["overview_polyline"];
   // console.log("setPolyline function:");
   // console.log(poly);
 

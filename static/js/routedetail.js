@@ -1,9 +1,8 @@
 "use strict";
 
-var pathname;
-
 // function to get the last item from the url
 function getLastItemInPath(path) {
+
     var urlArray = path.split("/");
     var lastItem = urlArray.pop();
     console.log(lastItem);
@@ -11,13 +10,9 @@ function getLastItemInPath(path) {
 }
 
 $( document ).ready(function() {
-    pathname = window.location.pathname; // Returns path
-    console.log(pathname);
 
-    var id = getLastItemInPath(pathname);
-
+    var id = getLastItemInPath(window.location.pathname);
     $.post("/route-detail.json", {routeId: id}, showIndividualRouteData);
-
 });
 
 
@@ -36,7 +31,7 @@ function showIndividualRouteData(data) {
 }
 
 
-// #################### Render a map and custom polyline ########################3
+// #################### Render a map and custom polyline ########################
 function showSavedMap(response) {
 
     var map = new google.maps.Map(document.getElementById('map'), {
