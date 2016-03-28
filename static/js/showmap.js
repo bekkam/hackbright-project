@@ -7,6 +7,7 @@ var totalDistance;
 var newRoute;
 var waypoints;
 var poly;
+
 function updateMap() {
 
 
@@ -35,6 +36,7 @@ function updateMap() {
         calculateTotalDistanceInKilometers(directionsDisplay.getDirections());
         // everytime the directions change (including user dragging), update the polyline
         setPolyline(directionsDisplay.getDirections());
+        setCustomDirections(directionsDisplay.getDirections());
         // getWaypoints(directionsDisplay.getDirections());
         // drawCustomPolyline(directionsDisplay.getDirections());
     });
@@ -81,7 +83,25 @@ function calculateTotalDistanceInKilometers(response) {
   $("#total-distance-field1").val(totalDistance);
   $("#total-distance-field2").val(totalDistance);
 
-// ################ new code to save text directions ###############
+}
+
+
+// ############ new code to test polyline creation & retrieval
+function setPolyline(response) {
+  poly = response.routes[0]["overview_polyline"];
+  // console.log("setPolyline function:");
+  // console.log(poly);
+
+  $("#overview-polyline-field1").val(poly);
+  $("#overview-polyline-field2").val(poly);
+
+}
+
+
+// ############ new code to refactor saving custom directions####
+
+function setCustomDirections(response) {
+
   console.log("response.routes[0].legs is ");
   console.log(response.routes[0].legs);
 
@@ -107,23 +127,9 @@ function calculateTotalDistanceInKilometers(response) {
   }
   console.log(stepDistanceArray);
 
-// #####################################################
 }
 
-
-// ############ new code to test polyline creation & retrieval
-function setPolyline(response) {
-  poly = response.routes[0]["overview_polyline"];
-  console.log("getPolyline function:");
-  console.log(poly);
-  // return poly;
-  // newRoute = new Route("testName", poly);
-  // console.log(newRoute);
-  // console.log(newRoute.getName());
-  $("#overview-polyline-field1").val(poly);
-  $("#overview-polyline-field2").val(poly);
-
-}
+//  ##############################################
 
 
 // Utility method to confirm accuracy of polyline encoding/decoding 
