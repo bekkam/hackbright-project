@@ -61,13 +61,16 @@ class Route(db.Model):
     polyline = db.Column(db.String(1500))
     directions_text = db.Column(db.String(2000))
     directions_distance = db.Column(db.String(200))
+    start_address = db.Column(db.String(100))
+    end_address = db.Column(db.String(100))
 
     # Define relationship to user: a user has many routes
     user = db.relationship("User", backref=db.backref("routes"))
 
     def __init__(self, user_id, route_name, add_date, start_lat, start_long,
                  end_lat, end_long, route_distance, favorite, polyline,
-                 directions_text, directions_distance):
+                 directions_text, directions_distance, start_address,
+                 end_address):
         self.user_id = user_id
         self.route_name = route_name
         self.add_date = add_date
@@ -80,11 +83,13 @@ class Route(db.Model):
         self.polyline = polyline
         self.directions_text = directions_text
         self.directions_distance = directions_distance
+        self.start_address = start_address
+        self.end_address = end_address
 
     def __repr__(self):
         """Provide helpful representation when printed."""
 
-        return "<User user_id=%s, Route route_id=%s, route_name=%s, add_date=%s, start_lat=%s,start_long=%s, end_lat=%s, end_long=%s, route_distance=%s, favorite=%s, polyline=%s, directions_text=%s, directions_distance=%s>" % (self.user_id, self.route_id, self.route_name, self.add_date, self.start_lat, self.start_long, self.end_lat, self.end_long, self.route_distance, self.favorite, self.polyline, self.directions_text, self.directions_distance)
+        return "<User user_id=%s, Route route_id=%s, route_name=%s, add_date=%s, start_lat=%s,start_long=%s, end_lat=%s, end_long=%s, route_distance=%s, favorite=%s, polyline=%s, directions_text=%s, directions_distance=%s, start_address=%s, end_address=%s>" % (self.user_id, self.route_id, self.route_name, self.add_date, self.start_lat, self.start_long, self.end_lat, self.end_long, self.route_distance, self.favorite, self.polyline, self.directions_text, self.directions_distance, self.start_address, self.end_address)
 
     @classmethod
     def get_all(cls):
@@ -116,7 +121,9 @@ class Route(db.Model):
                           favorite=self.favorite,
                           polyline=self.polyline,
                           directions_text=self.directions_text,
-                          directions_distance=self.directions_distance
+                          directions_distance=self.directions_distance,
+                          start_address=self.start_address,
+                          end_address=self.end_address
                           )
         db.session.add(new_route)
         db.session.commit()

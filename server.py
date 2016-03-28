@@ -148,7 +148,9 @@ def add_route():
                       favorite=request.form.get("favorite"),
                       polyline=polyline,
                       directions_text=directions_text,
-                      directions_distance=directions_distance
+                      directions_distance=directions_distance,
+                      start_address=start_address,
+                      end_address=end_address
                       )
     new_route.add()
 
