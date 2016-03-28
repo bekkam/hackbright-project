@@ -132,6 +132,12 @@ def add_route():
     print directions_text
     print directions_distance
 
+    start_address = request.form.get("start-address")
+    end_address = request.form.get("end-address")
+
+    print start_address
+    print end_address
+
     new_route = Route(user_id=user_id, route_name=route,
                       add_date=datetime.now(),
                       start_lat=request.form.get("start-lat"),
