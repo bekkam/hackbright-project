@@ -129,14 +129,8 @@ def add_route():
     directions_text = request.form.get("directions-text")
     directions_distance = request.form.get("directions-distance")
 
-    print directions_text
-    print directions_distance
-
     start_address = request.form.get("start-address")
     end_address = request.form.get("end-address")
-
-    print start_address
-    print end_address
 
     new_route = Route(user_id=user_id, route_name=route,
                       add_date=datetime.now(),
@@ -274,6 +268,7 @@ def run_detail_json():
     run = Run.query.get(run_id)
     route = Route.get_by_id(run.route_id)
 
+    print route
     string_run_date = datetime.strftime(run.run_date, "%m/%d/%Y")
 
     waypoints = util.decode_polyline(route.polyline)
@@ -283,8 +278,13 @@ def run_detail_json():
                 "run_date": string_run_date,
                 "route_distance": route.route_distance,
                 "duration": run.duration,
-                "waypoints": waypoints}
-    # print run_data
+                "waypoints": waypoints,
+                "directions_text": route.directions_text,
+                "directions_distance": route.directions_distance,
+                "start_address": route.start_address,
+                "end_address": route.end_address
+                }
+    print run_data
     return jsonify(run_data)
 
 
@@ -306,13 +306,23 @@ def add_route_and_run():
     user_id = session["user_id"]
     polyline = request.form.get("overview-polyline")
 
+    directions_text = request.form.get("directions-text")
+    directions_distance = request.form.get("directions-distance")
+
+    start_address = request.form.get("start-address")
+    end_address = request.form.get("end-address")
+
     # print "start_lat is %s, start_long is %s, end_lat is %s, end_long is %s, name is %s, distance is %s, favorite is %s" % (start_lat, start_long, end_lat, end_long, route, distance, favorite)
 
     new_route = Route(user_id=user_id, route_name=route, add_date=add_date,
                       start_lat=start_lat, start_long=start_long,
                       end_lat=end_lat, end_long=end_long,
                       route_distance=distance, favorite=favorite,
-                      polyline=polyline
+                      polyline=polyline,
+                      directions_text=directions_text,
+                      directions_distance=directions_distance,
+                      start_address=start_address,
+                      end_address=end_address
                       )
 
     new_route.add()

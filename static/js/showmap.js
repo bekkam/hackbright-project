@@ -134,4 +134,8 @@ function setCustomDirections(response) {
   $("#start-address-field1").val(startAddress);
   $("#end-address-field1").val(endAddress);
 
+  $("#directions-text-field2").val(stepInstructionsArray);
+  $("#directions-distance-field2").val(stepDistanceArray);
+  $("#start-address-field2").val(startAddress);
+  $("#end-address-field2").val(endAddress);
 }

@@ -37,10 +37,8 @@ function showIndividualRouteData(data) {
     showSavedMap(data)
 }
 
-// TODO: Add function to populate run data table
 
-// Add ability to generate map based on decoded polyline 
-
+// #################### Render a map and custom polyline ########################3
 function showSavedMap(response) {
 
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -71,7 +69,13 @@ function showSavedMap(response) {
     console.log(polyline);
     polyline.setMap(map);
 
+    showDirections(response);
+}
 
+// ########################## Render custom directions for the polyline ###############
+function showDirections(response) {
+
+    console.log("showDirections called");
     console.log(response.directions_text);
     console.log(response.start_address);
 
@@ -100,5 +104,6 @@ function showSavedMap(response) {
     }
     summaryPanel.innerHTML += "End Address: " + response.end_address;
     summaryPanel.innerHTML += "<br>Map data ©2016 Google</br>";
-
 }
+
+// #########################################################################
