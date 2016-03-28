@@ -73,6 +73,8 @@ function showSavedMap(response) {
 
 
     console.log(response.directions_text);
+    console.log(response.start_address);
+
     
     var directionsTextArray = response.directions_text.split(",");
     console.log(directionsTextArray);
@@ -85,7 +87,7 @@ function showSavedMap(response) {
     summaryPanel.innerHTML = '';
     summaryPanel.innerHTML += "<p>Walking directions are in beta. Use caution" 
     + " – This route may be missing sidewalks or pedestrian paths.<p>"
-
+    summaryPanel.innerHTML += "Start Address: " + response.start_address + "</br>"
     // loop over directions array to populate each direction on new line
     var m;
     for (m = 0; m < directionsTextArray.length; m++) {
@@ -96,6 +98,9 @@ function showSavedMap(response) {
         summaryPanel.innerHTML += "<br>";
 
     }
+    summaryPanel.innerHTML += "End Address: " + response.end_address;
+    summaryPanel.innerHTML += "<br>Map data ©2016 Google</br>";
+
     // summaryPanel.innerHTML += response.directions_text;
     // ############ new code to get directions #################
 
