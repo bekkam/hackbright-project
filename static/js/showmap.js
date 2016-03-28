@@ -112,9 +112,11 @@ function setCustomDirections(response) {
   console.log(directionsRouteLegs[0]);
 
   // Save start and end addresses attributes of the leg
-  var endAddress = directionsRouteLegs[0].end_address;
   var startAddress = directionsRouteLegs[0].start_address;
+  var endAddress = directionsRouteLegs[0].end_address;
 
+  console.log("end address is");
+  console.log(endAddress);
   // Create stepInstructionsArray and stepDistanceArray, to store the
   // instructions attribute and distance for each step of the route leg
   var stepInstructionsArray = [];
@@ -129,6 +131,8 @@ function setCustomDirections(response) {
 
   $("#directions-text-field1").val(stepInstructionsArray);
   $("#directions-distance-field1").val(stepDistanceArray);
+  $("#start-address-field1").val(startAddress);
+  $("#end-address-field1").val(endAddress);
 
 }
 

@@ -83,6 +83,8 @@ function showSavedMap(response) {
     var summaryPanel = document.getElementById('right-panel');
 
     summaryPanel.innerHTML = '';
+    summaryPanel.innerHTML += "<p>Walking directions are in beta. Use caution" 
+    + " – This route may be missing sidewalks or pedestrian paths.<p>"
 
     // loop over directions array to populate each direction on new line
     var m;
@@ -98,33 +100,33 @@ function showSavedMap(response) {
     // ############ new code to get directions #################
 
     // $.("#right-panel").html("hi");
-    var directionsDisplay = new google.maps.DirectionsRenderer();
-    var directionsService = new google.maps.DirectionsService();
+    // var directionsDisplay = new google.maps.DirectionsRenderer();
+    // var directionsService = new google.maps.DirectionsService();
 
-    var lastWaypointIndex = response.waypoints.length -1;
-    var originCoordinates = new google.maps.LatLng(response.waypoints[0][0], response.waypoints[0][1]);
-    var destinationCoordinates = new google.maps.LatLng(response.waypoints[lastWaypointIndex][0], response.waypoints[lastWaypointIndex][1]);
+    // var lastWaypointIndex = response.waypoints.length -1;
+    // // var originCoordinates = new google.maps.LatLng(response.waypoints[0][0], response.waypoints[0][1]);
+    // // var destinationCoordinates = new google.maps.LatLng(response.waypoints[lastWaypointIndex][0], response.waypoints[lastWaypointIndex][1]);
 
-    directionsDisplay.setMap(map);
-    directionsDisplay.setPanel(document.getElementById("right-panel"));
+    // // directionsDisplay.setMap(map);
+    // // directionsDisplay.setPanel(document.getElementById("right-panel"));
 
-    console.log("directionsService.route is");
-    console.log(directionsService.route);
-    directionsService.route({
-      origin: originCoordinates ,
-      destination: destinationCoordinates ,
-      travelMode: google.maps.TravelMode.WALKING,
-      avoidTolls: true
-    }, function(response, status) {
-      if (status === google.maps.DirectionsStatus.OK) {
+    // // console.log("directionsService.route is");
+    // // console.log(directionsService.route);
+    // directionsService.route({
+    //   origin: {lat: response.waypoints[0][0], lng: response.waypoints[0][1]} ,
+    //   destination: {lat: response.waypoints[lastWaypointIndex][0], lng: response.waypoints[lastWaypointIndex][1]}  ,
+    //   travelMode: google.maps.TravelMode.WALKING,
+    //   avoidTolls: true
+    // }, function(response, status) {
+    //   if (status === google.maps.DirectionsStatus.OK) {
 
-        directionsDisplay.setDirections(response);  
+    // //     directionsDisplay.setDirections(response);  
+    //     console.log(response);
 
-
-      } else {
-        alert('Could not display directions due to: ' + status);
-      }
-    });
+    //   } else {
+    //     alert('Could not display directions due to: ' + status);
+    //   }
+    // });
 
 
 }
