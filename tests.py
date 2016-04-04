@@ -12,7 +12,6 @@ def load_tests(loader, tests, ignore):
     """
 
     tests.addTests(doctest.DocTestSuite(util))
-    # tests.addTests(doctest.DocFileSuite("tests.txt"))
     return tests
 
 
@@ -53,23 +52,14 @@ class ServerTemplatesTestCase(unittest.TestCase):
         self.assertIn('<h4>Login</h4>', result.data)
         self.assertIn('<h4>Register</h4>', result.data)
 
-    # Test registration form with valid and invalid credentials
-    # Test login form with valid and invalid credentials
-    # Test logout
-    # def test_logout(self):
-    #     """Test /logout"""
-
-    #     result = self.client.get('/logout', follow_redirects=True)
-    #     self.assertEqual(result.status_code, 200)
-
     def test_homepage(self):
         """Test that the homepage returns the correct html"""
 
         result = self.client.get('/homepage')
         self.assertEqual(result.status_code, 200)
-        self.assertIn("<h3>Map a new route</h3>", result.data)
+        self.assertIn("<h3>Map a new course</h3>", result.data)
 
-    def test_draw_route(self):
+    def test_draw_course(self):
         """Test that the map page returns the correct html"""
 
         result = self.client.get('draw-route?start=golden+gate+park%2C+san+francisco+ca&end=24th+street+mission+bart%2C+san+francisco%2C+ca')
@@ -84,12 +74,12 @@ class ServerTemplatesTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
         self.assertIn("<h2>Profile</h2>", result.data)
 
-    def test_routes_page(self):
-        """Test that the routes page returns the correct html"""
+    def test_courses_page(self):
+        """Test that the courses page returns the correct html"""
 
-        result = self.client.get('/routes')
+        result = self.client.get('/courses')
         self.assertEqual(result.status_code, 200)
-        self.assertIn("<h2>Routes</h2>", result.data)
+        self.assertIn("<h2>Courses</h2>", result.data)
 
     def test_runs_page(self):
         """Test that the runs page returns the correct html"""
