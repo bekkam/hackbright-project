@@ -2,7 +2,7 @@
 
 // function to get the last item from the url
 function getLastItemInPath(path) {
-
+    
     var urlArray = path.split("/");
     var lastItem = urlArray.pop();
     console.log(lastItem);

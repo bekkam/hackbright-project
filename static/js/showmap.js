@@ -1,8 +1,8 @@
 "use strict";
+
 var map;
 
 function updateMap() {
-
 
   var startLat = $('#start-lat-field').data('startlat');
   var startLong = $('#start-long-field').data('startlong');
@@ -34,9 +34,7 @@ function updateMap() {
         // drawCustomPolyline(directionsDisplay.getDirections());
     });
     
-
     displayRoute({lat: startLat, lng: startLong }, {lat: endLat, lng: endLong }, directionsService, directionsDisplay)
-
 }
 
 

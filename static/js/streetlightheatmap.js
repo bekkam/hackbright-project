@@ -1,6 +1,7 @@
 "user strict";
 
 var heatmap;
+var latLngs = [];
 
 function generateHeatMap(evt) {
   // Make the query string for SODA API
@@ -8,13 +9,12 @@ function generateHeatMap(evt) {
     +"category=Streetlights"
     +"&Status=Open"
 
-  var latLngs = [];
 
     // Get data, and lat/long to latLngs array
     $.getJSON(url, function(data) {
           $.each(data, function(i, entry) {
               latLngs.push(new google.maps.LatLng(parseFloat(entry.point.latitude), 
-                                                   parseFloat(entry.point.longitude)));
+                                                  parseFloat(entry.point.longitude)));
             });
     });
     heatmap = new google.maps.visualization.HeatmapLayer({
