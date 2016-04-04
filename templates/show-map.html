@@ -39,7 +39,7 @@
   <div class="row">
   <div class="col-xs-12 col-md-6 col-lg-4">
 
-    <span> <h4>Save this Route: </h4></span>
+    <span> <h4>Save this Course: </h4></span>
     <form id="save-route-form" method="post" action="/new-route">
         <input type="text" name="route" id="route-name" placeholder="Route Name">
         <input type="hidden" name="start-lat" id="start-lat-field" value="{{ start_lat }}" data-startlat="{{ start_lat }}">
@@ -54,13 +54,13 @@
         <input type="hidden" name="end-address" id="end-address-field1" value=""><br>
 
         <input type="checkbox" name="favorite" id="favorite-field1" value="true"> Favorite?<br>
-        <input type="submit" id="save-route-button" value="Submit Route">
+        <input type="submit" id="save-route-button" value="Submit Course">
     </form> 
 </div>
 
   <div class="col-xs-12 col-md-6 col-lg-4">
 
-  <span><h4>I've Run this Route: </h4></span>
+  <span><h4>I've Run this Course: </h4></span>
       <form id="save-run-form" method="post" action="/new-run">
           <input type="text" name="route" id="route-name2" placeholder="Name of Route" value="test run"><br>
           <input type="hidden" name="start-lat" id="start-lat-field2" value="{{ start_lat }}" data-startlat="{{ start_lat }}">
@@ -78,7 +78,7 @@
           <input type="text" name="date" id="run-date-field" placeholder="Date of run" required value="01/01/2016"><br>
 
           <input type="text" name="duration" id="run-duration-field"  placeholder="Duration in minutes" required value="33"><br>
-          <input type="submit" id="add-run-form-submit" value="Submit Route and Run">
+          <input type="submit" id="add-run-form-submit" value="Submit Course and Run">
       </form>
   </div>
 </div>

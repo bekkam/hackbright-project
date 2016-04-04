@@ -2,7 +2,7 @@
 
 
 $( document ).ready(function() {
-      $('#allRunsDataTable').html("<tr><th>Run ID</th><th>Route Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>")
+      $('#allRunsDataTable').html("<tr><th>Run ID</th><th>Course Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>")
       
       $.getJSON('all-run-data.json', function(data) {
             $.each(data, function(runId, ranRoute) {

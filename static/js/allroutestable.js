@@ -1,7 +1,7 @@
 "use strict";
 
 $( document ).ready(function() {
-      $('#allRoutesDataTable').html("<tr><th>Route ID</th><th>Route Name</th><th>Date Added</th><th>Distance (km)</th></tr>")
+      $('#allRoutesDataTable').html("<tr><th>Course ID</th><th>Course Name</th><th>Date Added</th><th>Distance (km)</th></tr>")
 
       $.getJSON('all-route-data.json', function(data) {
             $.each(data, function(id, route) {

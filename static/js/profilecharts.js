@@ -37,7 +37,7 @@ generateChart("/user-pace.json", ctxLinePace, "lineLegendDistance");
 // Create table with data on three most recently added routes
 
 $( document ).ready(function() {
-      $('#recent-routes-data-table').html("<tr><th>Route ID</th><th>Route Name</th><th>Date Added</th><th>Distance (km)</th></tr>");
+      $('#recent-routes-data-table').html("<tr><th>Course ID</th><th>Course Name</th><th>Date Added</th><th>Distance (km)</th></tr>");
 
       $.getJSON('/three-recent-routes.json', function(data) {
             $.each(data, function(id, route) {
@@ -54,7 +54,7 @@ $( document ).ready(function() {
 // Create table with data on three most recent runs
 
 $( document ).ready(function() {
-      $('#recent-runs-data-table').html("<tr><th>Run ID</th><th>Route Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>");
+      $('#recent-runs-data-table').html("<tr><th>Run ID</th><th>Course Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>");
       
       $.getJSON('/three-recent-runs.json', function(data) {
             $.each(data, function(runId, ranRoute) {

@@ -20,7 +20,7 @@ function showRunData(data) {
 
     $('#run-header').html("<h3>Run ID:" + data.run_id + "</h3>");
     $('#run-detail-data').html("<h4>Run Data</h4>");
-    $("<tr><th>Route Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>").appendTo('#run-detail-table');
+    $("<tr><th>Course Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>").appendTo('#run-detail-table');
     var row = $("<tr />");
     $("#run-detail-table").append(row); 
       row.append($("<td>" + data.route_name + "</td>"));
