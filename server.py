@@ -398,7 +398,7 @@ def user_distance_data():
 
     for item in run_date_distance:
         date, distance = item
-        labels.append(str(date))
+        labels.append(datetime.strftime(date, "%m/%d/%Y"))
         data.append(str(distance))
 
     data_dict = {
@@ -432,7 +432,7 @@ def user_data():
 
     for item in run_date_distance_duration:
         date, distance, duration = item
-        labels.append(str(date))
+        labels.append(datetime.strftime(date, "%m/%d/%Y"))
         km_per_hour = util.get_distance_per_hour(distance, duration)
         data.append(km_per_hour)
 

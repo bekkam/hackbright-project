@@ -26,7 +26,7 @@ var ctxLineDistance = $("#lineChartDistance").get(0).getContext("2d");
 var ctxLinePace = $("#lineChartPace").get(0).getContext("2d");
 
 generateChart("/user-distance.json", ctxLineDistance, "lineLegendDistance");
-generateChart("/user-pace.json", ctxLinePace, "lineLegendDistance");
+generateChart("/user-pace.json", ctxLinePace, "lineLegendPace");
 
 
 // ################################################################################
