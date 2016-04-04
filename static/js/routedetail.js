@@ -12,7 +12,7 @@ function getLastItemInPath(path) {
 $( document ).ready(function() {
 
     var id = getLastItemInPath(window.location.pathname);
-    $.post("/route-detail.json", {routeId: id}, showIndividualRouteData);
+    $.post("/course-detail.json", {routeId: id}, showIndividualRouteData);
 });
 
 

@@ -37,16 +37,16 @@ generateChart("/user-pace.json", ctxLinePace, "lineLegendDistance");
 // Create table with data on three most recently added routes
 
 $( document ).ready(function() {
-      $('#recent-routes-data-table').html("<tr><th>Course ID</th><th>Course Name</th><th>Date Added</th><th>Distance (km)</th></tr>");
+      $('#recent-courses-data-table').html("<tr><th>Course ID</th><th>Course Name</th><th>Date Added</th><th>Distance (km)</th></tr>");
 
-      $.getJSON('/three-recent-routes.json', function(data) {
-            $.each(data, function(id, route) {
+      $.getJSON('/three-recent-courses.json', function(data) {
+            $.each(data, function(id, course) {
                   var row = $("<tr />");
-                  $("#recent-routes-data-table").append(row); 
+                  $("#recent-courses-data-table").append(row); 
                   row.append($("<td>" + id + "</td>"));
-                  row.append($("<td>" + "<a href=" + "/routes/" + id + ">" + route.route_name + "</td>"));
-                  row.append($("<td>" + route.add_date + "</td>"));
-                  row.append($("<td>" + route.route_distance + "</td>"));
+                  row.append($("<td>" + "<a href=" + "/courses/" + id + ">" + course.route_name + "</td>"));
+                  row.append($("<td>" + course.add_date + "</td>"));
+                  row.append($("<td>" + course.route_distance + "</td>"));
               });
       });
 });

@@ -96,9 +96,9 @@ def show_homepage():
     return render_template('homepage.html')
 
 
-@app.route('/draw-route')
+@app.route('/draw-course')
 def get_addresses():
-    """Draw route on map based on user entered text for start and end address"""
+    """Draw path on map based on user entered text for start and end address"""
 
     start = request.args.get("start")
     end = request.args.get("end")
@@ -114,11 +114,11 @@ def get_addresses():
 
 
 # ROUTES
-@app.route("/new-route", methods=["POST"])
-def add_route():
-    """Add a running route to the database"""
+@app.route("/new-course", methods=["POST"])
+def add_course():
+    """Add a running course to the database"""
 
-    print "/new-route called"
+    print "/new-course called"
     user_id = session["user_id"]
     print user_id
     route = request.form.get("route")
@@ -148,46 +148,46 @@ def add_route():
                       )
     new_route.add()
 
-    return "Route %s has been saved to your routes" % route
+    return "Course %s has been saved to your courses" % route
 
 
-@app.route("/routes")
-def route_list():
-    """Show list of routes."""
+@app.route("/courses")
+def course_list():
+    """Show list of courses."""
 
     return render_template("route_list.html")
 
 
-@app.route('/all-route-data.json')
-def all_route_data():
-    """Return JSON of all routes."""
+@app.route('/all-course-data.json')
+def all_course_data():
+    """Return JSON of all courses."""
 
-    allroutedata = {}
+    all_course_data = {}
 
-    routes = Route.get_all()
+    courses = Route.get_all()
 
-    for route in routes:
-        string_add_date = datetime.strftime(route.add_date, "%m/%d/%Y")
-        allroutedata[route.route_id] = {"route_id": route.route_id,
-                                        "route_name": route.route_name,
-                                        "add_date": string_add_date,
-                                        "route_distance": route.route_distance}
+    for course in courses:
+        string_add_date = datetime.strftime(course.add_date, "%m/%d/%Y")
+        all_course_data[course.route_id] = {"route_id": course.route_id,
+                                            "route_name": course.route_name,
+                                            "add_date": string_add_date,
+                                            "route_distance": course.route_distance}
 
-    return jsonify(allroutedata)
+    return jsonify(all_course_data)
 
 
-@app.route("/routes/<int:route_id>")
+@app.route("/courses/<int:route_id>")
 def route_detail(route_id):
-    """Show info about route."""
+    """Show info about course."""
 
     print Route.get_by_id(route_id)
 
     return render_template("route.html", route=Route.get_by_id(route_id))
 
 
-@app.route("/route-detail.json", methods=['POST'])
-def route_detail_json():
-    """Return JSON of individual route."""
+@app.route("/course-detail.json", methods=['POST'])
+def course_detail_json():
+    """Return JSON of individual course."""
 
     route_data = {}
 
@@ -212,28 +212,28 @@ def route_detail_json():
     return jsonify(route_data)
 
 
-@app.route("/get-saved-route")
-def search_route_detail_by_name():
-    """Show info about route."""
+@app.route("/get-saved-course")
+def search_course_detail_by_name():
+    """Show info about course."""
 
     print "search term is ", request.args.get("search")
     route = Route.get_by_route_name(request.args.get("search"))
     print route
 
-    return redirect("routes/%s" % route.route_id)
+    return redirect("courses/%s" % route.route_id)
 
 
 #  RUNS
 @app.route("/runs")
 def run_list():
-    """Show list of runs, and the route information for each."""
+    """Show list of runs, and the course information for each."""
 
     return render_template("run_list.html")
 
 
 @app.route('/all-run-data.json')
 def all_run_data():
-    """Return JSON of all routes."""
+    """Return JSON of all runs."""
 
     all_run_data = {}
     ran_routes = db.session.query(Run, Route).join(Route).all()
@@ -250,7 +250,7 @@ def all_run_data():
 
 @app.route("/runs/<int:run_id>")
 def run_detail(run_id):
-    """Show info about route."""
+    """Show info about run."""
 
     run = Run.query.get(run_id)
     route = Route.query.get(run.route_id)
@@ -289,7 +289,7 @@ def run_detail_json():
 
 
 @app.route('/new-run', methods=["POST"])
-def add_route_and_run():
+def add_course_and_run():
     """Add a run to the database."""
 
     print "/new-run in server.py called"
@@ -347,21 +347,21 @@ def show_profile():
     return render_template("profile.html")
 
 
-@app.route('/three-recent-routes.json')
+@app.route('/three-recent-courses.json')
 def recent_route_data():
-    """Return JSON of the three most recently added routes."""
+    """Return JSON of the three most recently added courses."""
 
-    recent_routes_data = {}
-    recent_routes = Route.query.order_by(Route.add_date.desc()).limit(3).all()
+    recent_courses_data = {}
+    recent_courses = Route.query.order_by(Route.add_date.desc()).limit(3).all()
 
-    for recent_route in recent_routes:
-        string_add_date = datetime.strftime(recent_route.add_date, "%m/%d/%Y")
-        recent_routes_data[recent_route.route_id] = {"route_id": recent_route.route_id,
-                                                     "route_name": recent_route.route_name,
-                                                     "add_date": string_add_date,
-                                                     "route_distance": recent_route.route_distance}
+    for recent_course in recent_courses:
+        string_add_date = datetime.strftime(recent_course.add_date, "%m/%d/%Y")
+        recent_courses_data[recent_course.route_id] = {"route_id": recent_course.route_id,
+                                                       "route_name": recent_course.route_name,
+                                                       "add_date": string_add_date,
+                                                       "route_distance": recent_course.route_distance}
 
-    return jsonify(recent_routes_data)
+    return jsonify(recent_courses_data)
 
 
 @app.route('/three-recent-runs.json')

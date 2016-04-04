@@ -109,11 +109,11 @@ function validateRouteForm(event){
         alert("Please enter at least two characters for the name of the Route");
 
     } else {
-        saveToDb(event, "/new-route");
+        saveToDb(event, "/new-course");
     }
 }
 
-$("#save-route-form").on("submit", validateRouteForm);
+$("#save-course-form").on("submit", validateRouteForm);
 
 
 // ####################  Datepicker ##############################

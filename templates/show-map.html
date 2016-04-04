@@ -40,8 +40,8 @@
   <div class="col-xs-12 col-md-6 col-lg-4">
 
     <span> <h4>Save this Course: </h4></span>
-    <form id="save-route-form" method="post" action="/new-route">
-        <input type="text" name="route" id="route-name" placeholder="Route Name">
+    <form id="save-course-form" method="post" action="/new-course">
+        <input type="text" name="route" id="route-name" placeholder="Course Name">
         <input type="hidden" name="start-lat" id="start-lat-field" value="{{ start_lat }}" data-startlat="{{ start_lat }}">
         <input type="hidden" name="start-long" id="start-long-field" value="{{ start_long }}" data-startlong="{{ start_long }}">
         <input type="hidden" name="end-lat" id="end-lat-field" value="{{ end_lat }}" data-endlat="{{ end_lat }}">
@@ -62,7 +62,7 @@
 
   <span><h4>I've Run this Course: </h4></span>
       <form id="save-run-form" method="post" action="/new-run">
-          <input type="text" name="route" id="route-name2" placeholder="Name of Route" value="test run"><br>
+          <input type="text" name="route" id="route-name2" placeholder="Name of Course" value="test run"><br>
           <input type="hidden" name="start-lat" id="start-lat-field2" value="{{ start_lat }}" data-startlat="{{ start_lat }}">
           <input type="hidden" name="start-long" id="start-long-field2" value="{{ start_long }}" data-startlong="{{ start_long }}">
           <input type="hidden" name="end-lat" id="end-lat-field2" value="{{ end_lat }}" data-endlat="{{ end_lat }}">
