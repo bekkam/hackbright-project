@@ -23,9 +23,9 @@ function showRunData(data) {
     $("<tr><th>Course Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>").appendTo('#run-detail-table');
     var row = $("<tr />");
     $("#run-detail-table").append(row); 
-      row.append($("<td>" + data.route_name + "</td>"));
+      row.append($("<td>" + data.course_name + "</td>"));
       row.append($("<td>" + data.run_date + "</td>"));
-      row.append($("<td>" + data.route_distance + "</td>"));
+      row.append($("<td>" + data.course_distance + "</td>"));
       row.append($("<td>" + data.duration + "</td>"));
     
     showSavedRunMap(data);

@@ -74,13 +74,13 @@ function validateRunForm(event) {
 
     event.preventDefault();
 
-    var charInput = $("#route-name2").val().length;
+    var charInput = $("#course-name2").val().length;
     var runDate = $("#run-date-field").val();
     var duration = $("#run-duration-field").val();
 
     // validate form fields. only submit to server if all fields are valid.
     if (checkMinimumInputLength(charInput) == false) {
-        alert("Please enter at least two characters for the name of the Route");
+        alert("Please enter at least two characters for the name of the Course");
 
     } else if (checkDateFormat(runDate) == false) {
         alert("Please enter a run date in appropriate format");
@@ -100,20 +100,20 @@ function validateRunForm(event) {
 $("#save-run-form").on("submit", validateRunForm);
 
 
-function validateRouteForm(event){
+function validateCourseForm(event){
     event.preventDefault();
 
-    var charInput = $("#route-name").val().length;
+    var charInput = $("#course-name").val().length;
 
     if (checkMinimumInputLength(charInput) == false) {
-        alert("Please enter at least two characters for the name of the Route");
+        alert("Please enter at least two characters for the name of the Course");
 
     } else {
         saveToDb(event, "/new-course");
     }
 }
 
-$("#save-course-form").on("submit", validateRouteForm);
+$("#save-course-form").on("submit", validateCourseForm);
 
 
 // ####################  Datepicker ##############################

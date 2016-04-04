@@ -44,9 +44,9 @@ $( document ).ready(function() {
                   var row = $("<tr />");
                   $("#recent-courses-data-table").append(row); 
                   row.append($("<td>" + id + "</td>"));
-                  row.append($("<td>" + "<a href=" + "/courses/" + id + ">" + course.route_name + "</td>"));
+                  row.append($("<td>" + "<a href=" + "/courses/" + id + ">" + course.course_name + "</td>"));
                   row.append($("<td>" + course.add_date + "</td>"));
-                  row.append($("<td>" + course.route_distance + "</td>"));
+                  row.append($("<td>" + course.course_distance + "</td>"));
               });
       });
 });
@@ -57,14 +57,14 @@ $( document ).ready(function() {
       $('#recent-runs-data-table').html("<tr><th>Run ID</th><th>Course Name</th><th>Date of Run</th><th>Distance (km)</th><th>Duration</th></tr>");
       
       $.getJSON('/three-recent-runs.json', function(data) {
-            $.each(data, function(runId, ranRoute) {
+            $.each(data, function(runId, courseRan) {
                   var row = $("<tr />");
                   $("#recent-runs-data-table").append(row); 
                   row.append($("<td>" + "<a href=" + "/runs/" + runId + ">"+ runId + "</td>"));
-                  row.append($("<td>" + ranRoute.route_name + "</td>"));
-                  row.append($("<td>" + ranRoute.run_date + "</td>"));
-                  row.append($("<td>" + ranRoute.route_distance + "</td>"));
-                  row.append($("<td>" + ranRoute.duration + "</td>"));
+                  row.append($("<td>" + courseRan.course_name + "</td>"));
+                  row.append($("<td>" + courseRan.run_date + "</td>"));
+                  row.append($("<td>" + courseRan.course_distance + "</td>"));
+                  row.append($("<td>" + courseRan.duration + "</td>"));
               });
       });
 });
