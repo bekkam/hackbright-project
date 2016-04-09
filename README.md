@@ -10,7 +10,7 @@ SafeRun is a fitness tracker and running path generator, made with the nighttime
 - **Testing**: Unittest, Doctest (Python), Jasmine (Javascript)
 - **APIs**: Google Maps Javascript API, Chart.js, Socrata Open Data API (SODA), SnazzyMaps
 
- ## Screencasts
+<!-- ## Features
 
 *Profile Page*
 
@@ -51,7 +51,7 @@ SafeRun is a fitness tracker and running path generator, made with the nighttime
 
 
 ![save]
-(/docs/static/saverun.gif)
+(/docs/static/saverun.gif) -->
 
 
 
