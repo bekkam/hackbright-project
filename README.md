@@ -15,7 +15,10 @@ SafeRun is a fitness tracker and running path generator, made with the nighttime
 *Create a Course*
 
 
-(/docs/static/createrun/.gif))
+![create]
+(/docs/static/createrun.gif)
+
+
 *View Outage Data*
 
 
