@@ -7,5 +7,21 @@ SafeRun is a fitness tracker and running path generator, made with the nighttime
 - **Frontend**: Javascript (AJAX, JQuery), Bootstrap, HTML, CSS
 - **Backend**: Python, Jinja2, Flask, SQLAlchemy, Geocoder, PolylineCodec
 - **Database**: PostgreSQL
-- **APIs**: Google Maps Javascript API, Chart.js, Socrata Open Data API (SODA), SnazzyMaps
 - **Testing**: Unittest, Doctest (Python), Jasmine (Javascript)
+- **APIs**: Google Maps Javascript API, Chart.js, Socrata Open Data API (SODA), SnazzyMaps
+
+## Screencasts
+
+*Create a Course*
+
+
+(/docs/static/createrun/.gif))
+*View Outage Data*
+
+
+*Save a Course (or Run)*
+
+
+*Profile Page*
+
+
