@@ -127,7 +127,7 @@ class Course(db.Model):
                             )
         db.session.add(new_course)
         db.session.commit()
-        print "course added in model"
+        # print "course added in model"
 
 
 class Run(db.Model):
@@ -165,7 +165,7 @@ class Run(db.Model):
                       duration=self.duration)
         db.session.add(new_run)
         db.session.commit()
-        print "run added in model"
+        # print "run added in model"
 
 
 class Outage(db.Model):
