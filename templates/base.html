@@ -36,16 +36,18 @@
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
+        {% if "user_id" in session %}
         <li><a href="/profile">My Profile</a></li>
         <li><a href="/courses">Courses</a></li>
         <li><a href="/runs">Runs</a></li>
+        {% endif %}
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
           {% if "user_id" in session %}
               <a href="/logout">Logout</a>
           {% else %}
-              <a href="/login">Login</a>
+              <a href="/">Login</a>
           {% endif %}
           <!-- <a href="#">Log Out</a> -->
         </li>
